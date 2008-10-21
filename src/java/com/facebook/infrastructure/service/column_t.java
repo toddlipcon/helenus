@@ -19,6 +19,7 @@ public class column_t implements TBase, java.io.Serializable {
   public long timestamp;
 
   public final Isset __isset = new Isset();
+
   public static final class Isset implements java.io.Serializable {
     public boolean columnName = false;
     public boolean value = false;
@@ -28,11 +29,7 @@ public class column_t implements TBase, java.io.Serializable {
   public column_t() {
   }
 
-  public column_t(
-    String columnName,
-    String value,
-    long timestamp)
-  {
+  public column_t(String columnName, String value, long timestamp) {
     this();
     this.columnName = columnName;
     this.__isset.columnName = true;
@@ -46,7 +43,7 @@ public class column_t implements TBase, java.io.Serializable {
     if (that == null)
       return false;
     if (that instanceof column_t)
-      return this.equals((column_t)that);
+      return this.equals((column_t) that);
     return false;
   }
 
@@ -91,41 +88,39 @@ public class column_t implements TBase, java.io.Serializable {
   public void read(TProtocol iprot) throws TException {
     TField field;
     iprot.readStructBegin();
-    while (true)
-    {
+    while (true) {
       field = iprot.readFieldBegin();
-      if (field.type == TType.STOP) { 
+      if (field.type == TType.STOP) {
         break;
       }
-      switch (field.id)
-      {
-        case 1:
-          if (field.type == TType.STRING) {
-            this.columnName = iprot.readString();
-            this.__isset.columnName = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        case 2:
-          if (field.type == TType.STRING) {
-            this.value = iprot.readString();
-            this.__isset.value = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        case 3:
-          if (field.type == TType.I64) {
-            this.timestamp = iprot.readI64();
-            this.__isset.timestamp = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        default:
+      switch (field.id) {
+      case 1:
+        if (field.type == TType.STRING) {
+          this.columnName = iprot.readString();
+          this.__isset.columnName = true;
+        } else {
           TProtocolUtil.skip(iprot, field.type);
-          break;
+        }
+        break;
+      case 2:
+        if (field.type == TType.STRING) {
+          this.value = iprot.readString();
+          this.__isset.value = true;
+        } else {
+          TProtocolUtil.skip(iprot, field.type);
+        }
+        break;
+      case 3:
+        if (field.type == TType.I64) {
+          this.timestamp = iprot.readI64();
+          this.__isset.timestamp = true;
+        } else {
+          TProtocolUtil.skip(iprot, field.type);
+        }
+        break;
+      default:
+        TProtocolUtil.skip(iprot, field.type);
+        break;
       }
       iprot.readFieldEnd();
     }
@@ -175,4 +170,3 @@ public class column_t implements TBase, java.io.Serializable {
   }
 
 }
-

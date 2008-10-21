@@ -39,197 +39,172 @@ import com.facebook.infrastructure.utils.BloomFilter;
 import com.facebook.infrastructure.utils.LogUtil;
 
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-class MinorCompactionManager implements IComponentShutdown
-{
-    private static MinorCompactionManager instance_;
-    private static Lock lock_ = new ReentrantLock();
-    private static Logger logger_ = Logger.getLogger(MinorCompactionManager.class);
-    final static long intervalInMins_ = 5;
+class MinorCompactionManager implements IComponentShutdown {
+  private static MinorCompactionManager instance_;
+  private static Lock lock_ = new ReentrantLock();
+  private static Logger logger_ = Logger
+      .getLogger(MinorCompactionManager.class);
+  final static long intervalInMins_ = 5;
 
-    public static MinorCompactionManager instance()
-    {
-        if ( instance_ == null )
-        {
-            lock_.lock();
-            try
-            {
-                if ( instance_ == null )
-                    instance_ = new MinorCompactionManager();
-            }
-            finally
-            {
-                lock_.unlock();
-            }
-        }
-        return instance_;
+  public static MinorCompactionManager instance() {
+    if (instance_ == null) {
+      lock_.lock();
+      try {
+        if (instance_ == null)
+          instance_ = new MinorCompactionManager();
+      } finally {
+        lock_.unlock();
+      }
+    }
+    return instance_;
+  }
+
+  class FileCompactor implements Runnable {
+    private ColumnFamilyStore columnFamilyStore_;
+
+    FileCompactor(ColumnFamilyStore columnFamilyStore) {
+      columnFamilyStore_ = columnFamilyStore;
     }
 
-    class FileCompactor implements Runnable
-    {
-        private ColumnFamilyStore columnFamilyStore_;
+    public void run() {
+      try {
+        logger_.debug("Started  compaction ..."
+            + columnFamilyStore_.columnFamily_);
+        columnFamilyStore_.doCompaction(null);
+        logger_.debug("Finished compaction ..."
+            + columnFamilyStore_.columnFamily_);
+      } catch (IOException e) {
+        logger_.debug(LogUtil.throwableToString(e));
+      } catch (Throwable th) {
+        logger_.error(LogUtil.throwableToString(th));
+      }
+    }
+  }
 
-        FileCompactor(ColumnFamilyStore columnFamilyStore)
-        {
-        	columnFamilyStore_ = columnFamilyStore;
-        }
+  class FileCompactor2 implements Callable<BloomFilter.CountingBloomFilter> {
+    private ColumnFamilyStore columnFamilyStore_;
+    private List<Range> ranges_;
+    private EndPoint target_;
+    private List<String> fileList_;
 
-        public void run()
-        {
-            try
-            {
-                logger_.debug("Started  compaction ..."+columnFamilyStore_.columnFamily_);
-            	columnFamilyStore_.doCompaction(null);
-                logger_.debug("Finished compaction ..."+columnFamilyStore_.columnFamily_);
-            }
-            catch (IOException e)
-            {
-                logger_.debug( LogUtil.throwableToString(e) );
-            }
-            catch (Throwable th)
-            {
-                logger_.error( LogUtil.throwableToString(th) );
-            }
-        }
+    FileCompactor2(ColumnFamilyStore columnFamilyStore, List<Range> ranges) {
+      columnFamilyStore_ = columnFamilyStore;
+      ranges_ = ranges;
     }
 
-    class FileCompactor2 implements Callable<BloomFilter.CountingBloomFilter>
-    {
-        private ColumnFamilyStore columnFamilyStore_;
-        private List<Range> ranges_;
-        private EndPoint target_;
-        private List<String> fileList_;
-
-        FileCompactor2(ColumnFamilyStore columnFamilyStore, List<Range> ranges)
-        {
-            columnFamilyStore_ = columnFamilyStore;
-            ranges_ = ranges;
-        }
-        
-        FileCompactor2(ColumnFamilyStore columnFamilyStore, List<Range> ranges, EndPoint target,List<String> fileList)
-        {
-            columnFamilyStore_ = columnFamilyStore;
-            ranges_ = ranges;
-            target_ = target;
-            fileList_ = fileList;
-        }
-
-        public BloomFilter.CountingBloomFilter call()
-        {
-        	BloomFilter.CountingBloomFilter result = null;
-            try
-            {
-                logger_.debug("Started  compaction ..."+columnFamilyStore_.columnFamily_);
-                result = columnFamilyStore_.doRangeAntiCompaction(ranges_, target_,fileList_);
-                logger_.debug("Finished compaction ..."+columnFamilyStore_.columnFamily_);
-            }
-            catch (IOException e)
-            {
-                logger_.debug( LogUtil.throwableToString(e) );
-            }
-            return result;
-        }
+    FileCompactor2(ColumnFamilyStore columnFamilyStore, List<Range> ranges,
+        EndPoint target, List<String> fileList) {
+      columnFamilyStore_ = columnFamilyStore;
+      ranges_ = ranges;
+      target_ = target;
+      fileList_ = fileList;
     }
 
-    class OnDemandCompactor implements Callable<BloomFilter.CountingBloomFilter>
-    {
-        private ColumnFamilyStore columnFamilyStore_;
-        private long skip_ = 0L;
+    public BloomFilter.CountingBloomFilter call() {
+      BloomFilter.CountingBloomFilter result = null;
+      try {
+        logger_.debug("Started  compaction ..."
+            + columnFamilyStore_.columnFamily_);
+        result = columnFamilyStore_.doRangeAntiCompaction(ranges_, target_,
+            fileList_);
+        logger_.debug("Finished compaction ..."
+            + columnFamilyStore_.columnFamily_);
+      } catch (IOException e) {
+        logger_.debug(LogUtil.throwableToString(e));
+      }
+      return result;
+    }
+  }
 
-        OnDemandCompactor(ColumnFamilyStore columnFamilyStore, long skip)
-        {
-            columnFamilyStore_ = columnFamilyStore;
-            skip_ = skip;
-        }
+  class OnDemandCompactor implements Callable<BloomFilter.CountingBloomFilter> {
+    private ColumnFamilyStore columnFamilyStore_;
+    private long skip_ = 0L;
 
-        public BloomFilter.CountingBloomFilter call()
-        {
-        	BloomFilter.CountingBloomFilter result = null;
-            try
-            {
-                logger_.debug("Started  Major compaction ..."+columnFamilyStore_.columnFamily_);
-                result = columnFamilyStore_.doMajorCompaction(skip_);
-                logger_.debug("Finished Major compaction ..."+columnFamilyStore_.columnFamily_);
-            }
-            catch (IOException e)
-            {
-                logger_.debug( LogUtil.throwableToString(e) );
-            }
-            return result;
-        }
+    OnDemandCompactor(ColumnFamilyStore columnFamilyStore, long skip) {
+      columnFamilyStore_ = columnFamilyStore;
+      skip_ = skip;
     }
 
-    class CleanupCompactor implements Runnable
-    {
-        private ColumnFamilyStore columnFamilyStore_;
-
-        CleanupCompactor(ColumnFamilyStore columnFamilyStore)
-        {
-        	columnFamilyStore_ = columnFamilyStore;
-        }
-
-        public void run()
-        {
-            try
-            {
-                logger_.debug("Started  compaction ..."+columnFamilyStore_.columnFamily_);
-            	columnFamilyStore_.doCleanupCompaction();
-                logger_.debug("Finished compaction ..."+columnFamilyStore_.columnFamily_);
-            }
-            catch (IOException e)
-            {
-                logger_.debug( LogUtil.throwableToString(e) );
-            }
-            catch (Throwable th)
-            {
-                logger_.error( LogUtil.throwableToString(th) );
-            }
-        }
+    public BloomFilter.CountingBloomFilter call() {
+      BloomFilter.CountingBloomFilter result = null;
+      try {
+        logger_.debug("Started  Major compaction ..."
+            + columnFamilyStore_.columnFamily_);
+        result = columnFamilyStore_.doMajorCompaction(skip_);
+        logger_.debug("Finished Major compaction ..."
+            + columnFamilyStore_.columnFamily_);
+      } catch (IOException e) {
+        logger_.debug(LogUtil.throwableToString(e));
+      }
+      return result;
     }
-    
-    
-    private ScheduledExecutorService compactor_ = new DebuggableScheduledThreadPoolExecutor(1, new ThreadFactoryImpl("MINOR-COMPACTION-POOL"));
+  }
 
-    public MinorCompactionManager()
-    {
-    	StorageService.instance().registerComponentForShutdown(this);
-	}
+  class CleanupCompactor implements Runnable {
+    private ColumnFamilyStore columnFamilyStore_;
 
-    public void shutdown()
-    {
-    	compactor_.shutdownNow();
+    CleanupCompactor(ColumnFamilyStore columnFamilyStore) {
+      columnFamilyStore_ = columnFamilyStore;
     }
 
-    public void submitPeriodicCompaction(ColumnFamilyStore columnFamilyStore)
-    {        
-    	compactor_.scheduleWithFixedDelay(new FileCompactor(columnFamilyStore), MinorCompactionManager.intervalInMins_,
-    			MinorCompactionManager.intervalInMins_, TimeUnit.MINUTES);       
+    public void run() {
+      try {
+        logger_.debug("Started  compaction ..."
+            + columnFamilyStore_.columnFamily_);
+        columnFamilyStore_.doCleanupCompaction();
+        logger_.debug("Finished compaction ..."
+            + columnFamilyStore_.columnFamily_);
+      } catch (IOException e) {
+        logger_.debug(LogUtil.throwableToString(e));
+      } catch (Throwable th) {
+        logger_.error(LogUtil.throwableToString(th));
+      }
     }
+  }
 
-    public void submit(ColumnFamilyStore columnFamilyStore)
-    {
-        compactor_.submit(new FileCompactor(columnFamilyStore));
-    }
-    
-    public void submitCleanup(ColumnFamilyStore columnFamilyStore)
-    {
-        compactor_.submit(new CleanupCompactor(columnFamilyStore));
-    }
+  private ScheduledExecutorService compactor_ = new DebuggableScheduledThreadPoolExecutor(
+      1, new ThreadFactoryImpl("MINOR-COMPACTION-POOL"));
 
-    public Future<BloomFilter.CountingBloomFilter> submit(ColumnFamilyStore columnFamilyStore, List<Range> ranges, EndPoint target, List<String> fileList)
-    {
-        return compactor_.submit( new FileCompactor2(columnFamilyStore, ranges, target, fileList) );
-    } 
+  public MinorCompactionManager() {
+    StorageService.instance().registerComponentForShutdown(this);
+  }
 
-    public Future<BloomFilter.CountingBloomFilter> submit(ColumnFamilyStore columnFamilyStore, List<Range> ranges)
-    {
-        return compactor_.submit( new FileCompactor2(columnFamilyStore, ranges) );
-    }
+  public void shutdown() {
+    compactor_.shutdownNow();
+  }
 
-    public Future<BloomFilter.CountingBloomFilter> submitMajor(ColumnFamilyStore columnFamilyStore, List<Range> ranges, long skip)
-    {
-        return compactor_.submit( new OnDemandCompactor(columnFamilyStore, skip) );
-    }
+  public void submitPeriodicCompaction(ColumnFamilyStore columnFamilyStore) {
+    compactor_.scheduleWithFixedDelay(new FileCompactor(columnFamilyStore),
+        MinorCompactionManager.intervalInMins_,
+        MinorCompactionManager.intervalInMins_, TimeUnit.MINUTES);
+  }
+
+  public void submit(ColumnFamilyStore columnFamilyStore) {
+    compactor_.submit(new FileCompactor(columnFamilyStore));
+  }
+
+  public void submitCleanup(ColumnFamilyStore columnFamilyStore) {
+    compactor_.submit(new CleanupCompactor(columnFamilyStore));
+  }
+
+  public Future<BloomFilter.CountingBloomFilter> submit(
+      ColumnFamilyStore columnFamilyStore, List<Range> ranges, EndPoint target,
+      List<String> fileList) {
+    return compactor_.submit(new FileCompactor2(columnFamilyStore, ranges,
+        target, fileList));
+  }
+
+  public Future<BloomFilter.CountingBloomFilter> submit(
+      ColumnFamilyStore columnFamilyStore, List<Range> ranges) {
+    return compactor_.submit(new FileCompactor2(columnFamilyStore, ranges));
+  }
+
+  public Future<BloomFilter.CountingBloomFilter> submitMajor(
+      ColumnFamilyStore columnFamilyStore, List<Range> ranges, long skip) {
+    return compactor_.submit(new OnDemandCompactor(columnFamilyStore, skip));
+  }
 }

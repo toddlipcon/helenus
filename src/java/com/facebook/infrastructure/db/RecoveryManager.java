@@ -33,64 +33,59 @@ import org.apache.log4j.Logger;
 import com.facebook.infrastructure.config.DatabaseDescriptor;
 
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class RecoveryManager
-{
-    private static RecoveryManager instance_;
-    private static Logger logger_ = Logger.getLogger(RecoveryManager.class);
-    
-    synchronized static RecoveryManager instance() throws IOException
-    {
-        if ( instance_ == null )
-            instance_ = new RecoveryManager();
-        return instance_;
+public class RecoveryManager {
+  private static RecoveryManager instance_;
+  private static Logger logger_ = Logger.getLogger(RecoveryManager.class);
+
+  synchronized static RecoveryManager instance() throws IOException {
+    if (instance_ == null)
+      instance_ = new RecoveryManager();
+    return instance_;
+  }
+
+  public void doRecovery() throws IOException {
+    String directory = DatabaseDescriptor.getLogFileLocation();
+    File file = new File(directory);
+    File[] files = file.listFiles();
+    /* Maintains a mapping of table name to a list of commit log files */
+    Map<String, List<File>> tableToCommitLogs = new HashMap<String, List<File>>();
+
+    for (File f : files) {
+      String table = CommitLog.getTableName(f.getName());
+      List<File> clogs = tableToCommitLogs.get(table);
+      if (clogs == null) {
+        clogs = new ArrayList<File>();
+        tableToCommitLogs.put(table, clogs);
+      }
+      clogs.add(f);
     }
-    
-    public void doRecovery() throws IOException
-    {
-        String directory = DatabaseDescriptor.getLogFileLocation();
-        File file = new File(directory);
-        File[] files = file.listFiles();
-        /* Maintains a mapping of table name to a list of commit log files */
-        Map<String, List<File>> tableToCommitLogs = new HashMap<String, List<File>>();
-        
-        for (File f : files)
-        {
-            String table = CommitLog.getTableName(f.getName());
-            List<File> clogs = tableToCommitLogs.get(table);
-            if ( clogs == null )
-            {
-                clogs = new ArrayList<File>();
-                tableToCommitLogs.put(table, clogs);
-            }
-            clogs.add(f);
-        }
-        
-        recoverEachTable(tableToCommitLogs);
-        FileUtils.delete(files);
+
+    recoverEachTable(tableToCommitLogs);
+    FileUtils.delete(files);
+  }
+
+  private void recoverEachTable(Map<String, List<File>> tableToCommitLogs)
+      throws IOException {
+    Comparator<File> fCmp = new FileUtils.FileComparator();
+    Set<String> tables = tableToCommitLogs.keySet();
+    for (String table : tables) {
+      List<File> clogs = tableToCommitLogs.get(table);
+      Collections.sort(clogs, fCmp);
+      CommitLog clog = new CommitLog(table, true);
+      clog.recover(clogs);
     }
-    
-    private void recoverEachTable(Map<String, List<File>> tableToCommitLogs) throws IOException
-    {
-        Comparator<File> fCmp = new FileUtils.FileComparator();
-        Set<String> tables = tableToCommitLogs.keySet();
-        for ( String table : tables )
-        {
-            List<File> clogs = tableToCommitLogs.get(table);
-            Collections.sort(clogs, fCmp);
-            CommitLog clog = new CommitLog(table, true);
-            clog.recover(clogs);
-        }
-    }
-    
-    public static void main(String[] args) throws Throwable
-    {
-        DatabaseDescriptor.init();
-        long start = System.currentTimeMillis();
-        RecoveryManager rm = RecoveryManager.instance();
-        rm.doRecovery();  
-        logger_.debug( "Time taken : " + (System.currentTimeMillis() - start) + " ms.");
-    }
+  }
+
+  public static void main(String[] args) throws Throwable {
+    DatabaseDescriptor.init();
+    long start = System.currentTimeMillis();
+    RecoveryManager rm = RecoveryManager.instance();
+    rm.doRecovery();
+    logger_.debug("Time taken : " + (System.currentTimeMillis() - start)
+        + " ms.");
+  }
 }

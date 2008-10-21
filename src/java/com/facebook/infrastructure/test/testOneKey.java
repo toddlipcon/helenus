@@ -21,28 +21,30 @@ package com.facebook.infrastructure.test;
 import com.facebook.infrastructure.config.DatabaseDescriptor;
 import com.facebook.infrastructure.db.Table;
 
-public class testOneKey
-{
-    static void testCompactions() throws Exception
-    {
-    	testInsert.bulkInsertSuperColumns("MailboxThreadList0Indexed", 1, 0, 64*1024, 0, 1);
-    	testInsert.bulkInsertSuperColumns("MailboxThreadList0Indexed", 1, 64*1024, 128*1024, 0, 1);
+public class testOneKey {
+  static void testCompactions() throws Exception {
+    testInsert.bulkInsertSuperColumns("MailboxThreadList0Indexed", 1, 0,
+        64 * 1024, 0, 1);
+    testInsert.bulkInsertSuperColumns("MailboxThreadList0Indexed", 1,
+        64 * 1024, 128 * 1024, 0, 1);
 
-    	String sTableName = DatabaseDescriptor.getTables().get(0);
-    	Table.open(sTableName).forceCompaction();
+    String sTableName = DatabaseDescriptor.getTables().get(0);
+    Table.open(sTableName).forceCompaction();
 
-    	testRead.readSuperCols("MailboxThreadList0Indexed", "1", 128*1024, 1);
-    }
+    testRead.readSuperCols("MailboxThreadList0Indexed", "1", 128 * 1024, 1);
+  }
 
-    static void testBulkInsertAndRead()
-    {
-    	testInsert.bulkInsertSimpleColumns("MailboxUserList", 1, 0, 32*1024);
-    	testInsert.bulkInsertSimpleColumns("MailboxUserListIndexed", 1, 0, 32*1024);
-        testInsert.bulkInsertSuperColumns("MailboxThreadList0", 1, 0, 16*1024, 0, 2);
-        testInsert.bulkInsertSuperColumns("MailboxThreadList0Indexed", 1, 0, 16*1024, 0, 2);
+  static void testBulkInsertAndRead() {
+    testInsert.bulkInsertSimpleColumns("MailboxUserList", 1, 0, 32 * 1024);
+    testInsert.bulkInsertSimpleColumns("MailboxUserListIndexed", 1, 0,
+        32 * 1024);
+    testInsert.bulkInsertSuperColumns("MailboxThreadList0", 1, 0, 16 * 1024, 0,
+        2);
+    testInsert.bulkInsertSuperColumns("MailboxThreadList0Indexed", 1, 0,
+        16 * 1024, 0, 2);
 
-        System.out.println("Reading data...");
-        testRead.readSimpleCols("MailboxUserListIndexed", "1", 32*1024);
-        testRead.readSuperCols("MailboxThreadList0Indexed", "1", 16*1024, 2);
-    }
+    System.out.println("Reading data...");
+    testRead.readSimpleCols("MailboxUserListIndexed", "1", 32 * 1024);
+    testRead.readSuperCols("MailboxThreadList0Indexed", "1", 16 * 1024, 2);
+  }
 }

@@ -28,94 +28,72 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.apache.log4j.Logger;
 
 import com.facebook.infrastructure.utils.LogUtil;
+
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-class AsyncResult implements IAsyncResult
-{
-    private static Logger logger_ = Logger.getLogger( AsyncResult.class );
-    private Object[] result_ = new Object[0];    
-    private AtomicBoolean done_ = new AtomicBoolean(false);
-    private Lock lock_ = new ReentrantLock();
-    private Condition condition_;
+class AsyncResult implements IAsyncResult {
+  private static Logger logger_ = Logger.getLogger(AsyncResult.class);
+  private Object[] result_ = new Object[0];
+  private AtomicBoolean done_ = new AtomicBoolean(false);
+  private Lock lock_ = new ReentrantLock();
+  private Condition condition_;
 
-    public AsyncResult()
-    {        
-        condition_ = lock_.newCondition();
-    }    
-    
-    public Object[] get()
-    {
-        lock_.lock();
-        try
-        {
-            if ( !done_.get() )
-            {
-                condition_.await();                    
-            }
-        }
-        catch ( InterruptedException ex )
-        {
-            logger_.warn( LogUtil.throwableToString(ex) );
-        }
-        finally
-        {
-            lock_.unlock();            
-        }        
-        return result_;
+  public AsyncResult() {
+    condition_ = lock_.newCondition();
+  }
+
+  public Object[] get() {
+    lock_.lock();
+    try {
+      if (!done_.get()) {
+        condition_.await();
+      }
+    } catch (InterruptedException ex) {
+      logger_.warn(LogUtil.throwableToString(ex));
+    } finally {
+      lock_.unlock();
     }
-    
-    public boolean isDone()
-    {
-        return done_.get();
+    return result_;
+  }
+
+  public boolean isDone() {
+    return done_.get();
+  }
+
+  public Object[] get(long timeout, TimeUnit tu) throws TimeoutException {
+    lock_.lock();
+    try {
+      boolean bVal = true;
+      try {
+        if (!done_.get()) {
+          bVal = condition_.await(timeout, tu);
+        }
+      } catch (InterruptedException ex) {
+        logger_.warn(LogUtil.throwableToString(ex));
+      }
+
+      if (!bVal && !done_.get()) {
+        throw new TimeoutException("Operation timed out.");
+      }
+    } finally {
+      lock_.unlock();
     }
-    
-    public Object[] get(long timeout, TimeUnit tu) throws TimeoutException
-    {
-        lock_.lock();
-        try
-        {            
-            boolean bVal = true;
-            try
-            {
-                if ( !done_.get() )
-                {                    
-                    bVal = condition_.await(timeout, tu);
-                }
-            }
-            catch ( InterruptedException ex )
-            {
-                logger_.warn( LogUtil.throwableToString(ex) );
-            }
-            
-            if ( !bVal && !done_.get() )
-            {                                           
-                throw new TimeoutException("Operation timed out.");
-            }
-        }
-        finally
-        {
-            lock_.unlock();      
-        }
-        return result_;
+    return result_;
+  }
+
+  void result(Object[] result) {
+    try {
+      lock_.lock();
+      if (!done_.get()) {
+        result_ = result;
+        done_.set(true);
+        condition_.signal();
+      }
+    } finally {
+      lock_.unlock();
     }
-    
-    void result(Object[] result)
-    {        
-        try
-        {
-            lock_.lock();
-            if ( !done_.get() )
-            {
-                result_ = result;
-                done_.set(true);
-                condition_.signal();
-            }
-        }
-        finally
-        {
-            lock_.unlock();
-        }        
-    }    
+  }
 }

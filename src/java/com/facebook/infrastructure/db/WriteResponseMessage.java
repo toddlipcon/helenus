@@ -37,77 +37,73 @@ import com.facebook.infrastructure.service.StorageService;
  * key in a table
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
  */
-public class WriteResponseMessage implements Serializable
-{
-private static ICompactSerializer<WriteResponseMessage> serializer_;	
-	
-    static
-    {
-        serializer_ = new WriteResponseMessageSerializer();
-    }
+public class WriteResponseMessage implements Serializable {
+  private static ICompactSerializer<WriteResponseMessage> serializer_;
 
-    static ICompactSerializer<WriteResponseMessage> serializer()
-    {
-        return serializer_;
-    }
-	
-    public static Message makeWriteResponseMessage(WriteResponseMessage writeResponseMessage) throws IOException
-    {
-    	ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream( bos );
-        WriteResponseMessage.serializer().serialize(writeResponseMessage, dos);
-        Message message = new Message(StorageService.getLocalStorageEndPoint(), MessagingService.responseStage_, MessagingService.responseVerbHandler_, new Object[]{bos.toByteArray()});         
-        return message;
-    }
-    
-	@XmlElement(name = "Table")
-	private String table_;
+  static {
+    serializer_ = new WriteResponseMessageSerializer();
+  }
 
-	@XmlElement(name = "key")
-	private String key_;
-	
-	@XmlElement(name = "Status")
-	private boolean status_;
-	
-	private WriteResponseMessage() {
-	}
+  static ICompactSerializer<WriteResponseMessage> serializer() {
+    return serializer_;
+  }
 
-	public WriteResponseMessage(String table, String key, boolean bVal) {
-		table_ = table;
-		key_ = key;
-		status_ = bVal;
-	}
+  public static Message makeWriteResponseMessage(
+      WriteResponseMessage writeResponseMessage) throws IOException {
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    DataOutputStream dos = new DataOutputStream(bos);
+    WriteResponseMessage.serializer().serialize(writeResponseMessage, dos);
+    Message message = new Message(StorageService.getLocalStorageEndPoint(),
+        MessagingService.responseStage_, MessagingService.responseVerbHandler_,
+        new Object[] { bos.toByteArray() });
+    return message;
+  }
 
-	public String table() 
-	{
-		return table_;
-	}
+  @XmlElement(name = "Table")
+  private String table_;
 
-	public String key() 
-	{
-		return key_;
-	}
-	
-	public boolean isSuccess()
-	{
-		return status_;
-	}
+  @XmlElement(name = "key")
+  private String key_;
+
+  @XmlElement(name = "Status")
+  private boolean status_;
+
+  private WriteResponseMessage() {
+  }
+
+  public WriteResponseMessage(String table, String key, boolean bVal) {
+    table_ = table;
+    key_ = key;
+    status_ = bVal;
+  }
+
+  public String table() {
+    return table_;
+  }
+
+  public String key() {
+    return key_;
+  }
+
+  public boolean isSuccess() {
+    return status_;
+  }
 }
 
-class WriteResponseMessageSerializer implements ICompactSerializer<WriteResponseMessage>
-{
-	public void serialize(WriteResponseMessage wm, DataOutputStream dos) throws IOException
-	{
-		dos.writeUTF(wm.table());
-		dos.writeUTF(wm.key());
-		dos.writeBoolean(wm.isSuccess());
-	}
-	
-    public WriteResponseMessage deserialize(DataInputStream dis) throws IOException
-    {
-    	String table = dis.readUTF();
-    	String key = dis.readUTF();
-    	boolean status = dis.readBoolean();
-    	return new WriteResponseMessage(table, key, status);
-    }
+class WriteResponseMessageSerializer implements
+    ICompactSerializer<WriteResponseMessage> {
+  public void serialize(WriteResponseMessage wm, DataOutputStream dos)
+      throws IOException {
+    dos.writeUTF(wm.table());
+    dos.writeUTF(wm.key());
+    dos.writeBoolean(wm.isSuccess());
+  }
+
+  public WriteResponseMessage deserialize(DataInputStream dis)
+      throws IOException {
+    String table = dis.readUTF();
+    String key = dis.readUTF();
+    boolean status = dis.readBoolean();
+    return new WriteResponseMessage(table, key, status);
+  }
 }

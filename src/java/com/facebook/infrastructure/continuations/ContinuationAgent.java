@@ -22,16 +22,16 @@ import java.lang.instrument.Instrumentation;
 
 import org.apache.commons.javaflow.bytecode.transformation.bcel.BcelClassTransformer;
 
-
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class ContinuationAgent
-{
-    public static void premain(String agentArguments, Instrumentation instrumentation)
-    {
-        System.out.println("Inside the ContinuationAgent");
-        instrumentation.addTransformer(new ContinuationClassTransformer(agentArguments, new BcelClassTransformer()));
-    }
+public class ContinuationAgent {
+  public static void premain(String agentArguments,
+      Instrumentation instrumentation) {
+    System.out.println("Inside the ContinuationAgent");
+    instrumentation.addTransformer(new ContinuationClassTransformer(
+        agentArguments, new BcelClassTransformer()));
+  }
 }

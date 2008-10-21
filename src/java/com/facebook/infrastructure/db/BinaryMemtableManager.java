@@ -31,68 +31,51 @@ import com.facebook.infrastructure.concurrent.DebuggableThreadPoolExecutor;
 import com.facebook.infrastructure.concurrent.ThreadFactoryImpl;
 import com.facebook.infrastructure.utils.LogUtil;
 
-
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class BinaryMemtableManager
-{
-    private static BinaryMemtableManager instance_;
-    private static Lock lock_ = new ReentrantLock();
-    private static Logger logger_ = Logger.getLogger(BinaryMemtableManager.class);    
+public class BinaryMemtableManager {
+  private static BinaryMemtableManager instance_;
+  private static Lock lock_ = new ReentrantLock();
+  private static Logger logger_ = Logger.getLogger(BinaryMemtableManager.class);
 
-    static BinaryMemtableManager instance() 
-    {
-        if ( instance_ == null )
-        {
-            lock_.lock();
-            try
-            {
-                if ( instance_ == null )
-                    instance_ = new BinaryMemtableManager();
-            }
-            finally
-            {
-                lock_.unlock();
-            }
-        }
-        return instance_;
+  static BinaryMemtableManager instance() {
+    if (instance_ == null) {
+      lock_.lock();
+      try {
+        if (instance_ == null)
+          instance_ = new BinaryMemtableManager();
+      } finally {
+        lock_.unlock();
+      }
     }
-    
-    class BinaryMemtableFlusher implements Runnable
-    {
-        private BinaryMemtable memtable_;
-        
-        BinaryMemtableFlusher(BinaryMemtable memtable)
-        {
-            memtable_ = memtable;
-        }
-        
-        public void run()
-        {
-            try
-            {
-            	memtable_.flush();
-            }
-            catch (IOException e)
-            {
-                logger_.debug( LogUtil.throwableToString(e) );
-            }        	
-        }
+    return instance_;
+  }
+
+  class BinaryMemtableFlusher implements Runnable {
+    private BinaryMemtable memtable_;
+
+    BinaryMemtableFlusher(BinaryMemtable memtable) {
+      memtable_ = memtable;
     }
-    
-    private ExecutorService flusher_ = new DebuggableThreadPoolExecutor( 1,
-            1,
-            Integer.MAX_VALUE,
-            TimeUnit.SECONDS,
-            new LinkedBlockingQueue<Runnable>(),
-            new ThreadFactoryImpl("BINARY-MEMTABLE-FLUSHER-POOL")
-            );  
-    
-    /* Submit memtables to be flushed to disk */
-    void submit(String cfName, BinaryMemtable memtbl)
-    {
-    	flusher_.submit( new BinaryMemtableFlusher(memtbl) );
+
+    public void run() {
+      try {
+        memtable_.flush();
+      } catch (IOException e) {
+        logger_.debug(LogUtil.throwableToString(e));
+      }
     }
+  }
+
+  private ExecutorService flusher_ = new DebuggableThreadPoolExecutor(1, 1,
+      Integer.MAX_VALUE, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(),
+      new ThreadFactoryImpl("BINARY-MEMTABLE-FLUSHER-POOL"));
+
+  /* Submit memtables to be flushed to disk */
+  void submit(String cfName, BinaryMemtable memtbl) {
+    flusher_.submit(new BinaryMemtableFlusher(memtbl));
+  }
 }

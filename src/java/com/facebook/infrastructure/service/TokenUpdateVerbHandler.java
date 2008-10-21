@@ -26,27 +26,25 @@ import org.apache.log4j.Logger;
 import com.facebook.infrastructure.net.IVerbHandler;
 import com.facebook.infrastructure.net.Message;
 import com.facebook.infrastructure.utils.LogUtil;
+
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class TokenUpdateVerbHandler implements IVerbHandler
-{
-    private static Logger logger_ = Logger.getLogger(TokenUpdateVerbHandler.class);
+public class TokenUpdateVerbHandler implements IVerbHandler {
+  private static Logger logger_ = Logger
+      .getLogger(TokenUpdateVerbHandler.class);
 
-    public void doVerb(Message message)
-    {
-    	byte[] body = (byte[])message.getMessageBody()[0];
-        BigInteger token = new BigInteger(body);
-        try
-        {
-        	logger_.info("Updating the token to [" + token + "]");
-        	StorageService.instance().updateToken(token);
-        }
-    	catch( IOException ex )
-    	{
-    		logger_.debug(LogUtil.throwableToString(ex));
-    	}
+  public void doVerb(Message message) {
+    byte[] body = (byte[]) message.getMessageBody()[0];
+    BigInteger token = new BigInteger(body);
+    try {
+      logger_.info("Updating the token to [" + token + "]");
+      StorageService.instance().updateToken(token);
+    } catch (IOException ex) {
+      logger_.debug(LogUtil.throwableToString(ex));
     }
+  }
 
 }

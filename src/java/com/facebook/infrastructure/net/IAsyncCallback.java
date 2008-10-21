@@ -19,13 +19,14 @@
 package com.facebook.infrastructure.net;
 
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public interface IAsyncCallback 
-{
-	/**
-	 * @param response responses to be returned
-	 */
-	public void response(Message msg);
+public interface IAsyncCallback {
+  /**
+   * @param response
+   *          responses to be returned
+   */
+  public void response(Message msg);
 }

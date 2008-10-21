@@ -18,17 +18,14 @@
 package com.facebook.infrastructure.io;
 
 /**
- * Section of a file that needs to be scanned
- * is represented by this class.
-*/
-class Coordinate
-{
-    long start_;
-    long end_;
-    
-    Coordinate(long start, long end)
-    {
-        start_ = start;
-        end_ = end;
-    }
+ * Section of a file that needs to be scanned is represented by this class.
+ */
+class Coordinate {
+  long start_;
+  long end_;
+
+  Coordinate(long start, long end) {
+    start_ = start;
+    end_ = end;
+  }
 }

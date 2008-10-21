@@ -21,11 +21,12 @@ package com.facebook.infrastructure.gms;
 import com.facebook.infrastructure.net.EndPoint;
 
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public interface IFailureNotification
-{   
-    public void suspect(EndPoint ep);
-    public void revive(EndPoint ep);
+public interface IFailureNotification {
+  public void suspect(EndPoint ep);
+
+  public void revive(EndPoint ep);
 }

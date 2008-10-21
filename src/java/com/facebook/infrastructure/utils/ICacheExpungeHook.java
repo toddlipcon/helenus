@@ -19,13 +19,9 @@
 package com.facebook.infrastructure.utils;
 
 /**
- * Created by IntelliJ IDEA.
- * User: lakshman
- * Date: Aug 16, 2005
- * Time: 1:08:58 PM
+ * Created by IntelliJ IDEA. User: lakshman Date: Aug 16, 2005 Time: 1:08:58 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface ICacheExpungeHook<K,V>
-{
-    public void callMe(K key , V value);
+public interface ICacheExpungeHook<K, V> {
+  public void callMe(K key, V value);
 }

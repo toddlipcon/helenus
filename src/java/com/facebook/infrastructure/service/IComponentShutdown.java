@@ -18,7 +18,6 @@
 
 package com.facebook.infrastructure.service;
 
-public interface IComponentShutdown
-{
-	public void shutdown();
+public interface IComponentShutdown {
+  public void shutdown();
 }

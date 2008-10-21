@@ -29,42 +29,39 @@ import com.facebook.infrastructure.net.sink.SinkManager;
 import com.facebook.infrastructure.utils.LogUtil;
 
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-class MessageDeserializationTask implements Runnable
-{
-    private static Logger logger_ = Logger.getLogger(MessageDeserializationTask.class); 
-    private static ISerializer serializer_ = new FastSerializer();
-    private int serializerType_;
-    private byte[] bytes_ = new byte[0];    
-    
-    MessageDeserializationTask(int serializerType, byte[] bytes)
-    {
-        serializerType_ = serializerType;
-        bytes_ = bytes;        
+class MessageDeserializationTask implements Runnable {
+  private static Logger logger_ = Logger
+      .getLogger(MessageDeserializationTask.class);
+  private static ISerializer serializer_ = new FastSerializer();
+  private int serializerType_;
+  private byte[] bytes_ = new byte[0];
+
+  MessageDeserializationTask(int serializerType, byte[] bytes) {
+    serializerType_ = serializerType;
+    bytes_ = bytes;
+  }
+
+  public void run() {
+    /* For DEBUG only. Printing queue length */
+    DebuggableThreadPoolExecutor es = (DebuggableThreadPoolExecutor) MessagingService
+        .getDeserilizationExecutor();
+    logger_.debug("Message Deserialization Task: "
+        + (es.getTaskCount() - es.getCompletedTaskCount()));
+    /* END DEBUG */
+    try {
+      Message message = (Message) serializer_.deserialize(bytes_);
+
+      if (message != null) {
+        message = SinkManager.processServerMessageSink(message);
+        MessagingService.receive(message);
+      }
+    } catch (IOException ex) {
+      logger_.warn(LogUtil.throwableToString(ex));
     }
-    
-    public void run()
-    {
-    	/* For DEBUG only. Printing queue length */   
-    	DebuggableThreadPoolExecutor es = (DebuggableThreadPoolExecutor)MessagingService.getDeserilizationExecutor();
-        logger_.debug( "Message Deserialization Task: " + (es.getTaskCount() - es.getCompletedTaskCount()) );
-        /* END DEBUG */
-        try
-        {                        
-            Message message = (Message)serializer_.deserialize(bytes_);                                                           
-            
-            if ( message != null )
-            {
-                message = SinkManager.processServerMessageSink(message);
-                MessagingService.receive(message);                                                                                                    
-            }
-        }
-        catch ( IOException ex )
-        {            
-            logger_.warn(LogUtil.throwableToString(ex));              
-        }
-    }
+  }
 
 }

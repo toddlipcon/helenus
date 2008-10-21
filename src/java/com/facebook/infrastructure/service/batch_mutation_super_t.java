@@ -23,9 +23,10 @@ import com.facebook.thrift.protocol.TType;
 public class batch_mutation_super_t implements TBase, java.io.Serializable {
   public String table;
   public String key;
-  public Map<String,List<superColumn_t>> cfmap;
+  public Map<String, List<superColumn_t>> cfmap;
 
   public final Isset __isset = new Isset();
+
   public static final class Isset implements java.io.Serializable {
     public boolean table = false;
     public boolean key = false;
@@ -35,11 +36,8 @@ public class batch_mutation_super_t implements TBase, java.io.Serializable {
   public batch_mutation_super_t() {
   }
 
-  public batch_mutation_super_t(
-    String table,
-    String key,
-    Map<String,List<superColumn_t>> cfmap)
-  {
+  public batch_mutation_super_t(String table, String key,
+      Map<String, List<superColumn_t>> cfmap) {
     this();
     this.table = table;
     this.__isset.table = true;
@@ -53,7 +51,7 @@ public class batch_mutation_super_t implements TBase, java.io.Serializable {
     if (that == null)
       return false;
     if (that instanceof batch_mutation_super_t)
-      return this.equals((batch_mutation_super_t)that);
+      return this.equals((batch_mutation_super_t) that);
     return false;
   }
 
@@ -98,64 +96,61 @@ public class batch_mutation_super_t implements TBase, java.io.Serializable {
   public void read(TProtocol iprot) throws TException {
     TField field;
     iprot.readStructBegin();
-    while (true)
-    {
+    while (true) {
       field = iprot.readFieldBegin();
-      if (field.type == TType.STOP) { 
+      if (field.type == TType.STOP) {
         break;
       }
-      switch (field.id)
-      {
-        case 1:
-          if (field.type == TType.STRING) {
-            this.table = iprot.readString();
-            this.__isset.table = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        case 2:
-          if (field.type == TType.STRING) {
-            this.key = iprot.readString();
-            this.__isset.key = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        case 3:
-          if (field.type == TType.MAP) {
-            {
-              TMap _map13 = iprot.readMapBegin();
-              this.cfmap = new HashMap<String,List<superColumn_t>>(2*_map13.size);
-              for (int _i14 = 0; _i14 < _map13.size; ++_i14)
-              {
-                String _key15;
-                List<superColumn_t> _val16;
-                _key15 = iprot.readString();
-                {
-                  TList _list17 = iprot.readListBegin();
-                  _val16 = new ArrayList<superColumn_t>(_list17.size);
-                  for (int _i18 = 0; _i18 < _list17.size; ++_i18)
-                  {
-                    superColumn_t _elem19 = new superColumn_t();
-                    _elem19 = new superColumn_t();
-                    _elem19.read(iprot);
-                    _val16.add(_elem19);
-                  }
-                  iprot.readListEnd();
-                }
-                this.cfmap.put(_key15, _val16);
-              }
-              iprot.readMapEnd();
-            }
-            this.__isset.cfmap = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        default:
+      switch (field.id) {
+      case 1:
+        if (field.type == TType.STRING) {
+          this.table = iprot.readString();
+          this.__isset.table = true;
+        } else {
           TProtocolUtil.skip(iprot, field.type);
-          break;
+        }
+        break;
+      case 2:
+        if (field.type == TType.STRING) {
+          this.key = iprot.readString();
+          this.__isset.key = true;
+        } else {
+          TProtocolUtil.skip(iprot, field.type);
+        }
+        break;
+      case 3:
+        if (field.type == TType.MAP) {
+          {
+            TMap _map13 = iprot.readMapBegin();
+            this.cfmap = new HashMap<String, List<superColumn_t>>(
+                2 * _map13.size);
+            for (int _i14 = 0; _i14 < _map13.size; ++_i14) {
+              String _key15;
+              List<superColumn_t> _val16;
+              _key15 = iprot.readString();
+              {
+                TList _list17 = iprot.readListBegin();
+                _val16 = new ArrayList<superColumn_t>(_list17.size);
+                for (int _i18 = 0; _i18 < _list17.size; ++_i18) {
+                  superColumn_t _elem19 = new superColumn_t();
+                  _elem19 = new superColumn_t();
+                  _elem19.read(iprot);
+                  _val16.add(_elem19);
+                }
+                iprot.readListEnd();
+              }
+              this.cfmap.put(_key15, _val16);
+            }
+            iprot.readMapEnd();
+          }
+          this.__isset.cfmap = true;
+        } else {
+          TProtocolUtil.skip(iprot, field.type);
+        }
+        break;
+      default:
+        TProtocolUtil.skip(iprot, field.type);
+        break;
       }
       iprot.readFieldEnd();
     }
@@ -188,12 +183,14 @@ public class batch_mutation_super_t implements TBase, java.io.Serializable {
       field.id = 3;
       oprot.writeFieldBegin(field);
       {
-        oprot.writeMapBegin(new TMap(TType.STRING, TType.LIST, this.cfmap.size()));
-        for (String _iter20 : this.cfmap.keySet())        {
+        oprot.writeMapBegin(new TMap(TType.STRING, TType.LIST, this.cfmap
+            .size()));
+        for (String _iter20 : this.cfmap.keySet()) {
           oprot.writeString(_iter20);
           {
-            oprot.writeListBegin(new TList(TType.STRUCT, this.cfmap.get(_iter20).size()));
-            for (superColumn_t _iter21 : this.cfmap.get(_iter20))            {
+            oprot.writeListBegin(new TList(TType.STRUCT, this.cfmap
+                .get(_iter20).size()));
+            for (superColumn_t _iter21 : this.cfmap.get(_iter20)) {
               _iter21.write(oprot);
             }
             oprot.writeListEnd();
@@ -220,4 +217,3 @@ public class batch_mutation_super_t implements TBase, java.io.Serializable {
   }
 
 }
-

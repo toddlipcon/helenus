@@ -33,73 +33,60 @@ import com.facebook.infrastructure.io.ICompactSerializer;
  *
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
  */
-class CommitLogEntry
-{    
-    private static AtomicInteger lsnGenerator_ = new AtomicInteger(0);
-    private static ICompactSerializer<CommitLogEntry> serializer_;
-    static
-    {
-        serializer_ = new CommitLogEntrySerializer();
-    }
-    
-    static ICompactSerializer<CommitLogEntry> serializer()
-    {
-        return serializer_;
-    }    
-    
-    private int length_;
-    private byte[] value_ = new byte[0];
-    
-    CommitLogEntry()
-    {
-    }
-    
-    CommitLogEntry(byte[] value)
-    {
-        this(value, 0);
-    }
-    
-    CommitLogEntry(byte[] value, int length)
-    {
-        value_ = value;   
-        length_ = length;
-    }
-    
-    void value(byte[] bytes)
-    {
-        value_ = bytes;
-    }
-    
-    byte[] value()
-    {
-        return value_;
-    }
-    
-    void length(int size)
-    {
-        length_ = size;
-    }
-    
-    int length()
-    {
-        return length_;
-    }
+class CommitLogEntry {
+  private static AtomicInteger lsnGenerator_ = new AtomicInteger(0);
+  private static ICompactSerializer<CommitLogEntry> serializer_;
+  static {
+    serializer_ = new CommitLogEntrySerializer();
+  }
+
+  static ICompactSerializer<CommitLogEntry> serializer() {
+    return serializer_;
+  }
+
+  private int length_;
+  private byte[] value_ = new byte[0];
+
+  CommitLogEntry() {
+  }
+
+  CommitLogEntry(byte[] value) {
+    this(value, 0);
+  }
+
+  CommitLogEntry(byte[] value, int length) {
+    value_ = value;
+    length_ = length;
+  }
+
+  void value(byte[] bytes) {
+    value_ = bytes;
+  }
+
+  byte[] value() {
+    return value_;
+  }
+
+  void length(int size) {
+    length_ = size;
+  }
+
+  int length() {
+    return length_;
+  }
 }
 
-class CommitLogEntrySerializer implements ICompactSerializer<CommitLogEntry>
-{
-    public void serialize(CommitLogEntry logEntry, DataOutputStream dos) throws IOException
-    {    
-        int length = logEntry.length();
-        dos.writeInt(length);
-        dos.write(logEntry.value(), 0, length);           
-    }
-    
-    public CommitLogEntry deserialize(DataInputStream dis) throws IOException
-    {        
-        byte[] value = new byte[dis.readInt()];
-        dis.readFully(value);        
-        return new CommitLogEntry(value);
-    }
-}
+class CommitLogEntrySerializer implements ICompactSerializer<CommitLogEntry> {
+  public void serialize(CommitLogEntry logEntry, DataOutputStream dos)
+      throws IOException {
+    int length = logEntry.length();
+    dos.writeInt(length);
+    dos.write(logEntry.value(), 0, length);
+  }
 
+  public CommitLogEntry deserialize(DataInputStream dis) throws IOException {
+    byte[] value = new byte[dis.readInt()];
+    dis.readFully(value);
+    return new CommitLogEntry(value);
+  }
+}

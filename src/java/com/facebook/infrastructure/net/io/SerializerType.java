@@ -18,10 +18,6 @@
 
 package com.facebook.infrastructure.net.io;
 
-public enum SerializerType
-{
-    BINARY,
-    JAVA,
-    XML,
-    JSON
+public enum SerializerType {
+  BINARY, JAVA, XML, JSON
 }

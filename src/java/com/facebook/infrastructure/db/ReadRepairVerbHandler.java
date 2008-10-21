@@ -28,32 +28,27 @@ import com.facebook.infrastructure.net.Message;
 import com.facebook.infrastructure.utils.LogUtil;
 
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class ReadRepairVerbHandler implements IVerbHandler
-{
-    private static Logger logger_ = Logger.getLogger(ReadRepairVerbHandler.class);    
-    
-    public void doVerb(Message message)
-    {          
-        byte[] body = (byte[])message.getMessageBody()[0];
-        DataInputBuffer buffer = new DataInputBuffer();
-        buffer.reset(body, body.length);        
-        
-        try
-        {
-            RowMutationMessage rmMsg = RowMutationMessage.serializer().deserialize(buffer);
-            RowMutation rm = rmMsg.getRowMutation();
-            rm.apply();                                   
-        }
-        catch( ColumnFamilyNotDefinedException ex )
-        {
-            logger_.debug(LogUtil.throwableToString(ex));
-        }
-        catch ( IOException e )
-        {
-            logger_.debug(LogUtil.throwableToString(e));            
-        }        
+public class ReadRepairVerbHandler implements IVerbHandler {
+  private static Logger logger_ = Logger.getLogger(ReadRepairVerbHandler.class);
+
+  public void doVerb(Message message) {
+    byte[] body = (byte[]) message.getMessageBody()[0];
+    DataInputBuffer buffer = new DataInputBuffer();
+    buffer.reset(body, body.length);
+
+    try {
+      RowMutationMessage rmMsg = RowMutationMessage.serializer().deserialize(
+          buffer);
+      RowMutation rm = rmMsg.getRowMutation();
+      rm.apply();
+    } catch (ColumnFamilyNotDefinedException ex) {
+      logger_.debug(LogUtil.throwableToString(ex));
+    } catch (IOException e) {
+      logger_.debug(LogUtil.throwableToString(e));
     }
+  }
 }

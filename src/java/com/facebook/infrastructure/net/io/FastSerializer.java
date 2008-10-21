@@ -23,23 +23,22 @@ import java.io.IOException;
 import com.facebook.infrastructure.io.DataInputBuffer;
 import com.facebook.infrastructure.io.DataOutputBuffer;
 import com.facebook.infrastructure.net.Message;
+
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class FastSerializer implements ISerializer
-{ 
-    public byte[] serialize(Message message) throws IOException
-    {
-        DataOutputBuffer buffer = new DataOutputBuffer();
-        Message.serializer().serialize(message, buffer);
-        return buffer.getData();
-    }
-    
-    public Message deserialize(byte[] bytes) throws IOException
-    {
-        DataInputBuffer bufIn = new DataInputBuffer();
-        bufIn.reset(bytes, bytes.length);
-        return Message.serializer().deserialize(bufIn);
-    }
+public class FastSerializer implements ISerializer {
+  public byte[] serialize(Message message) throws IOException {
+    DataOutputBuffer buffer = new DataOutputBuffer();
+    Message.serializer().serialize(message, buffer);
+    return buffer.getData();
+  }
+
+  public Message deserialize(byte[] bytes) throws IOException {
+    DataInputBuffer bufIn = new DataInputBuffer();
+    bufIn.reset(bytes, bytes.length);
+    return Message.serializer().deserialize(bufIn);
+  }
 }

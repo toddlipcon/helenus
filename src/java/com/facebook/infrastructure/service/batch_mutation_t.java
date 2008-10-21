@@ -23,9 +23,10 @@ import com.facebook.thrift.protocol.TType;
 public class batch_mutation_t implements TBase, java.io.Serializable {
   public String table;
   public String key;
-  public Map<String,List<column_t>> cfmap;
+  public Map<String, List<column_t>> cfmap;
 
   public final Isset __isset = new Isset();
+
   public static final class Isset implements java.io.Serializable {
     public boolean table = false;
     public boolean key = false;
@@ -35,11 +36,8 @@ public class batch_mutation_t implements TBase, java.io.Serializable {
   public batch_mutation_t() {
   }
 
-  public batch_mutation_t(
-    String table,
-    String key,
-    Map<String,List<column_t>> cfmap)
-  {
+  public batch_mutation_t(String table, String key,
+      Map<String, List<column_t>> cfmap) {
     this();
     this.table = table;
     this.__isset.table = true;
@@ -53,7 +51,7 @@ public class batch_mutation_t implements TBase, java.io.Serializable {
     if (that == null)
       return false;
     if (that instanceof batch_mutation_t)
-      return this.equals((batch_mutation_t)that);
+      return this.equals((batch_mutation_t) that);
     return false;
   }
 
@@ -98,64 +96,60 @@ public class batch_mutation_t implements TBase, java.io.Serializable {
   public void read(TProtocol iprot) throws TException {
     TField field;
     iprot.readStructBegin();
-    while (true)
-    {
+    while (true) {
       field = iprot.readFieldBegin();
-      if (field.type == TType.STOP) { 
+      if (field.type == TType.STOP) {
         break;
       }
-      switch (field.id)
-      {
-        case 1:
-          if (field.type == TType.STRING) {
-            this.table = iprot.readString();
-            this.__isset.table = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        case 2:
-          if (field.type == TType.STRING) {
-            this.key = iprot.readString();
-            this.__isset.key = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        case 3:
-          if (field.type == TType.MAP) {
-            {
-              TMap _map0 = iprot.readMapBegin();
-              this.cfmap = new HashMap<String,List<column_t>>(2*_map0.size);
-              for (int _i1 = 0; _i1 < _map0.size; ++_i1)
-              {
-                String _key2;
-                List<column_t> _val3;
-                _key2 = iprot.readString();
-                {
-                  TList _list4 = iprot.readListBegin();
-                  _val3 = new ArrayList<column_t>(_list4.size);
-                  for (int _i5 = 0; _i5 < _list4.size; ++_i5)
-                  {
-                    column_t _elem6 = new column_t();
-                    _elem6 = new column_t();
-                    _elem6.read(iprot);
-                    _val3.add(_elem6);
-                  }
-                  iprot.readListEnd();
-                }
-                this.cfmap.put(_key2, _val3);
-              }
-              iprot.readMapEnd();
-            }
-            this.__isset.cfmap = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        default:
+      switch (field.id) {
+      case 1:
+        if (field.type == TType.STRING) {
+          this.table = iprot.readString();
+          this.__isset.table = true;
+        } else {
           TProtocolUtil.skip(iprot, field.type);
-          break;
+        }
+        break;
+      case 2:
+        if (field.type == TType.STRING) {
+          this.key = iprot.readString();
+          this.__isset.key = true;
+        } else {
+          TProtocolUtil.skip(iprot, field.type);
+        }
+        break;
+      case 3:
+        if (field.type == TType.MAP) {
+          {
+            TMap _map0 = iprot.readMapBegin();
+            this.cfmap = new HashMap<String, List<column_t>>(2 * _map0.size);
+            for (int _i1 = 0; _i1 < _map0.size; ++_i1) {
+              String _key2;
+              List<column_t> _val3;
+              _key2 = iprot.readString();
+              {
+                TList _list4 = iprot.readListBegin();
+                _val3 = new ArrayList<column_t>(_list4.size);
+                for (int _i5 = 0; _i5 < _list4.size; ++_i5) {
+                  column_t _elem6 = new column_t();
+                  _elem6 = new column_t();
+                  _elem6.read(iprot);
+                  _val3.add(_elem6);
+                }
+                iprot.readListEnd();
+              }
+              this.cfmap.put(_key2, _val3);
+            }
+            iprot.readMapEnd();
+          }
+          this.__isset.cfmap = true;
+        } else {
+          TProtocolUtil.skip(iprot, field.type);
+        }
+        break;
+      default:
+        TProtocolUtil.skip(iprot, field.type);
+        break;
       }
       iprot.readFieldEnd();
     }
@@ -188,12 +182,14 @@ public class batch_mutation_t implements TBase, java.io.Serializable {
       field.id = 3;
       oprot.writeFieldBegin(field);
       {
-        oprot.writeMapBegin(new TMap(TType.STRING, TType.LIST, this.cfmap.size()));
-        for (String _iter7 : this.cfmap.keySet())        {
+        oprot.writeMapBegin(new TMap(TType.STRING, TType.LIST, this.cfmap
+            .size()));
+        for (String _iter7 : this.cfmap.keySet()) {
           oprot.writeString(_iter7);
           {
-            oprot.writeListBegin(new TList(TType.STRUCT, this.cfmap.get(_iter7).size()));
-            for (column_t _iter8 : this.cfmap.get(_iter7))            {
+            oprot.writeListBegin(new TList(TType.STRUCT, this.cfmap.get(_iter7)
+                .size()));
+            for (column_t _iter8 : this.cfmap.get(_iter7)) {
               _iter8.write(oprot);
             }
             oprot.writeListEnd();
@@ -220,4 +216,3 @@ public class batch_mutation_t implements TBase, java.io.Serializable {
   }
 
 }
-

@@ -30,31 +30,30 @@ import com.facebook.infrastructure.net.IVerbHandler;
 import com.facebook.infrastructure.net.Message;
 import com.facebook.infrastructure.net.MessagingService;
 import com.facebook.infrastructure.utils.LogUtil;
+
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class TokenInfoVerbHandler implements IVerbHandler
-{
-    private static Logger logger_ = Logger.getLogger( TokenInfoVerbHandler.class );
-    
-    public void doVerb(Message message)
-    {
-        EndPoint from = message.getFrom();
-        logger_.info("Received a token download request from " + from);
-        /* Get the token metadata map and send it over. */        
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(bos);
-        try
-        {
-            TokenMetadata.serializer().serialize( StorageService.instance().getTokenMetadata(), dos );
-            Message response = message.getReply(StorageService.getLocalStorageEndPoint(), new Object[]{bos.toByteArray()});
-            logger_.info("Sending the token download response to " + from);
-            MessagingService.getMessagingInstance().sendOneWay(response, from);
-        }
-        catch ( IOException ex )
-        {
-            logger_.info( LogUtil.throwableToString(ex) );
-        }
+public class TokenInfoVerbHandler implements IVerbHandler {
+  private static Logger logger_ = Logger.getLogger(TokenInfoVerbHandler.class);
+
+  public void doVerb(Message message) {
+    EndPoint from = message.getFrom();
+    logger_.info("Received a token download request from " + from);
+    /* Get the token metadata map and send it over. */
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    DataOutputStream dos = new DataOutputStream(bos);
+    try {
+      TokenMetadata.serializer().serialize(
+          StorageService.instance().getTokenMetadata(), dos);
+      Message response = message.getReply(StorageService
+          .getLocalStorageEndPoint(), new Object[] { bos.toByteArray() });
+      logger_.info("Sending the token download response to " + from);
+      MessagingService.getMessagingInstance().sendOneWay(response, from);
+    } catch (IOException ex) {
+      logger_.info(LogUtil.throwableToString(ex));
     }
+  }
 }

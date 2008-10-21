@@ -18,15 +18,13 @@
 
 package com.facebook.infrastructure.db;
 
-
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class ColumnFamilyNotDefinedException extends Exception
-{
-    public ColumnFamilyNotDefinedException(String message)
-    {
-        super(message);
-    }
+public class ColumnFamilyNotDefinedException extends Exception {
+  public ColumnFamilyNotDefinedException(String message) {
+    super(message);
+  }
 }

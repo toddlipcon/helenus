@@ -5,7 +5,6 @@
 // Generated on: 2007.10.19 at 01:36:41 PM PDT 
 //
 
-
 package com.facebook.infrastructure.loader;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,114 +13,103 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
- * &lt;complexType>
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="Table" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="Key" type="{}KeyType"/>
- *         &lt;element name="ColumnFamily" type="{}ColumnFamilyType"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base=&quot;{http://www.w3.org/2001/XMLSchema}anyType&quot;&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name=&quot;Table&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot;/&gt;
+ *         &lt;element name=&quot;Key&quot; type=&quot;{}KeyType&quot;/&gt;
+ *         &lt;element name=&quot;ColumnFamily&quot; type=&quot;{}ColumnFamilyType&quot;/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "table",
-    "key",
-    "columnFamily"
-})
+@XmlType(name = "", propOrder = { "table", "key", "columnFamily" })
 @XmlRootElement(name = "Importer")
 public class Importer {
 
-    @XmlElement(name = "Table", required = true)
-    protected String table;
-    @XmlElement(name = "Key", required = true)
-    protected KeyType key;
-    @XmlElement(name = "ColumnFamily", required = true)
-    protected ColumnFamilyType columnFamily;
+  @XmlElement(name = "Table", required = true)
+  protected String table;
+  @XmlElement(name = "Key", required = true)
+  protected KeyType key;
+  @XmlElement(name = "ColumnFamily", required = true)
+  protected ColumnFamilyType columnFamily;
 
-    /**
-     * Gets the value of the table property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getTable() {
-        return table;
-    }
+  /**
+   * Gets the value of the table property.
+   * 
+   * @return possible object is {@link String }
+   * 
+   */
+  public String getTable() {
+    return table;
+  }
 
-    /**
-     * Sets the value of the table property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setTable(String value) {
-        this.table = value;
-    }
+  /**
+   * Sets the value of the table property.
+   * 
+   * @param value
+   *          allowed object is {@link String }
+   * 
+   */
+  public void setTable(String value) {
+    this.table = value;
+  }
 
-    /**
-     * Gets the value of the key property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link KeyType }
-     *     
-     */
-    public KeyType getKey() {
-        return key;
-    }
+  /**
+   * Gets the value of the key property.
+   * 
+   * @return possible object is {@link KeyType }
+   * 
+   */
+  public KeyType getKey() {
+    return key;
+  }
 
-    /**
-     * Sets the value of the key property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link KeyType }
-     *     
-     */
-    public void setKey(KeyType value) {
-        this.key = value;
-    }
+  /**
+   * Sets the value of the key property.
+   * 
+   * @param value
+   *          allowed object is {@link KeyType }
+   * 
+   */
+  public void setKey(KeyType value) {
+    this.key = value;
+  }
 
-    /**
-     * Gets the value of the columnFamily property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ColumnFamilyType }
-     *     
-     */
-    public ColumnFamilyType getColumnFamily() {
-        return columnFamily;
-    }
+  /**
+   * Gets the value of the columnFamily property.
+   * 
+   * @return possible object is {@link ColumnFamilyType }
+   * 
+   */
+  public ColumnFamilyType getColumnFamily() {
+    return columnFamily;
+  }
 
-    /**
-     * Sets the value of the columnFamily property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ColumnFamilyType }
-     *     
-     */
-    public void setColumnFamily(ColumnFamilyType value) {
-        this.columnFamily = value;
-    }
+  /**
+   * Sets the value of the columnFamily property.
+   * 
+   * @param value
+   *          allowed object is {@link ColumnFamilyType }
+   * 
+   */
+  public void setColumnFamily(ColumnFamilyType value) {
+    this.columnFamily = value;
+  }
 
 }

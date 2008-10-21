@@ -21,12 +21,14 @@ package com.facebook.infrastructure.net.io;
 import java.io.IOException;
 
 import com.facebook.infrastructure.net.Message;
+
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public interface ISerializer
-{
-    public byte[] serialize(Message message) throws IOException;
-    public Message deserialize(byte[] bytes) throws IOException;
+public interface ISerializer {
+  public byte[] serialize(Message message) throws IOException;
+
+  public Message deserialize(byte[] bytes) throws IOException;
 }

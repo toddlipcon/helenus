@@ -27,91 +27,71 @@ import com.facebook.infrastructure.config.DatabaseDescriptor;
 import com.facebook.infrastructure.io.DataInputBuffer;
 import com.facebook.infrastructure.io.SSTable;
 
+public class NamesFilter implements IFilter {
+  /* list of column names to filter against. */
+  private List<String> names_ = new ArrayList<String>();
 
-public class NamesFilter implements IFilter
-{
-    /* list of column names to filter against. */
-    private List<String> names_ = new ArrayList<String>();  
-    
-    NamesFilter(List<String> names)
-    {
-        names_ = names;     
-    }
-    
-    public ColumnFamily filter(String cf, ColumnFamily columnFamily)
-    {
-    	String[] values = RowMutation.getColumnAndColumnFamily(cf);
-		String cfName = columnFamily.name();
-		ColumnFamily filteredCf = new ColumnFamily(cfName);
-		if( values.length == 1 )
-		{
-			Collection<IColumn> columns = columnFamily.getAllColumns();
-			for(IColumn column : columns)
-			{
-		        if ( names_.contains(column.name()) )
-		        {
-		            names_.remove(column.name());            
-					filteredCf.addColumn(column.name(), column);
-		        }
-				if( isDone() )
-				{
-					return filteredCf;
-				}
-			}
-		}
-		else if ( values.length == 2 && DatabaseDescriptor.getColumnType(cfName).equals("Super") )
-		{
-    		Collection<IColumn> columns = columnFamily.getAllColumns();
-    		for(IColumn column : columns)
-    		{
-    			SuperColumn superColumn = (SuperColumn)column;
-    			SuperColumn filteredSuperColumn = new SuperColumn(superColumn.name());
-				filteredCf.addColumn(filteredSuperColumn.name(), filteredSuperColumn);
-        		Collection<IColumn> subColumns = superColumn.getSubColumns();
-        		for(IColumn subColumn : subColumns)
-        		{
-    		        if ( names_.contains(subColumn.name()) )
-    		        {
-    		            names_.remove(subColumn.name());            
-    		            filteredSuperColumn.addColumn(subColumn.name(), subColumn);
-    		        }
-    				if( isDone() )
-    				{
-    					return filteredCf;
-    				}
-    			}
-    		}
-		}
-    	else 
-    	{
-    		throw new UnsupportedOperationException();
-    	}
-		return filteredCf;
-    }
-    
-    public IColumn filter(IColumn column, DataInputStream dis) throws IOException
-    {       
-        String columnName = column.name();
-        if ( names_.contains(columnName) )
-        {
-            names_.remove(columnName);            
+  NamesFilter(List<String> names) {
+    names_ = names;
+  }
+
+  public ColumnFamily filter(String cf, ColumnFamily columnFamily) {
+    String[] values = RowMutation.getColumnAndColumnFamily(cf);
+    String cfName = columnFamily.name();
+    ColumnFamily filteredCf = new ColumnFamily(cfName);
+    if (values.length == 1) {
+      Collection<IColumn> columns = columnFamily.getAllColumns();
+      for (IColumn column : columns) {
+        if (names_.contains(column.name())) {
+          names_.remove(column.name());
+          filteredCf.addColumn(column.name(), column);
         }
-        else
-        {
-            column = null;
+        if (isDone()) {
+          return filteredCf;
         }
-        
-        return column;
+      }
+    } else if (values.length == 2
+        && DatabaseDescriptor.getColumnType(cfName).equals("Super")) {
+      Collection<IColumn> columns = columnFamily.getAllColumns();
+      for (IColumn column : columns) {
+        SuperColumn superColumn = (SuperColumn) column;
+        SuperColumn filteredSuperColumn = new SuperColumn(superColumn.name());
+        filteredCf.addColumn(filteredSuperColumn.name(), filteredSuperColumn);
+        Collection<IColumn> subColumns = superColumn.getSubColumns();
+        for (IColumn subColumn : subColumns) {
+          if (names_.contains(subColumn.name())) {
+            names_.remove(subColumn.name());
+            filteredSuperColumn.addColumn(subColumn.name(), subColumn);
+          }
+          if (isDone()) {
+            return filteredCf;
+          }
+        }
+      }
+    } else {
+      throw new UnsupportedOperationException();
     }
-    
-    public boolean isDone()
-    {
-        return names_.isEmpty();
+    return filteredCf;
+  }
+
+  public IColumn filter(IColumn column, DataInputStream dis) throws IOException {
+    String columnName = column.name();
+    if (names_.contains(columnName)) {
+      names_.remove(columnName);
+    } else {
+      column = null;
     }
 
-    public DataInputBuffer next(String key, String cf, SSTable ssTable) throws IOException
-    {
-    	return ssTable.next(key, cf, names_);
-    }
+    return column;
+  }
+
+  public boolean isDone() {
+    return names_.isEmpty();
+  }
+
+  public DataInputBuffer next(String key, String cf, SSTable ssTable)
+      throws IOException {
+    return ssTable.next(key, cf, names_);
+  }
 
 }

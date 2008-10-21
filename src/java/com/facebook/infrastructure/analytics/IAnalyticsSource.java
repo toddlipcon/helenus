@@ -19,14 +19,14 @@
 package com.facebook.infrastructure.analytics;
 
 /**
- * Call-back interface.  See <code>AnalyticsContext.registerUpdater()</code>.
- * This callback is called at a regular (pre-registered time interval) in
- * order to update the metric values.
- *
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com ) & Karthik Ranganathan ( kranganathan@facebook.com )
+ * Call-back interface. See <code>AnalyticsContext.registerUpdater()</code>.
+ * This callback is called at a regular (pre-registered time interval) in order
+ * to update the metric values.
+ * 
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com ) & Karthik Ranganathan ( kranganathan@facebook.com )
  */
-public interface IAnalyticsSource
-{
+public interface IAnalyticsSource {
   /**
    * Timer-based call-back from the metric library.
    */

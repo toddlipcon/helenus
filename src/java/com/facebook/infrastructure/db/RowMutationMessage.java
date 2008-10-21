@@ -32,69 +32,67 @@ import com.facebook.infrastructure.net.Message;
 import com.facebook.infrastructure.service.StorageService;
 import com.facebook.infrastructure.utils.FBUtilities;
 
-
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class RowMutationMessage implements Serializable
-{   
-    public static final String hint_ = "HINT";
-    private static ICompactSerializer<RowMutationMessage> serializer_;	
-	
-    static
-    {
-        serializer_ = new RowMutationMessageSerializer();
-    }
+public class RowMutationMessage implements Serializable {
+  public static final String hint_ = "HINT";
+  private static ICompactSerializer<RowMutationMessage> serializer_;
 
-    static ICompactSerializer<RowMutationMessage> serializer()
-    {
-        return serializer_;
-    }
+  static {
+    serializer_ = new RowMutationMessageSerializer();
+  }
 
-    public static Message makeRowMutationMessage(RowMutationMessage rowMutationMessage) throws IOException
-    {         
-        return makeRowMutationMessage(rowMutationMessage, StorageService.mutationVerbHandler_);
-    }
-    
-    public static Message makeRowMutationMessage(RowMutationMessage rowMutationMessage, String verbHandlerName) throws IOException
-    {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream( bos );
-        RowMutationMessage.serializer().serialize(rowMutationMessage, dos);
-        EndPoint local = StorageService.getLocalStorageEndPoint();
-        EndPoint from = ( local != null ) ? local : new EndPoint(FBUtilities.getHostName(), 7000); 
-        Message message = new Message(from, StorageService.mutationStage_, verbHandlerName, new Object[]{bos.toByteArray()});         
-        return message;
-    }
-    
-    @XmlElement(name="RowMutation")
-    private RowMutation rowMutation_;
-    
-    private RowMutationMessage()
-    {}
-    
-    public RowMutationMessage(RowMutation rowMutation)
-    {
-        rowMutation_ = rowMutation;
-    }
-    
-   public RowMutation getRowMutation()
-   {
-       return rowMutation_;
-   }
+  static ICompactSerializer<RowMutationMessage> serializer() {
+    return serializer_;
+  }
+
+  public static Message makeRowMutationMessage(
+      RowMutationMessage rowMutationMessage) throws IOException {
+    return makeRowMutationMessage(rowMutationMessage,
+        StorageService.mutationVerbHandler_);
+  }
+
+  public static Message makeRowMutationMessage(
+      RowMutationMessage rowMutationMessage, String verbHandlerName)
+      throws IOException {
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    DataOutputStream dos = new DataOutputStream(bos);
+    RowMutationMessage.serializer().serialize(rowMutationMessage, dos);
+    EndPoint local = StorageService.getLocalStorageEndPoint();
+    EndPoint from = (local != null) ? local : new EndPoint(FBUtilities
+        .getHostName(), 7000);
+    Message message = new Message(from, StorageService.mutationStage_,
+        verbHandlerName, new Object[] { bos.toByteArray() });
+    return message;
+  }
+
+  @XmlElement(name = "RowMutation")
+  private RowMutation rowMutation_;
+
+  private RowMutationMessage() {
+  }
+
+  public RowMutationMessage(RowMutation rowMutation) {
+    rowMutation_ = rowMutation;
+  }
+
+  public RowMutation getRowMutation() {
+    return rowMutation_;
+  }
 }
 
-class RowMutationMessageSerializer implements ICompactSerializer<RowMutationMessage>
-{
-	public void serialize(RowMutationMessage rm, DataOutputStream dos) throws IOException
-	{
-		RowMutation.serializer().serialize(rm.getRowMutation(), dos);
-	}
-	
-    public RowMutationMessage deserialize(DataInputStream dis) throws IOException
-    {
-    	RowMutation rm = RowMutation.serializer().deserialize(dis);
-    	return new RowMutationMessage(rm);
-    }
+class RowMutationMessageSerializer implements
+    ICompactSerializer<RowMutationMessage> {
+  public void serialize(RowMutationMessage rm, DataOutputStream dos)
+      throws IOException {
+    RowMutation.serializer().serialize(rm.getRowMutation(), dos);
+  }
+
+  public RowMutationMessage deserialize(DataInputStream dis) throws IOException {
+    RowMutation rm = RowMutation.serializer().deserialize(dis);
+    return new RowMutationMessage(rm);
+  }
 }

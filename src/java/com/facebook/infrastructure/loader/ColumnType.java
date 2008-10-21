@@ -5,7 +5,6 @@
 // Generated on: 2007.10.19 at 01:36:41 PM PDT 
 //
 
-
 package com.facebook.infrastructure.loader;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,139 +13,126 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ColumnType complex type.
+ * <p>
+ * Java class for ColumnType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
- * &lt;complexType name="ColumnType">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="Value" type="{}ValueType"/>
- *         &lt;element name="Timestamp" type="{}TimestampType"/>
- *       &lt;/sequence>
- *       &lt;attribute name="Name" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="Field" type="{http://www.w3.org/2001/XMLSchema}int" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name=&quot;ColumnType&quot;&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base=&quot;{http://www.w3.org/2001/XMLSchema}anyType&quot;&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name=&quot;Value&quot; type=&quot;{}ValueType&quot;/&gt;
+ *         &lt;element name=&quot;Timestamp&quot; type=&quot;{}TimestampType&quot;/&gt;
+ *       &lt;/sequence&gt;
+ *       &lt;attribute name=&quot;Name&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot; /&gt;
+ *       &lt;attribute name=&quot;Field&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}int&quot; /&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ColumnType", propOrder = {
-    "value",
-    "timestamp"
-})
+@XmlType(name = "ColumnType", propOrder = { "value", "timestamp" })
 public class ColumnType {
 
-    @XmlElement(name = "Value", required = true)
-    protected ValueType value;
-    @XmlElement(name = "Timestamp", required = true)
-    protected TimestampType timestamp;
-    @XmlAttribute(name = "Name")
-    protected String name;
-    @XmlAttribute(name = "Field")
-    protected Integer field;
+  @XmlElement(name = "Value", required = true)
+  protected ValueType value;
+  @XmlElement(name = "Timestamp", required = true)
+  protected TimestampType timestamp;
+  @XmlAttribute(name = "Name")
+  protected String name;
+  @XmlAttribute(name = "Field")
+  protected Integer field;
 
-    /**
-     * Gets the value of the value property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ValueType }
-     *     
-     */
-    public ValueType getValue() {
-        return value;
-    }
+  /**
+   * Gets the value of the value property.
+   * 
+   * @return possible object is {@link ValueType }
+   * 
+   */
+  public ValueType getValue() {
+    return value;
+  }
 
-    /**
-     * Sets the value of the value property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ValueType }
-     *     
-     */
-    public void setValue(ValueType value) {
-        this.value = value;
-    }
+  /**
+   * Sets the value of the value property.
+   * 
+   * @param value
+   *          allowed object is {@link ValueType }
+   * 
+   */
+  public void setValue(ValueType value) {
+    this.value = value;
+  }
 
-    /**
-     * Gets the value of the timestamp property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TimestampType }
-     *     
-     */
-    public TimestampType getTimestamp() {
-        return timestamp;
-    }
+  /**
+   * Gets the value of the timestamp property.
+   * 
+   * @return possible object is {@link TimestampType }
+   * 
+   */
+  public TimestampType getTimestamp() {
+    return timestamp;
+  }
 
-    /**
-     * Sets the value of the timestamp property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TimestampType }
-     *     
-     */
-    public void setTimestamp(TimestampType value) {
-        this.timestamp = value;
-    }
+  /**
+   * Sets the value of the timestamp property.
+   * 
+   * @param value
+   *          allowed object is {@link TimestampType }
+   * 
+   */
+  public void setTimestamp(TimestampType value) {
+    this.timestamp = value;
+  }
 
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
-        return name;
-    }
+  /**
+   * Gets the value of the name property.
+   * 
+   * @return possible object is {@link String }
+   * 
+   */
+  public String getName() {
+    return name;
+  }
 
-    /**
-     * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setName(String value) {
-        this.name = value;
-    }
+  /**
+   * Sets the value of the name property.
+   * 
+   * @param value
+   *          allowed object is {@link String }
+   * 
+   */
+  public void setName(String value) {
+    this.name = value;
+  }
 
-    /**
-     * Gets the value of the field property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getField() {
-        return field;
-    }
+  /**
+   * Gets the value of the field property.
+   * 
+   * @return possible object is {@link Integer }
+   * 
+   */
+  public Integer getField() {
+    return field;
+  }
 
-    /**
-     * Sets the value of the field property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setField(Integer value) {
-        this.field = value;
-    }
+  /**
+   * Sets the value of the field property.
+   * 
+   * @param value
+   *          allowed object is {@link Integer }
+   * 
+   */
+  public void setField(Integer value) {
+    this.field = value;
+  }
 
 }

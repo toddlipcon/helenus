@@ -26,97 +26,80 @@ import com.facebook.infrastructure.io.DataInputBuffer;
 import com.facebook.infrastructure.io.SSTable;
 
 /**
- * This class provides a filter for fitering out columns
- * greater than a certain count.
+ * This class provides a filter for fitering out columns greater than a certain
+ * count.
  * 
  * @author pmalik
- *
+ * 
  */
-public class CountFilter implements IFilter
-{
-	private long countLimit_;
-	private boolean isDone_;
-	
-	CountFilter(int countLimit)
-	{
-		countLimit_ = countLimit;		
-		isDone_ = false;
-	}
-	
-	public ColumnFamily filter(String cfNameParam, ColumnFamily columnFamily)
-	{
-    	String[] values = RowMutation.getColumnAndColumnFamily(cfNameParam);
-		String cfName = columnFamily.name();
-		ColumnFamily filteredCf = new ColumnFamily(cfName);
-		if( countLimit_ <= 0 )
-		{
-			isDone_ = true;
-			return filteredCf;
-		}
-		if( values.length == 1)
-		{
-    		Collection<IColumn> columns = columnFamily.getAllColumns();
-    		for(IColumn column : columns)
-    		{
-    			filteredCf.addColumn(column.name(), column);
-    			countLimit_--;
-    			if( countLimit_ <= 0 )
-    			{
-    				isDone_ = true;
-    				return filteredCf;
-    			}
-    		}
-		}
-		else if(values.length == 2 && DatabaseDescriptor.getColumnType(cfName).equals("Super"))
-		{
-    		Collection<IColumn> columns = columnFamily.getAllColumns();
-    		for(IColumn column : columns)
-    		{
-    			SuperColumn superColumn = (SuperColumn)column;
-    			SuperColumn filteredSuperColumn = new SuperColumn(superColumn.name());
-				filteredCf.addColumn(filteredSuperColumn.name(), filteredSuperColumn);
-        		Collection<IColumn> subColumns = superColumn.getSubColumns();
-        		for(IColumn subColumn : subColumns)
-        		{
-		            filteredSuperColumn.addColumn(subColumn.name(), subColumn);
-	    			countLimit_--;
-	    			if( countLimit_ <= 0 )
-	    			{
-	    				isDone_ = true;
-	    				return filteredCf;
-	    			}
-        		}
-    		}
-		}    	
-    	else 
-    	{
-    		throw new UnsupportedOperationException();
-    	}
-		return filteredCf;
-	}
-    
-    public IColumn filter(IColumn column, DataInputStream dis) throws IOException
-    {
-		countLimit_--;
-		if( countLimit_ <= 0 )
-		{
-			isDone_ = true;
-		}
-		return column;
-    }
-	
-	public boolean isDone()
-	{
-		return isDone_;
-	}
+public class CountFilter implements IFilter {
+  private long countLimit_;
+  private boolean isDone_;
 
-	public void setDone()
-	{
-		isDone_ = true;
-	}
+  CountFilter(int countLimit) {
+    countLimit_ = countLimit;
+    isDone_ = false;
+  }
 
-    public DataInputBuffer next(String key, String cf, SSTable ssTable) throws IOException
-    {
-    	return ssTable.next(key, cf);
+  public ColumnFamily filter(String cfNameParam, ColumnFamily columnFamily) {
+    String[] values = RowMutation.getColumnAndColumnFamily(cfNameParam);
+    String cfName = columnFamily.name();
+    ColumnFamily filteredCf = new ColumnFamily(cfName);
+    if (countLimit_ <= 0) {
+      isDone_ = true;
+      return filteredCf;
     }
+    if (values.length == 1) {
+      Collection<IColumn> columns = columnFamily.getAllColumns();
+      for (IColumn column : columns) {
+        filteredCf.addColumn(column.name(), column);
+        countLimit_--;
+        if (countLimit_ <= 0) {
+          isDone_ = true;
+          return filteredCf;
+        }
+      }
+    } else if (values.length == 2
+        && DatabaseDescriptor.getColumnType(cfName).equals("Super")) {
+      Collection<IColumn> columns = columnFamily.getAllColumns();
+      for (IColumn column : columns) {
+        SuperColumn superColumn = (SuperColumn) column;
+        SuperColumn filteredSuperColumn = new SuperColumn(superColumn.name());
+        filteredCf.addColumn(filteredSuperColumn.name(), filteredSuperColumn);
+        Collection<IColumn> subColumns = superColumn.getSubColumns();
+        for (IColumn subColumn : subColumns) {
+          filteredSuperColumn.addColumn(subColumn.name(), subColumn);
+          countLimit_--;
+          if (countLimit_ <= 0) {
+            isDone_ = true;
+            return filteredCf;
+          }
+        }
+      }
+    } else {
+      throw new UnsupportedOperationException();
+    }
+    return filteredCf;
+  }
+
+  public IColumn filter(IColumn column, DataInputStream dis) throws IOException {
+    countLimit_--;
+    if (countLimit_ <= 0) {
+      isDone_ = true;
+    }
+    return column;
+  }
+
+  public boolean isDone() {
+    return isDone_;
+  }
+
+  public void setDone() {
+    isDone_ = true;
+  }
+
+  public DataInputBuffer next(String key, String cf, SSTable ssTable)
+      throws IOException {
+    return ssTable.next(key, cf);
+  }
 }

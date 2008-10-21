@@ -42,74 +42,64 @@ import com.facebook.infrastructure.config.DatabaseDescriptor;
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
  */
 
-public class Scanner
-{
-    private String table_;
-    private String columnFamily_;
-    private Set<IColumn> columns_ = new HashSet<IColumn>();
-    
-    public Scanner(String table)
-    {
-        table_ = table;
+public class Scanner {
+  private String table_;
+  private String columnFamily_;
+  private Set<IColumn> columns_ = new HashSet<IColumn>();
+
+  public Scanner(String table) {
+    table_ = table;
+  }
+
+  public void fetchColumnFamily(String cf) throws IOException {
+    columnFamily_ = cf;
+  }
+
+  public Iterator<IColumn> lookup(String key)
+      throws ColumnFamilyNotDefinedException, IOException {
+    if (columnFamily_ != null) {
+      Table table = Table.open(table_);
+      ColumnFamily columnFamily = table.get(key, columnFamily_);
+      if (columnFamily != null) {
+        Collection<IColumn> columns = columnFamily.getAllColumns();
+        columns_.addAll(columns);
+      }
     }
-    
-    public void fetchColumnFamily(String cf) throws IOException
-    {
-        columnFamily_ = cf;        
+    return columns_.iterator();
+  }
+
+  public boolean hasNext() {
+    return columns_.iterator().hasNext();
+  }
+
+  public IColumn next() {
+    return columns_.iterator().next();
+  }
+
+  public void remove() {
+    columns_.iterator().remove();
+  }
+
+  public static void main(String[] args) throws Throwable {
+    DatabaseDescriptor.init();
+    Table table = Table.open("Test");
+    Random random = new Random();
+    byte[] bytes = new byte[1024];
+
+    String key = new Integer(10).toString();
+    RowMutation rm = new RowMutation("Test", key);
+    random.nextBytes(bytes);
+    rm.add("ColumnFamily:Column", bytes);
+    rm.add("ColumnFamily2:Column", bytes);
+    rm.apply();
+
+    Scanner scanner = new Scanner("Test");
+    scanner.fetchColumnFamily("ColumnFamily");
+    Iterator<IColumn> it = scanner.lookup(key);
+    while (it.hasNext()) {
+      IColumn column = it.next();
+      System.out.println(column.name());
+      System.out.println(column.value());
     }
-    
-    public Iterator<IColumn> lookup(String key) throws ColumnFamilyNotDefinedException, IOException
-    {
-        if ( columnFamily_ != null )
-        {
-            Table table = Table.open(table_);
-            ColumnFamily columnFamily = table.get(key, columnFamily_);
-            if ( columnFamily != null )
-            {
-                Collection<IColumn> columns = columnFamily.getAllColumns();            
-                columns_.addAll(columns);
-            }
-        }
-        return columns_.iterator();
-    }
-    
-    public boolean hasNext()
-    {
-        return columns_.iterator().hasNext();
-    }
-    
-    public IColumn next()
-    {
-        return columns_.iterator().next();
-    }
-    
-    public void remove()
-    {
-        columns_.iterator().remove();
-    }
-    
-    public static void main(String[] args) throws Throwable
-    {
-        DatabaseDescriptor.init();
-        Table table = Table.open("Test");    
-        Random random = new Random();
-        byte[] bytes = new byte[1024];        
-        
-        String key = new Integer(10).toString();
-        RowMutation rm = new RowMutation("Test", key);
-        random.nextBytes(bytes);
-        rm.add("ColumnFamily:Column", bytes);
-        rm.add("ColumnFamily2:Column", bytes);
-        rm.apply();
-        
-        Scanner scanner = new Scanner("Test");
-        scanner.fetchColumnFamily("ColumnFamily");
-        Iterator<IColumn> it = scanner.lookup(key);
-        while ( it.hasNext() )
-        {
-            IColumn column = it.next();
-            System.out.println(column.name());
-            System.out.println(column.value());
-        }
-    }
+  }
 }

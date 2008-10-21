@@ -21,30 +21,28 @@ package com.facebook.infrastructure.net;
 import org.apache.log4j.Logger;
 
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-class ResponseVerbHandler implements IVerbHandler
-{
-    private static final Logger logger_ = Logger.getLogger( ResponseVerbHandler.class );
-    
-    public void doVerb(Message message)
-    {     
-        String messageId = message.getMessageId();        
-        IAsyncCallback cb = MessagingService.getRegisteredCallback(messageId);
-        if ( cb != null )
-        {
-            logger_.info("Processing response on a callback from " + message.getFrom());
-            cb.response(message);
-        }
-        else
-        {            
-            AsyncResult ar = (AsyncResult)MessagingService.getAsyncResult(messageId);
-            if ( ar != null )
-            {
-                logger_.info("Processing response on an async result from " + message.getFrom());
-                ar.result(message.getMessageBody());
-            }
-        }
+class ResponseVerbHandler implements IVerbHandler {
+  private static final Logger logger_ = Logger
+      .getLogger(ResponseVerbHandler.class);
+
+  public void doVerb(Message message) {
+    String messageId = message.getMessageId();
+    IAsyncCallback cb = MessagingService.getRegisteredCallback(messageId);
+    if (cb != null) {
+      logger_.info("Processing response on a callback from "
+          + message.getFrom());
+      cb.response(message);
+    } else {
+      AsyncResult ar = (AsyncResult) MessagingService.getAsyncResult(messageId);
+      if (ar != null) {
+        logger_.info("Processing response on an async result from "
+            + message.getFrom());
+        ar.result(message.getMessageBody());
+      }
     }
+  }
 }

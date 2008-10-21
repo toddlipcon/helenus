@@ -25,52 +25,65 @@ public class Cassandra {
 
   public interface Iface extends com.facebook.fb303.FacebookService.Iface {
 
-    public List<column_t> get_slice(String tablename, String key, String columnFamily_column, int start, int count) throws TException;
+    public List<column_t> get_slice(String tablename, String key,
+        String columnFamily_column, int start, int count) throws TException;
 
-    public column_t get_column(String tablename, String key, String columnFamily_column) throws TException;
+    public column_t get_column(String tablename, String key,
+        String columnFamily_column) throws TException;
 
-    public int get_column_count(String tablename, String key, String columnFamily_column) throws TException;
+    public int get_column_count(String tablename, String key,
+        String columnFamily_column) throws TException;
 
-    public void insert(String tablename, String key, String columnFamily_column, String cellData, long timestamp) throws TException;
+    public void insert(String tablename, String key,
+        String columnFamily_column, String cellData, long timestamp)
+        throws TException;
 
     public void batch_insert(batch_mutation_t batchMutation) throws TException;
 
-    public boolean batch_insert_blocking(batch_mutation_t batchMutation) throws TException;
+    public boolean batch_insert_blocking(batch_mutation_t batchMutation)
+        throws TException;
 
-    public void remove(String tablename, String key, String columnFamily_column) throws TException;
+    public void remove(String tablename, String key, String columnFamily_column)
+        throws TException;
 
-    public List<column_t> get_columns_since(String tablename, String key, String columnFamily_column, long timeStamp) throws TException;
+    public List<column_t> get_columns_since(String tablename, String key,
+        String columnFamily_column, long timeStamp) throws TException;
 
-    public List<superColumn_t> get_slice_super(String tablename, String key, String columnFamily_superColumnName, int start, int count) throws TException;
+    public List<superColumn_t> get_slice_super(String tablename, String key,
+        String columnFamily_superColumnName, int start, int count)
+        throws TException;
 
-    public superColumn_t get_superColumn(String tablename, String key, String columnFamily) throws TException;
+    public superColumn_t get_superColumn(String tablename, String key,
+        String columnFamily) throws TException;
 
-    public void batch_insert_superColumn(batch_mutation_super_t batchMutationSuper) throws TException;
+    public void batch_insert_superColumn(
+        batch_mutation_super_t batchMutationSuper) throws TException;
 
-    public boolean batch_insert_superColumn_blocking(batch_mutation_super_t batchMutationSuper) throws TException;
+    public boolean batch_insert_superColumn_blocking(
+        batch_mutation_super_t batchMutationSuper) throws TException;
 
   }
 
-  public static class Client extends com.facebook.fb303.FacebookService.Client implements Iface {
-    public Client(TProtocol prot)
-    {
+  public static class Client extends com.facebook.fb303.FacebookService.Client
+      implements Iface {
+    public Client(TProtocol prot) {
       this(prot, prot);
     }
 
-    public Client(TProtocol iprot, TProtocol oprot)
-    {
+    public Client(TProtocol iprot, TProtocol oprot) {
       super(iprot, oprot);
     }
 
-    public List<column_t> get_slice(String tablename, String key, String columnFamily_column, int start, int count) throws TException
-    {
+    public List<column_t> get_slice(String tablename, String key,
+        String columnFamily_column, int start, int count) throws TException {
       send_get_slice(tablename, key, columnFamily_column, start, count);
       return recv_get_slice();
     }
 
-    public void send_get_slice(String tablename, String key, String columnFamily_column, int start, int count) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("get_slice", TMessageType.CALL, seqid_));
+    public void send_get_slice(String tablename, String key,
+        String columnFamily_column, int start, int count) throws TException {
+      oprot_.writeMessageBegin(new TMessage("get_slice", TMessageType.CALL,
+          seqid_));
       get_slice_args args = new get_slice_args();
       args.tablename = tablename;
       args.key = key;
@@ -82,8 +95,7 @@ public class Cassandra {
       oprot_.getTransport().flush();
     }
 
-    public List<column_t> recv_get_slice() throws TException
-    {
+    public List<column_t> recv_get_slice() throws TException {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
         TApplicationException x = TApplicationException.read(iprot_);
@@ -96,18 +108,20 @@ public class Cassandra {
       if (result.__isset.success) {
         return result.success;
       }
-      throw new TApplicationException(TApplicationException.MISSING_RESULT, "get_slice failed: unknown result");
+      throw new TApplicationException(TApplicationException.MISSING_RESULT,
+          "get_slice failed: unknown result");
     }
 
-    public column_t get_column(String tablename, String key, String columnFamily_column) throws TException
-    {
+    public column_t get_column(String tablename, String key,
+        String columnFamily_column) throws TException {
       send_get_column(tablename, key, columnFamily_column);
       return recv_get_column();
     }
 
-    public void send_get_column(String tablename, String key, String columnFamily_column) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("get_column", TMessageType.CALL, seqid_));
+    public void send_get_column(String tablename, String key,
+        String columnFamily_column) throws TException {
+      oprot_.writeMessageBegin(new TMessage("get_column", TMessageType.CALL,
+          seqid_));
       get_column_args args = new get_column_args();
       args.tablename = tablename;
       args.key = key;
@@ -117,8 +131,7 @@ public class Cassandra {
       oprot_.getTransport().flush();
     }
 
-    public column_t recv_get_column() throws TException
-    {
+    public column_t recv_get_column() throws TException {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
         TApplicationException x = TApplicationException.read(iprot_);
@@ -131,18 +144,20 @@ public class Cassandra {
       if (result.__isset.success) {
         return result.success;
       }
-      throw new TApplicationException(TApplicationException.MISSING_RESULT, "get_column failed: unknown result");
+      throw new TApplicationException(TApplicationException.MISSING_RESULT,
+          "get_column failed: unknown result");
     }
 
-    public int get_column_count(String tablename, String key, String columnFamily_column) throws TException
-    {
+    public int get_column_count(String tablename, String key,
+        String columnFamily_column) throws TException {
       send_get_column_count(tablename, key, columnFamily_column);
       return recv_get_column_count();
     }
 
-    public void send_get_column_count(String tablename, String key, String columnFamily_column) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("get_column_count", TMessageType.CALL, seqid_));
+    public void send_get_column_count(String tablename, String key,
+        String columnFamily_column) throws TException {
+      oprot_.writeMessageBegin(new TMessage("get_column_count",
+          TMessageType.CALL, seqid_));
       get_column_count_args args = new get_column_count_args();
       args.tablename = tablename;
       args.key = key;
@@ -152,8 +167,7 @@ public class Cassandra {
       oprot_.getTransport().flush();
     }
 
-    public int recv_get_column_count() throws TException
-    {
+    public int recv_get_column_count() throws TException {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
         TApplicationException x = TApplicationException.read(iprot_);
@@ -166,17 +180,21 @@ public class Cassandra {
       if (result.__isset.success) {
         return result.success;
       }
-      throw new TApplicationException(TApplicationException.MISSING_RESULT, "get_column_count failed: unknown result");
+      throw new TApplicationException(TApplicationException.MISSING_RESULT,
+          "get_column_count failed: unknown result");
     }
 
-    public void insert(String tablename, String key, String columnFamily_column, String cellData, long timestamp) throws TException
-    {
+    public void insert(String tablename, String key,
+        String columnFamily_column, String cellData, long timestamp)
+        throws TException {
       send_insert(tablename, key, columnFamily_column, cellData, timestamp);
     }
 
-    public void send_insert(String tablename, String key, String columnFamily_column, String cellData, long timestamp) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("insert", TMessageType.CALL, seqid_));
+    public void send_insert(String tablename, String key,
+        String columnFamily_column, String cellData, long timestamp)
+        throws TException {
+      oprot_
+          .writeMessageBegin(new TMessage("insert", TMessageType.CALL, seqid_));
       insert_args args = new insert_args();
       args.tablename = tablename;
       args.key = key;
@@ -188,14 +206,14 @@ public class Cassandra {
       oprot_.getTransport().flush();
     }
 
-    public void batch_insert(batch_mutation_t batchMutation) throws TException
-    {
+    public void batch_insert(batch_mutation_t batchMutation) throws TException {
       send_batch_insert(batchMutation);
     }
 
-    public void send_batch_insert(batch_mutation_t batchMutation) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("batch_insert", TMessageType.CALL, seqid_));
+    public void send_batch_insert(batch_mutation_t batchMutation)
+        throws TException {
+      oprot_.writeMessageBegin(new TMessage("batch_insert", TMessageType.CALL,
+          seqid_));
       batch_insert_args args = new batch_insert_args();
       args.batchMutation = batchMutation;
       args.write(oprot_);
@@ -203,15 +221,16 @@ public class Cassandra {
       oprot_.getTransport().flush();
     }
 
-    public boolean batch_insert_blocking(batch_mutation_t batchMutation) throws TException
-    {
+    public boolean batch_insert_blocking(batch_mutation_t batchMutation)
+        throws TException {
       send_batch_insert_blocking(batchMutation);
       return recv_batch_insert_blocking();
     }
 
-    public void send_batch_insert_blocking(batch_mutation_t batchMutation) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("batch_insert_blocking", TMessageType.CALL, seqid_));
+    public void send_batch_insert_blocking(batch_mutation_t batchMutation)
+        throws TException {
+      oprot_.writeMessageBegin(new TMessage("batch_insert_blocking",
+          TMessageType.CALL, seqid_));
       batch_insert_blocking_args args = new batch_insert_blocking_args();
       args.batchMutation = batchMutation;
       args.write(oprot_);
@@ -219,8 +238,7 @@ public class Cassandra {
       oprot_.getTransport().flush();
     }
 
-    public boolean recv_batch_insert_blocking() throws TException
-    {
+    public boolean recv_batch_insert_blocking() throws TException {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
         TApplicationException x = TApplicationException.read(iprot_);
@@ -233,17 +251,19 @@ public class Cassandra {
       if (result.__isset.success) {
         return result.success;
       }
-      throw new TApplicationException(TApplicationException.MISSING_RESULT, "batch_insert_blocking failed: unknown result");
+      throw new TApplicationException(TApplicationException.MISSING_RESULT,
+          "batch_insert_blocking failed: unknown result");
     }
 
-    public void remove(String tablename, String key, String columnFamily_column) throws TException
-    {
+    public void remove(String tablename, String key, String columnFamily_column)
+        throws TException {
       send_remove(tablename, key, columnFamily_column);
     }
 
-    public void send_remove(String tablename, String key, String columnFamily_column) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("remove", TMessageType.CALL, seqid_));
+    public void send_remove(String tablename, String key,
+        String columnFamily_column) throws TException {
+      oprot_
+          .writeMessageBegin(new TMessage("remove", TMessageType.CALL, seqid_));
       remove_args args = new remove_args();
       args.tablename = tablename;
       args.key = key;
@@ -253,15 +273,16 @@ public class Cassandra {
       oprot_.getTransport().flush();
     }
 
-    public List<column_t> get_columns_since(String tablename, String key, String columnFamily_column, long timeStamp) throws TException
-    {
+    public List<column_t> get_columns_since(String tablename, String key,
+        String columnFamily_column, long timeStamp) throws TException {
       send_get_columns_since(tablename, key, columnFamily_column, timeStamp);
       return recv_get_columns_since();
     }
 
-    public void send_get_columns_since(String tablename, String key, String columnFamily_column, long timeStamp) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("get_columns_since", TMessageType.CALL, seqid_));
+    public void send_get_columns_since(String tablename, String key,
+        String columnFamily_column, long timeStamp) throws TException {
+      oprot_.writeMessageBegin(new TMessage("get_columns_since",
+          TMessageType.CALL, seqid_));
       get_columns_since_args args = new get_columns_since_args();
       args.tablename = tablename;
       args.key = key;
@@ -272,8 +293,7 @@ public class Cassandra {
       oprot_.getTransport().flush();
     }
 
-    public List<column_t> recv_get_columns_since() throws TException
-    {
+    public List<column_t> recv_get_columns_since() throws TException {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
         TApplicationException x = TApplicationException.read(iprot_);
@@ -286,18 +306,23 @@ public class Cassandra {
       if (result.__isset.success) {
         return result.success;
       }
-      throw new TApplicationException(TApplicationException.MISSING_RESULT, "get_columns_since failed: unknown result");
+      throw new TApplicationException(TApplicationException.MISSING_RESULT,
+          "get_columns_since failed: unknown result");
     }
 
-    public List<superColumn_t> get_slice_super(String tablename, String key, String columnFamily_superColumnName, int start, int count) throws TException
-    {
-      send_get_slice_super(tablename, key, columnFamily_superColumnName, start, count);
+    public List<superColumn_t> get_slice_super(String tablename, String key,
+        String columnFamily_superColumnName, int start, int count)
+        throws TException {
+      send_get_slice_super(tablename, key, columnFamily_superColumnName, start,
+          count);
       return recv_get_slice_super();
     }
 
-    public void send_get_slice_super(String tablename, String key, String columnFamily_superColumnName, int start, int count) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("get_slice_super", TMessageType.CALL, seqid_));
+    public void send_get_slice_super(String tablename, String key,
+        String columnFamily_superColumnName, int start, int count)
+        throws TException {
+      oprot_.writeMessageBegin(new TMessage("get_slice_super",
+          TMessageType.CALL, seqid_));
       get_slice_super_args args = new get_slice_super_args();
       args.tablename = tablename;
       args.key = key;
@@ -309,8 +334,7 @@ public class Cassandra {
       oprot_.getTransport().flush();
     }
 
-    public List<superColumn_t> recv_get_slice_super() throws TException
-    {
+    public List<superColumn_t> recv_get_slice_super() throws TException {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
         TApplicationException x = TApplicationException.read(iprot_);
@@ -323,18 +347,20 @@ public class Cassandra {
       if (result.__isset.success) {
         return result.success;
       }
-      throw new TApplicationException(TApplicationException.MISSING_RESULT, "get_slice_super failed: unknown result");
+      throw new TApplicationException(TApplicationException.MISSING_RESULT,
+          "get_slice_super failed: unknown result");
     }
 
-    public superColumn_t get_superColumn(String tablename, String key, String columnFamily) throws TException
-    {
+    public superColumn_t get_superColumn(String tablename, String key,
+        String columnFamily) throws TException {
       send_get_superColumn(tablename, key, columnFamily);
       return recv_get_superColumn();
     }
 
-    public void send_get_superColumn(String tablename, String key, String columnFamily) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("get_superColumn", TMessageType.CALL, seqid_));
+    public void send_get_superColumn(String tablename, String key,
+        String columnFamily) throws TException {
+      oprot_.writeMessageBegin(new TMessage("get_superColumn",
+          TMessageType.CALL, seqid_));
       get_superColumn_args args = new get_superColumn_args();
       args.tablename = tablename;
       args.key = key;
@@ -344,8 +370,7 @@ public class Cassandra {
       oprot_.getTransport().flush();
     }
 
-    public superColumn_t recv_get_superColumn() throws TException
-    {
+    public superColumn_t recv_get_superColumn() throws TException {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
         TApplicationException x = TApplicationException.read(iprot_);
@@ -358,17 +383,19 @@ public class Cassandra {
       if (result.__isset.success) {
         return result.success;
       }
-      throw new TApplicationException(TApplicationException.MISSING_RESULT, "get_superColumn failed: unknown result");
+      throw new TApplicationException(TApplicationException.MISSING_RESULT,
+          "get_superColumn failed: unknown result");
     }
 
-    public void batch_insert_superColumn(batch_mutation_super_t batchMutationSuper) throws TException
-    {
+    public void batch_insert_superColumn(
+        batch_mutation_super_t batchMutationSuper) throws TException {
       send_batch_insert_superColumn(batchMutationSuper);
     }
 
-    public void send_batch_insert_superColumn(batch_mutation_super_t batchMutationSuper) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("batch_insert_superColumn", TMessageType.CALL, seqid_));
+    public void send_batch_insert_superColumn(
+        batch_mutation_super_t batchMutationSuper) throws TException {
+      oprot_.writeMessageBegin(new TMessage("batch_insert_superColumn",
+          TMessageType.CALL, seqid_));
       batch_insert_superColumn_args args = new batch_insert_superColumn_args();
       args.batchMutationSuper = batchMutationSuper;
       args.write(oprot_);
@@ -376,15 +403,16 @@ public class Cassandra {
       oprot_.getTransport().flush();
     }
 
-    public boolean batch_insert_superColumn_blocking(batch_mutation_super_t batchMutationSuper) throws TException
-    {
+    public boolean batch_insert_superColumn_blocking(
+        batch_mutation_super_t batchMutationSuper) throws TException {
       send_batch_insert_superColumn_blocking(batchMutationSuper);
       return recv_batch_insert_superColumn_blocking();
     }
 
-    public void send_batch_insert_superColumn_blocking(batch_mutation_super_t batchMutationSuper) throws TException
-    {
-      oprot_.writeMessageBegin(new TMessage("batch_insert_superColumn_blocking", TMessageType.CALL, seqid_));
+    public void send_batch_insert_superColumn_blocking(
+        batch_mutation_super_t batchMutationSuper) throws TException {
+      oprot_.writeMessageBegin(new TMessage(
+          "batch_insert_superColumn_blocking", TMessageType.CALL, seqid_));
       batch_insert_superColumn_blocking_args args = new batch_insert_superColumn_blocking_args();
       args.batchMutationSuper = batchMutationSuper;
       args.write(oprot_);
@@ -392,8 +420,7 @@ public class Cassandra {
       oprot_.getTransport().flush();
     }
 
-    public boolean recv_batch_insert_superColumn_blocking() throws TException
-    {
+    public boolean recv_batch_insert_superColumn_blocking() throws TException {
       TMessage msg = iprot_.readMessageBegin();
       if (msg.type == TMessageType.EXCEPTION) {
         TApplicationException x = TApplicationException.read(iprot_);
@@ -406,13 +433,15 @@ public class Cassandra {
       if (result.__isset.success) {
         return result.success;
       }
-      throw new TApplicationException(TApplicationException.MISSING_RESULT, "batch_insert_superColumn_blocking failed: unknown result");
+      throw new TApplicationException(TApplicationException.MISSING_RESULT,
+          "batch_insert_superColumn_blocking failed: unknown result");
     }
 
   }
-  public static class Processor extends com.facebook.fb303.FacebookService.Processor implements TProcessor {
-    public Processor(Iface iface)
-    {
+
+  public static class Processor extends
+      com.facebook.fb303.FacebookService.Processor implements TProcessor {
+    public Processor(Iface iface) {
       super(iface);
       iface_ = iface;
       processMap_.put("get_slice", new get_slice());
@@ -425,21 +454,25 @@ public class Cassandra {
       processMap_.put("get_columns_since", new get_columns_since());
       processMap_.put("get_slice_super", new get_slice_super());
       processMap_.put("get_superColumn", new get_superColumn());
-      processMap_.put("batch_insert_superColumn", new batch_insert_superColumn());
-      processMap_.put("batch_insert_superColumn_blocking", new batch_insert_superColumn_blocking());
+      processMap_.put("batch_insert_superColumn",
+          new batch_insert_superColumn());
+      processMap_.put("batch_insert_superColumn_blocking",
+          new batch_insert_superColumn_blocking());
     }
 
     private Iface iface_;
 
-    public boolean process(TProtocol iprot, TProtocol oprot) throws TException
-    {
+    public boolean process(TProtocol iprot, TProtocol oprot) throws TException {
       TMessage msg = iprot.readMessageBegin();
       ProcessFunction fn = processMap_.get(msg.name);
       if (fn == null) {
         TProtocolUtil.skip(iprot, TType.STRUCT);
         iprot.readMessageEnd();
-        TApplicationException x = new TApplicationException(TApplicationException.UNKNOWN_METHOD, "Invalid method name: '"+msg.name+"'");
-        oprot.writeMessageBegin(new TMessage(msg.name, TMessageType.EXCEPTION, msg.seqid));
+        TApplicationException x = new TApplicationException(
+            TApplicationException.UNKNOWN_METHOD, "Invalid method name: '"
+                + msg.name + "'");
+        oprot.writeMessageBegin(new TMessage(msg.name, TMessageType.EXCEPTION,
+            msg.seqid));
         x.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -450,15 +483,17 @@ public class Cassandra {
     }
 
     private class get_slice implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot)
+          throws TException {
         get_slice_args args = new get_slice_args();
         args.read(iprot);
         iprot.readMessageEnd();
         get_slice_result result = new get_slice_result();
-        result.success = iface_.get_slice(args.tablename, args.key, args.columnFamily_column, args.start, args.count);
+        result.success = iface_.get_slice(args.tablename, args.key,
+            args.columnFamily_column, args.start, args.count);
         result.__isset.success = true;
-        oprot.writeMessageBegin(new TMessage("get_slice", TMessageType.REPLY, seqid));
+        oprot.writeMessageBegin(new TMessage("get_slice", TMessageType.REPLY,
+            seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -467,15 +502,17 @@ public class Cassandra {
     }
 
     private class get_column implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot)
+          throws TException {
         get_column_args args = new get_column_args();
         args.read(iprot);
         iprot.readMessageEnd();
         get_column_result result = new get_column_result();
-        result.success = iface_.get_column(args.tablename, args.key, args.columnFamily_column);
+        result.success = iface_.get_column(args.tablename, args.key,
+            args.columnFamily_column);
         result.__isset.success = true;
-        oprot.writeMessageBegin(new TMessage("get_column", TMessageType.REPLY, seqid));
+        oprot.writeMessageBegin(new TMessage("get_column", TMessageType.REPLY,
+            seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -484,15 +521,17 @@ public class Cassandra {
     }
 
     private class get_column_count implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot)
+          throws TException {
         get_column_count_args args = new get_column_count_args();
         args.read(iprot);
         iprot.readMessageEnd();
         get_column_count_result result = new get_column_count_result();
-        result.success = iface_.get_column_count(args.tablename, args.key, args.columnFamily_column);
+        result.success = iface_.get_column_count(args.tablename, args.key,
+            args.columnFamily_column);
         result.__isset.success = true;
-        oprot.writeMessageBegin(new TMessage("get_column_count", TMessageType.REPLY, seqid));
+        oprot.writeMessageBegin(new TMessage("get_column_count",
+            TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -501,19 +540,20 @@ public class Cassandra {
     }
 
     private class insert implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot)
+          throws TException {
         insert_args args = new insert_args();
         args.read(iprot);
         iprot.readMessageEnd();
-        iface_.insert(args.tablename, args.key, args.columnFamily_column, args.cellData, args.timestamp);
+        iface_.insert(args.tablename, args.key, args.columnFamily_column,
+            args.cellData, args.timestamp);
         return;
       }
     }
 
     private class batch_insert implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot)
+          throws TException {
         batch_insert_args args = new batch_insert_args();
         args.read(iprot);
         iprot.readMessageEnd();
@@ -523,15 +563,16 @@ public class Cassandra {
     }
 
     private class batch_insert_blocking implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot)
+          throws TException {
         batch_insert_blocking_args args = new batch_insert_blocking_args();
         args.read(iprot);
         iprot.readMessageEnd();
         batch_insert_blocking_result result = new batch_insert_blocking_result();
         result.success = iface_.batch_insert_blocking(args.batchMutation);
         result.__isset.success = true;
-        oprot.writeMessageBegin(new TMessage("batch_insert_blocking", TMessageType.REPLY, seqid));
+        oprot.writeMessageBegin(new TMessage("batch_insert_blocking",
+            TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -540,8 +581,8 @@ public class Cassandra {
     }
 
     private class remove implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot)
+          throws TException {
         remove_args args = new remove_args();
         args.read(iprot);
         iprot.readMessageEnd();
@@ -551,15 +592,17 @@ public class Cassandra {
     }
 
     private class get_columns_since implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot)
+          throws TException {
         get_columns_since_args args = new get_columns_since_args();
         args.read(iprot);
         iprot.readMessageEnd();
         get_columns_since_result result = new get_columns_since_result();
-        result.success = iface_.get_columns_since(args.tablename, args.key, args.columnFamily_column, args.timeStamp);
+        result.success = iface_.get_columns_since(args.tablename, args.key,
+            args.columnFamily_column, args.timeStamp);
         result.__isset.success = true;
-        oprot.writeMessageBegin(new TMessage("get_columns_since", TMessageType.REPLY, seqid));
+        oprot.writeMessageBegin(new TMessage("get_columns_since",
+            TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -568,15 +611,17 @@ public class Cassandra {
     }
 
     private class get_slice_super implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot)
+          throws TException {
         get_slice_super_args args = new get_slice_super_args();
         args.read(iprot);
         iprot.readMessageEnd();
         get_slice_super_result result = new get_slice_super_result();
-        result.success = iface_.get_slice_super(args.tablename, args.key, args.columnFamily_superColumnName, args.start, args.count);
+        result.success = iface_.get_slice_super(args.tablename, args.key,
+            args.columnFamily_superColumnName, args.start, args.count);
         result.__isset.success = true;
-        oprot.writeMessageBegin(new TMessage("get_slice_super", TMessageType.REPLY, seqid));
+        oprot.writeMessageBegin(new TMessage("get_slice_super",
+            TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -585,15 +630,17 @@ public class Cassandra {
     }
 
     private class get_superColumn implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot)
+          throws TException {
         get_superColumn_args args = new get_superColumn_args();
         args.read(iprot);
         iprot.readMessageEnd();
         get_superColumn_result result = new get_superColumn_result();
-        result.success = iface_.get_superColumn(args.tablename, args.key, args.columnFamily);
+        result.success = iface_.get_superColumn(args.tablename, args.key,
+            args.columnFamily);
         result.__isset.success = true;
-        oprot.writeMessageBegin(new TMessage("get_superColumn", TMessageType.REPLY, seqid));
+        oprot.writeMessageBegin(new TMessage("get_superColumn",
+            TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -602,8 +649,8 @@ public class Cassandra {
     }
 
     private class batch_insert_superColumn implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot)
+          throws TException {
         batch_insert_superColumn_args args = new batch_insert_superColumn_args();
         args.read(iprot);
         iprot.readMessageEnd();
@@ -613,15 +660,17 @@ public class Cassandra {
     }
 
     private class batch_insert_superColumn_blocking implements ProcessFunction {
-      public void process(int seqid, TProtocol iprot, TProtocol oprot) throws TException
-      {
+      public void process(int seqid, TProtocol iprot, TProtocol oprot)
+          throws TException {
         batch_insert_superColumn_blocking_args args = new batch_insert_superColumn_blocking_args();
         args.read(iprot);
         iprot.readMessageEnd();
         batch_insert_superColumn_blocking_result result = new batch_insert_superColumn_blocking_result();
-        result.success = iface_.batch_insert_superColumn_blocking(args.batchMutationSuper);
+        result.success = iface_
+            .batch_insert_superColumn_blocking(args.batchMutationSuper);
         result.__isset.success = true;
-        oprot.writeMessageBegin(new TMessage("batch_insert_superColumn_blocking", TMessageType.REPLY, seqid));
+        oprot.writeMessageBegin(new TMessage(
+            "batch_insert_superColumn_blocking", TMessageType.REPLY, seqid));
         result.write(oprot);
         oprot.writeMessageEnd();
         oprot.getTransport().flush();
@@ -631,7 +680,7 @@ public class Cassandra {
 
   }
 
-  public static class get_slice_args implements TBase, java.io.Serializable   {
+  public static class get_slice_args implements TBase, java.io.Serializable {
     public String tablename;
     public String key;
     public String columnFamily_column;
@@ -639,6 +688,7 @@ public class Cassandra {
     public int count;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean tablename = false;
       public boolean key = false;
@@ -654,13 +704,8 @@ public class Cassandra {
 
     }
 
-    public get_slice_args(
-      String tablename,
-      String key,
-      String columnFamily_column,
-      int start,
-      int count)
-    {
+    public get_slice_args(String tablename, String key,
+        String columnFamily_column, int start, int count) {
       this();
       this.tablename = tablename;
       this.__isset.tablename = true;
@@ -678,7 +723,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof get_slice_args)
-        return this.equals((get_slice_args)that);
+        return this.equals((get_slice_args) that);
       return false;
     }
 
@@ -741,57 +786,55 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case -1:
-            if (field.type == TType.STRING) {
-              this.tablename = iprot.readString();
-              this.__isset.tablename = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -2:
-            if (field.type == TType.STRING) {
-              this.key = iprot.readString();
-              this.__isset.key = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -3:
-            if (field.type == TType.STRING) {
-              this.columnFamily_column = iprot.readString();
-              this.__isset.columnFamily_column = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -4:
-            if (field.type == TType.I32) {
-              this.start = iprot.readI32();
-              this.__isset.start = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -5:
-            if (field.type == TType.I32) {
-              this.count = iprot.readI32();
-              this.__isset.count = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case -1:
+          if (field.type == TType.STRING) {
+            this.tablename = iprot.readString();
+            this.__isset.tablename = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        case -2:
+          if (field.type == TType.STRING) {
+            this.key = iprot.readString();
+            this.__isset.key = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case -3:
+          if (field.type == TType.STRING) {
+            this.columnFamily_column = iprot.readString();
+            this.__isset.columnFamily_column = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case -4:
+          if (field.type == TType.I32) {
+            this.start = iprot.readI32();
+            this.__isset.start = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case -5:
+          if (field.type == TType.I32) {
+            this.count = iprot.readI32();
+            this.__isset.count = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -860,10 +903,11 @@ public class Cassandra {
 
   }
 
-  public static class get_slice_result implements TBase, java.io.Serializable   {
+  public static class get_slice_result implements TBase, java.io.Serializable {
     public List<column_t> success;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean success = false;
     }
@@ -871,9 +915,7 @@ public class Cassandra {
     public get_slice_result() {
     }
 
-    public get_slice_result(
-      List<column_t> success)
-    {
+    public get_slice_result(List<column_t> success) {
       this();
       this.success = success;
       this.__isset.success = true;
@@ -883,7 +925,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof get_slice_result)
-        return this.equals((get_slice_result)that);
+        return this.equals((get_slice_result) that);
       return false;
     }
 
@@ -910,36 +952,33 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case 0:
-            if (field.type == TType.LIST) {
-              {
-                TList _list22 = iprot.readListBegin();
-                this.success = new ArrayList<column_t>(_list22.size);
-                for (int _i23 = 0; _i23 < _list22.size; ++_i23)
-                {
-                  column_t _elem24 = new column_t();
-                  _elem24 = new column_t();
-                  _elem24.read(iprot);
-                  this.success.add(_elem24);
-                }
-                iprot.readListEnd();
+        switch (field.id) {
+        case 0:
+          if (field.type == TType.LIST) {
+            {
+              TList _list22 = iprot.readListBegin();
+              this.success = new ArrayList<column_t>(_list22.size);
+              for (int _i23 = 0; _i23 < _list22.size; ++_i23) {
+                column_t _elem24 = new column_t();
+                _elem24 = new column_t();
+                _elem24.read(iprot);
+                this.success.add(_elem24);
               }
-              this.__isset.success = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
+              iprot.readListEnd();
             }
-            break;
-          default:
+            this.__isset.success = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -959,7 +998,7 @@ public class Cassandra {
           oprot.writeFieldBegin(field);
           {
             oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-            for (column_t _iter25 : this.success)            {
+            for (column_t _iter25 : this.success) {
               _iter25.write(oprot);
             }
             oprot.writeListEnd();
@@ -981,12 +1020,13 @@ public class Cassandra {
 
   }
 
-  public static class get_column_args implements TBase, java.io.Serializable   {
+  public static class get_column_args implements TBase, java.io.Serializable {
     public String tablename;
     public String key;
     public String columnFamily_column;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean tablename = false;
       public boolean key = false;
@@ -996,11 +1036,8 @@ public class Cassandra {
     public get_column_args() {
     }
 
-    public get_column_args(
-      String tablename,
-      String key,
-      String columnFamily_column)
-    {
+    public get_column_args(String tablename, String key,
+        String columnFamily_column) {
       this();
       this.tablename = tablename;
       this.__isset.tablename = true;
@@ -1014,7 +1051,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof get_column_args)
-        return this.equals((get_column_args)that);
+        return this.equals((get_column_args) that);
       return false;
     }
 
@@ -1059,41 +1096,39 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case -1:
-            if (field.type == TType.STRING) {
-              this.tablename = iprot.readString();
-              this.__isset.tablename = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -2:
-            if (field.type == TType.STRING) {
-              this.key = iprot.readString();
-              this.__isset.key = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -3:
-            if (field.type == TType.STRING) {
-              this.columnFamily_column = iprot.readString();
-              this.__isset.columnFamily_column = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case -1:
+          if (field.type == TType.STRING) {
+            this.tablename = iprot.readString();
+            this.__isset.tablename = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        case -2:
+          if (field.type == TType.STRING) {
+            this.key = iprot.readString();
+            this.__isset.key = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case -3:
+          if (field.type == TType.STRING) {
+            this.columnFamily_column = iprot.readString();
+            this.__isset.columnFamily_column = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -1146,10 +1181,11 @@ public class Cassandra {
 
   }
 
-  public static class get_column_result implements TBase, java.io.Serializable   {
+  public static class get_column_result implements TBase, java.io.Serializable {
     public column_t success;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean success = false;
     }
@@ -1157,9 +1193,7 @@ public class Cassandra {
     public get_column_result() {
     }
 
-    public get_column_result(
-      column_t success)
-    {
+    public get_column_result(column_t success) {
       this();
       this.success = success;
       this.__isset.success = true;
@@ -1169,7 +1203,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof get_column_result)
-        return this.equals((get_column_result)that);
+        return this.equals((get_column_result) that);
       return false;
     }
 
@@ -1196,26 +1230,24 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case 0:
-            if (field.type == TType.STRUCT) {
-              this.success = new column_t();
-              this.success.read(iprot);
-              this.__isset.success = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case 0:
+          if (field.type == TType.STRUCT) {
+            this.success = new column_t();
+            this.success.read(iprot);
+            this.__isset.success = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -1251,12 +1283,14 @@ public class Cassandra {
 
   }
 
-  public static class get_column_count_args implements TBase, java.io.Serializable   {
+  public static class get_column_count_args implements TBase,
+      java.io.Serializable {
     public String tablename;
     public String key;
     public String columnFamily_column;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean tablename = false;
       public boolean key = false;
@@ -1266,11 +1300,8 @@ public class Cassandra {
     public get_column_count_args() {
     }
 
-    public get_column_count_args(
-      String tablename,
-      String key,
-      String columnFamily_column)
-    {
+    public get_column_count_args(String tablename, String key,
+        String columnFamily_column) {
       this();
       this.tablename = tablename;
       this.__isset.tablename = true;
@@ -1284,7 +1315,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof get_column_count_args)
-        return this.equals((get_column_count_args)that);
+        return this.equals((get_column_count_args) that);
       return false;
     }
 
@@ -1329,41 +1360,39 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case -1:
-            if (field.type == TType.STRING) {
-              this.tablename = iprot.readString();
-              this.__isset.tablename = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -2:
-            if (field.type == TType.STRING) {
-              this.key = iprot.readString();
-              this.__isset.key = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -3:
-            if (field.type == TType.STRING) {
-              this.columnFamily_column = iprot.readString();
-              this.__isset.columnFamily_column = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case -1:
+          if (field.type == TType.STRING) {
+            this.tablename = iprot.readString();
+            this.__isset.tablename = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        case -2:
+          if (field.type == TType.STRING) {
+            this.key = iprot.readString();
+            this.__isset.key = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case -3:
+          if (field.type == TType.STRING) {
+            this.columnFamily_column = iprot.readString();
+            this.__isset.columnFamily_column = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -1416,10 +1445,12 @@ public class Cassandra {
 
   }
 
-  public static class get_column_count_result implements TBase, java.io.Serializable   {
+  public static class get_column_count_result implements TBase,
+      java.io.Serializable {
     public int success;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean success = false;
     }
@@ -1427,9 +1458,7 @@ public class Cassandra {
     public get_column_count_result() {
     }
 
-    public get_column_count_result(
-      int success)
-    {
+    public get_column_count_result(int success) {
       this();
       this.success = success;
       this.__isset.success = true;
@@ -1439,7 +1468,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof get_column_count_result)
-        return this.equals((get_column_count_result)that);
+        return this.equals((get_column_count_result) that);
       return false;
     }
 
@@ -1466,25 +1495,23 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case 0:
-            if (field.type == TType.I32) {
-              this.success = iprot.readI32();
-              this.__isset.success = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case 0:
+          if (field.type == TType.I32) {
+            this.success = iprot.readI32();
+            this.__isset.success = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -1518,7 +1545,7 @@ public class Cassandra {
 
   }
 
-  public static class insert_args implements TBase, java.io.Serializable   {
+  public static class insert_args implements TBase, java.io.Serializable {
     public String tablename;
     public String key;
     public String columnFamily_column;
@@ -1526,6 +1553,7 @@ public class Cassandra {
     public long timestamp;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean tablename = false;
       public boolean key = false;
@@ -1537,13 +1565,8 @@ public class Cassandra {
     public insert_args() {
     }
 
-    public insert_args(
-      String tablename,
-      String key,
-      String columnFamily_column,
-      String cellData,
-      long timestamp)
-    {
+    public insert_args(String tablename, String key,
+        String columnFamily_column, String cellData, long timestamp) {
       this();
       this.tablename = tablename;
       this.__isset.tablename = true;
@@ -1561,7 +1584,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof insert_args)
-        return this.equals((insert_args)that);
+        return this.equals((insert_args) that);
       return false;
     }
 
@@ -1624,57 +1647,55 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case -1:
-            if (field.type == TType.STRING) {
-              this.tablename = iprot.readString();
-              this.__isset.tablename = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -2:
-            if (field.type == TType.STRING) {
-              this.key = iprot.readString();
-              this.__isset.key = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -3:
-            if (field.type == TType.STRING) {
-              this.columnFamily_column = iprot.readString();
-              this.__isset.columnFamily_column = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -4:
-            if (field.type == TType.STRING) {
-              this.cellData = iprot.readString();
-              this.__isset.cellData = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -5:
-            if (field.type == TType.I64) {
-              this.timestamp = iprot.readI64();
-              this.__isset.timestamp = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case -1:
+          if (field.type == TType.STRING) {
+            this.tablename = iprot.readString();
+            this.__isset.tablename = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        case -2:
+          if (field.type == TType.STRING) {
+            this.key = iprot.readString();
+            this.__isset.key = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case -3:
+          if (field.type == TType.STRING) {
+            this.columnFamily_column = iprot.readString();
+            this.__isset.columnFamily_column = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case -4:
+          if (field.type == TType.STRING) {
+            this.cellData = iprot.readString();
+            this.__isset.cellData = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case -5:
+          if (field.type == TType.I64) {
+            this.timestamp = iprot.readI64();
+            this.__isset.timestamp = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -1745,10 +1766,11 @@ public class Cassandra {
 
   }
 
-  public static class batch_insert_args implements TBase, java.io.Serializable   {
+  public static class batch_insert_args implements TBase, java.io.Serializable {
     public batch_mutation_t batchMutation;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean batchMutation = false;
     }
@@ -1756,9 +1778,7 @@ public class Cassandra {
     public batch_insert_args() {
     }
 
-    public batch_insert_args(
-      batch_mutation_t batchMutation)
-    {
+    public batch_insert_args(batch_mutation_t batchMutation) {
       this();
       this.batchMutation = batchMutation;
       this.__isset.batchMutation = true;
@@ -1768,7 +1788,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof batch_insert_args)
-        return this.equals((batch_insert_args)that);
+        return this.equals((batch_insert_args) that);
       return false;
     }
 
@@ -1795,26 +1815,24 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case -1:
-            if (field.type == TType.STRUCT) {
-              this.batchMutation = new batch_mutation_t();
-              this.batchMutation.read(iprot);
-              this.__isset.batchMutation = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case -1:
+          if (field.type == TType.STRUCT) {
+            this.batchMutation = new batch_mutation_t();
+            this.batchMutation.read(iprot);
+            this.__isset.batchMutation = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -1847,10 +1865,12 @@ public class Cassandra {
 
   }
 
-  public static class batch_insert_blocking_args implements TBase, java.io.Serializable   {
+  public static class batch_insert_blocking_args implements TBase,
+      java.io.Serializable {
     public batch_mutation_t batchMutation;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean batchMutation = false;
     }
@@ -1858,9 +1878,7 @@ public class Cassandra {
     public batch_insert_blocking_args() {
     }
 
-    public batch_insert_blocking_args(
-      batch_mutation_t batchMutation)
-    {
+    public batch_insert_blocking_args(batch_mutation_t batchMutation) {
       this();
       this.batchMutation = batchMutation;
       this.__isset.batchMutation = true;
@@ -1870,7 +1888,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof batch_insert_blocking_args)
-        return this.equals((batch_insert_blocking_args)that);
+        return this.equals((batch_insert_blocking_args) that);
       return false;
     }
 
@@ -1897,26 +1915,24 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case -1:
-            if (field.type == TType.STRUCT) {
-              this.batchMutation = new batch_mutation_t();
-              this.batchMutation.read(iprot);
-              this.__isset.batchMutation = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case -1:
+          if (field.type == TType.STRUCT) {
+            this.batchMutation = new batch_mutation_t();
+            this.batchMutation.read(iprot);
+            this.__isset.batchMutation = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -1949,10 +1965,12 @@ public class Cassandra {
 
   }
 
-  public static class batch_insert_blocking_result implements TBase, java.io.Serializable   {
+  public static class batch_insert_blocking_result implements TBase,
+      java.io.Serializable {
     public boolean success;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean success = false;
     }
@@ -1960,9 +1978,7 @@ public class Cassandra {
     public batch_insert_blocking_result() {
     }
 
-    public batch_insert_blocking_result(
-      boolean success)
-    {
+    public batch_insert_blocking_result(boolean success) {
       this();
       this.success = success;
       this.__isset.success = true;
@@ -1972,7 +1988,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof batch_insert_blocking_result)
-        return this.equals((batch_insert_blocking_result)that);
+        return this.equals((batch_insert_blocking_result) that);
       return false;
     }
 
@@ -1999,25 +2015,23 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case 0:
-            if (field.type == TType.BOOL) {
-              this.success = iprot.readBool();
-              this.__isset.success = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case 0:
+          if (field.type == TType.BOOL) {
+            this.success = iprot.readBool();
+            this.__isset.success = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -2051,12 +2065,13 @@ public class Cassandra {
 
   }
 
-  public static class remove_args implements TBase, java.io.Serializable   {
+  public static class remove_args implements TBase, java.io.Serializable {
     public String tablename;
     public String key;
     public String columnFamily_column;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean tablename = false;
       public boolean key = false;
@@ -2066,11 +2081,7 @@ public class Cassandra {
     public remove_args() {
     }
 
-    public remove_args(
-      String tablename,
-      String key,
-      String columnFamily_column)
-    {
+    public remove_args(String tablename, String key, String columnFamily_column) {
       this();
       this.tablename = tablename;
       this.__isset.tablename = true;
@@ -2084,7 +2095,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof remove_args)
-        return this.equals((remove_args)that);
+        return this.equals((remove_args) that);
       return false;
     }
 
@@ -2129,41 +2140,39 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case -1:
-            if (field.type == TType.STRING) {
-              this.tablename = iprot.readString();
-              this.__isset.tablename = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -2:
-            if (field.type == TType.STRING) {
-              this.key = iprot.readString();
-              this.__isset.key = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -3:
-            if (field.type == TType.STRING) {
-              this.columnFamily_column = iprot.readString();
-              this.__isset.columnFamily_column = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case -1:
+          if (field.type == TType.STRING) {
+            this.tablename = iprot.readString();
+            this.__isset.tablename = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        case -2:
+          if (field.type == TType.STRING) {
+            this.key = iprot.readString();
+            this.__isset.key = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case -3:
+          if (field.type == TType.STRING) {
+            this.columnFamily_column = iprot.readString();
+            this.__isset.columnFamily_column = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -2216,13 +2225,15 @@ public class Cassandra {
 
   }
 
-  public static class get_columns_since_args implements TBase, java.io.Serializable   {
+  public static class get_columns_since_args implements TBase,
+      java.io.Serializable {
     public String tablename;
     public String key;
     public String columnFamily_column;
     public long timeStamp;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean tablename = false;
       public boolean key = false;
@@ -2233,12 +2244,8 @@ public class Cassandra {
     public get_columns_since_args() {
     }
 
-    public get_columns_since_args(
-      String tablename,
-      String key,
-      String columnFamily_column,
-      long timeStamp)
-    {
+    public get_columns_since_args(String tablename, String key,
+        String columnFamily_column, long timeStamp) {
       this();
       this.tablename = tablename;
       this.__isset.tablename = true;
@@ -2254,7 +2261,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof get_columns_since_args)
-        return this.equals((get_columns_since_args)that);
+        return this.equals((get_columns_since_args) that);
       return false;
     }
 
@@ -2308,49 +2315,47 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case -1:
-            if (field.type == TType.STRING) {
-              this.tablename = iprot.readString();
-              this.__isset.tablename = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -2:
-            if (field.type == TType.STRING) {
-              this.key = iprot.readString();
-              this.__isset.key = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -3:
-            if (field.type == TType.STRING) {
-              this.columnFamily_column = iprot.readString();
-              this.__isset.columnFamily_column = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -4:
-            if (field.type == TType.I64) {
-              this.timeStamp = iprot.readI64();
-              this.__isset.timeStamp = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case -1:
+          if (field.type == TType.STRING) {
+            this.tablename = iprot.readString();
+            this.__isset.tablename = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        case -2:
+          if (field.type == TType.STRING) {
+            this.key = iprot.readString();
+            this.__isset.key = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case -3:
+          if (field.type == TType.STRING) {
+            this.columnFamily_column = iprot.readString();
+            this.__isset.columnFamily_column = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case -4:
+          if (field.type == TType.I64) {
+            this.timeStamp = iprot.readI64();
+            this.__isset.timeStamp = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -2411,10 +2416,12 @@ public class Cassandra {
 
   }
 
-  public static class get_columns_since_result implements TBase, java.io.Serializable   {
+  public static class get_columns_since_result implements TBase,
+      java.io.Serializable {
     public List<column_t> success;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean success = false;
     }
@@ -2422,9 +2429,7 @@ public class Cassandra {
     public get_columns_since_result() {
     }
 
-    public get_columns_since_result(
-      List<column_t> success)
-    {
+    public get_columns_since_result(List<column_t> success) {
       this();
       this.success = success;
       this.__isset.success = true;
@@ -2434,7 +2439,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof get_columns_since_result)
-        return this.equals((get_columns_since_result)that);
+        return this.equals((get_columns_since_result) that);
       return false;
     }
 
@@ -2461,36 +2466,33 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case 0:
-            if (field.type == TType.LIST) {
-              {
-                TList _list26 = iprot.readListBegin();
-                this.success = new ArrayList<column_t>(_list26.size);
-                for (int _i27 = 0; _i27 < _list26.size; ++_i27)
-                {
-                  column_t _elem28 = new column_t();
-                  _elem28 = new column_t();
-                  _elem28.read(iprot);
-                  this.success.add(_elem28);
-                }
-                iprot.readListEnd();
+        switch (field.id) {
+        case 0:
+          if (field.type == TType.LIST) {
+            {
+              TList _list26 = iprot.readListBegin();
+              this.success = new ArrayList<column_t>(_list26.size);
+              for (int _i27 = 0; _i27 < _list26.size; ++_i27) {
+                column_t _elem28 = new column_t();
+                _elem28 = new column_t();
+                _elem28.read(iprot);
+                this.success.add(_elem28);
               }
-              this.__isset.success = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
+              iprot.readListEnd();
             }
-            break;
-          default:
+            this.__isset.success = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -2510,7 +2512,7 @@ public class Cassandra {
           oprot.writeFieldBegin(field);
           {
             oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-            for (column_t _iter29 : this.success)            {
+            for (column_t _iter29 : this.success) {
               _iter29.write(oprot);
             }
             oprot.writeListEnd();
@@ -2532,7 +2534,8 @@ public class Cassandra {
 
   }
 
-  public static class get_slice_super_args implements TBase, java.io.Serializable   {
+  public static class get_slice_super_args implements TBase,
+      java.io.Serializable {
     public String tablename;
     public String key;
     public String columnFamily_superColumnName;
@@ -2540,6 +2543,7 @@ public class Cassandra {
     public int count;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean tablename = false;
       public boolean key = false;
@@ -2555,13 +2559,8 @@ public class Cassandra {
 
     }
 
-    public get_slice_super_args(
-      String tablename,
-      String key,
-      String columnFamily_superColumnName,
-      int start,
-      int count)
-    {
+    public get_slice_super_args(String tablename, String key,
+        String columnFamily_superColumnName, int start, int count) {
       this();
       this.tablename = tablename;
       this.__isset.tablename = true;
@@ -2579,7 +2578,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof get_slice_super_args)
-        return this.equals((get_slice_super_args)that);
+        return this.equals((get_slice_super_args) that);
       return false;
     }
 
@@ -2607,10 +2606,12 @@ public class Cassandra {
 
       boolean this_present_columnFamily_superColumnName = true && (this.columnFamily_superColumnName != null);
       boolean that_present_columnFamily_superColumnName = true && (that.columnFamily_superColumnName != null);
-      if (this_present_columnFamily_superColumnName || that_present_columnFamily_superColumnName) {
+      if (this_present_columnFamily_superColumnName
+          || that_present_columnFamily_superColumnName) {
         if (!(this_present_columnFamily_superColumnName && that_present_columnFamily_superColumnName))
           return false;
-        if (!this.columnFamily_superColumnName.equals(that.columnFamily_superColumnName))
+        if (!this.columnFamily_superColumnName
+            .equals(that.columnFamily_superColumnName))
           return false;
       }
 
@@ -2642,57 +2643,55 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case -1:
-            if (field.type == TType.STRING) {
-              this.tablename = iprot.readString();
-              this.__isset.tablename = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -2:
-            if (field.type == TType.STRING) {
-              this.key = iprot.readString();
-              this.__isset.key = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -3:
-            if (field.type == TType.STRING) {
-              this.columnFamily_superColumnName = iprot.readString();
-              this.__isset.columnFamily_superColumnName = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -4:
-            if (field.type == TType.I32) {
-              this.start = iprot.readI32();
-              this.__isset.start = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -5:
-            if (field.type == TType.I32) {
-              this.count = iprot.readI32();
-              this.__isset.count = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case -1:
+          if (field.type == TType.STRING) {
+            this.tablename = iprot.readString();
+            this.__isset.tablename = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        case -2:
+          if (field.type == TType.STRING) {
+            this.key = iprot.readString();
+            this.__isset.key = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case -3:
+          if (field.type == TType.STRING) {
+            this.columnFamily_superColumnName = iprot.readString();
+            this.__isset.columnFamily_superColumnName = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case -4:
+          if (field.type == TType.I32) {
+            this.start = iprot.readI32();
+            this.__isset.start = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case -5:
+          if (field.type == TType.I32) {
+            this.count = iprot.readI32();
+            this.__isset.count = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -2761,10 +2760,12 @@ public class Cassandra {
 
   }
 
-  public static class get_slice_super_result implements TBase, java.io.Serializable   {
+  public static class get_slice_super_result implements TBase,
+      java.io.Serializable {
     public List<superColumn_t> success;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean success = false;
     }
@@ -2772,9 +2773,7 @@ public class Cassandra {
     public get_slice_super_result() {
     }
 
-    public get_slice_super_result(
-      List<superColumn_t> success)
-    {
+    public get_slice_super_result(List<superColumn_t> success) {
       this();
       this.success = success;
       this.__isset.success = true;
@@ -2784,7 +2783,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof get_slice_super_result)
-        return this.equals((get_slice_super_result)that);
+        return this.equals((get_slice_super_result) that);
       return false;
     }
 
@@ -2811,36 +2810,33 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case 0:
-            if (field.type == TType.LIST) {
-              {
-                TList _list30 = iprot.readListBegin();
-                this.success = new ArrayList<superColumn_t>(_list30.size);
-                for (int _i31 = 0; _i31 < _list30.size; ++_i31)
-                {
-                  superColumn_t _elem32 = new superColumn_t();
-                  _elem32 = new superColumn_t();
-                  _elem32.read(iprot);
-                  this.success.add(_elem32);
-                }
-                iprot.readListEnd();
+        switch (field.id) {
+        case 0:
+          if (field.type == TType.LIST) {
+            {
+              TList _list30 = iprot.readListBegin();
+              this.success = new ArrayList<superColumn_t>(_list30.size);
+              for (int _i31 = 0; _i31 < _list30.size; ++_i31) {
+                superColumn_t _elem32 = new superColumn_t();
+                _elem32 = new superColumn_t();
+                _elem32.read(iprot);
+                this.success.add(_elem32);
               }
-              this.__isset.success = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
+              iprot.readListEnd();
             }
-            break;
-          default:
+            this.__isset.success = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -2860,7 +2856,7 @@ public class Cassandra {
           oprot.writeFieldBegin(field);
           {
             oprot.writeListBegin(new TList(TType.STRUCT, this.success.size()));
-            for (superColumn_t _iter33 : this.success)            {
+            for (superColumn_t _iter33 : this.success) {
               _iter33.write(oprot);
             }
             oprot.writeListEnd();
@@ -2882,12 +2878,14 @@ public class Cassandra {
 
   }
 
-  public static class get_superColumn_args implements TBase, java.io.Serializable   {
+  public static class get_superColumn_args implements TBase,
+      java.io.Serializable {
     public String tablename;
     public String key;
     public String columnFamily;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean tablename = false;
       public boolean key = false;
@@ -2897,11 +2895,8 @@ public class Cassandra {
     public get_superColumn_args() {
     }
 
-    public get_superColumn_args(
-      String tablename,
-      String key,
-      String columnFamily)
-    {
+    public get_superColumn_args(String tablename, String key,
+        String columnFamily) {
       this();
       this.tablename = tablename;
       this.__isset.tablename = true;
@@ -2915,7 +2910,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof get_superColumn_args)
-        return this.equals((get_superColumn_args)that);
+        return this.equals((get_superColumn_args) that);
       return false;
     }
 
@@ -2960,41 +2955,39 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case -1:
-            if (field.type == TType.STRING) {
-              this.tablename = iprot.readString();
-              this.__isset.tablename = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -2:
-            if (field.type == TType.STRING) {
-              this.key = iprot.readString();
-              this.__isset.key = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          case -3:
-            if (field.type == TType.STRING) {
-              this.columnFamily = iprot.readString();
-              this.__isset.columnFamily = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case -1:
+          if (field.type == TType.STRING) {
+            this.tablename = iprot.readString();
+            this.__isset.tablename = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        case -2:
+          if (field.type == TType.STRING) {
+            this.key = iprot.readString();
+            this.__isset.key = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        case -3:
+          if (field.type == TType.STRING) {
+            this.columnFamily = iprot.readString();
+            this.__isset.columnFamily = true;
+          } else {
+            TProtocolUtil.skip(iprot, field.type);
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -3047,10 +3040,12 @@ public class Cassandra {
 
   }
 
-  public static class get_superColumn_result implements TBase, java.io.Serializable   {
+  public static class get_superColumn_result implements TBase,
+      java.io.Serializable {
     public superColumn_t success;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean success = false;
     }
@@ -3058,9 +3053,7 @@ public class Cassandra {
     public get_superColumn_result() {
     }
 
-    public get_superColumn_result(
-      superColumn_t success)
-    {
+    public get_superColumn_result(superColumn_t success) {
       this();
       this.success = success;
       this.__isset.success = true;
@@ -3070,7 +3063,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof get_superColumn_result)
-        return this.equals((get_superColumn_result)that);
+        return this.equals((get_superColumn_result) that);
       return false;
     }
 
@@ -3097,26 +3090,24 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case 0:
-            if (field.type == TType.STRUCT) {
-              this.success = new superColumn_t();
-              this.success.read(iprot);
-              this.__isset.success = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case 0:
+          if (field.type == TType.STRUCT) {
+            this.success = new superColumn_t();
+            this.success.read(iprot);
+            this.__isset.success = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -3152,10 +3143,12 @@ public class Cassandra {
 
   }
 
-  public static class batch_insert_superColumn_args implements TBase, java.io.Serializable   {
+  public static class batch_insert_superColumn_args implements TBase,
+      java.io.Serializable {
     public batch_mutation_super_t batchMutationSuper;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean batchMutationSuper = false;
     }
@@ -3164,8 +3157,7 @@ public class Cassandra {
     }
 
     public batch_insert_superColumn_args(
-      batch_mutation_super_t batchMutationSuper)
-    {
+        batch_mutation_super_t batchMutationSuper) {
       this();
       this.batchMutationSuper = batchMutationSuper;
       this.__isset.batchMutationSuper = true;
@@ -3175,7 +3167,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof batch_insert_superColumn_args)
-        return this.equals((batch_insert_superColumn_args)that);
+        return this.equals((batch_insert_superColumn_args) that);
       return false;
     }
 
@@ -3202,26 +3194,24 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case -1:
-            if (field.type == TType.STRUCT) {
-              this.batchMutationSuper = new batch_mutation_super_t();
-              this.batchMutationSuper.read(iprot);
-              this.__isset.batchMutationSuper = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case -1:
+          if (field.type == TType.STRUCT) {
+            this.batchMutationSuper = new batch_mutation_super_t();
+            this.batchMutationSuper.read(iprot);
+            this.__isset.batchMutationSuper = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -3254,10 +3244,12 @@ public class Cassandra {
 
   }
 
-  public static class batch_insert_superColumn_blocking_args implements TBase, java.io.Serializable   {
+  public static class batch_insert_superColumn_blocking_args implements TBase,
+      java.io.Serializable {
     public batch_mutation_super_t batchMutationSuper;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean batchMutationSuper = false;
     }
@@ -3266,8 +3258,7 @@ public class Cassandra {
     }
 
     public batch_insert_superColumn_blocking_args(
-      batch_mutation_super_t batchMutationSuper)
-    {
+        batch_mutation_super_t batchMutationSuper) {
       this();
       this.batchMutationSuper = batchMutationSuper;
       this.__isset.batchMutationSuper = true;
@@ -3277,7 +3268,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof batch_insert_superColumn_blocking_args)
-        return this.equals((batch_insert_superColumn_blocking_args)that);
+        return this.equals((batch_insert_superColumn_blocking_args) that);
       return false;
     }
 
@@ -3304,26 +3295,24 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case -1:
-            if (field.type == TType.STRUCT) {
-              this.batchMutationSuper = new batch_mutation_super_t();
-              this.batchMutationSuper.read(iprot);
-              this.__isset.batchMutationSuper = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case -1:
+          if (field.type == TType.STRUCT) {
+            this.batchMutationSuper = new batch_mutation_super_t();
+            this.batchMutationSuper.read(iprot);
+            this.__isset.batchMutationSuper = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -3347,7 +3336,8 @@ public class Cassandra {
     }
 
     public String toString() {
-      StringBuilder sb = new StringBuilder("batch_insert_superColumn_blocking_args(");
+      StringBuilder sb = new StringBuilder(
+          "batch_insert_superColumn_blocking_args(");
       sb.append("batchMutationSuper:");
       sb.append(this.batchMutationSuper);
       sb.append(")");
@@ -3356,10 +3346,12 @@ public class Cassandra {
 
   }
 
-  public static class batch_insert_superColumn_blocking_result implements TBase, java.io.Serializable   {
+  public static class batch_insert_superColumn_blocking_result implements
+      TBase, java.io.Serializable {
     public boolean success;
 
     public final Isset __isset = new Isset();
+
     public static final class Isset implements java.io.Serializable {
       public boolean success = false;
     }
@@ -3367,9 +3359,7 @@ public class Cassandra {
     public batch_insert_superColumn_blocking_result() {
     }
 
-    public batch_insert_superColumn_blocking_result(
-      boolean success)
-    {
+    public batch_insert_superColumn_blocking_result(boolean success) {
       this();
       this.success = success;
       this.__isset.success = true;
@@ -3379,7 +3369,7 @@ public class Cassandra {
       if (that == null)
         return false;
       if (that instanceof batch_insert_superColumn_blocking_result)
-        return this.equals((batch_insert_superColumn_blocking_result)that);
+        return this.equals((batch_insert_superColumn_blocking_result) that);
       return false;
     }
 
@@ -3406,25 +3396,23 @@ public class Cassandra {
     public void read(TProtocol iprot) throws TException {
       TField field;
       iprot.readStructBegin();
-      while (true)
-      {
+      while (true) {
         field = iprot.readFieldBegin();
-        if (field.type == TType.STOP) { 
+        if (field.type == TType.STOP) {
           break;
         }
-        switch (field.id)
-        {
-          case 0:
-            if (field.type == TType.BOOL) {
-              this.success = iprot.readBool();
-              this.__isset.success = true;
-            } else { 
-              TProtocolUtil.skip(iprot, field.type);
-            }
-            break;
-          default:
+        switch (field.id) {
+        case 0:
+          if (field.type == TType.BOOL) {
+            this.success = iprot.readBool();
+            this.__isset.success = true;
+          } else {
             TProtocolUtil.skip(iprot, field.type);
-            break;
+          }
+          break;
+        default:
+          TProtocolUtil.skip(iprot, field.type);
+          break;
         }
         iprot.readFieldEnd();
       }
@@ -3449,7 +3437,8 @@ public class Cassandra {
     }
 
     public String toString() {
-      StringBuilder sb = new StringBuilder("batch_insert_superColumn_blocking_result(");
+      StringBuilder sb = new StringBuilder(
+          "batch_insert_superColumn_blocking_result(");
       sb.append("success:");
       sb.append(this.success);
       sb.append(")");

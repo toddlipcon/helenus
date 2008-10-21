@@ -23,33 +23,28 @@ import org.apache.log4j.Logger;
 import com.facebook.infrastructure.utils.LogUtil;
 
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class MessageDeliveryTask implements Runnable
-{
-    private Message message_;
-    private static Logger logger_ = Logger.getLogger(MessageDeliveryTask.class);    
-    
-    public MessageDeliveryTask(Message message)
-    {
-        message_ = message;    
+public class MessageDeliveryTask implements Runnable {
+  private Message message_;
+  private static Logger logger_ = Logger.getLogger(MessageDeliveryTask.class);
+
+  public MessageDeliveryTask(Message message) {
+    message_ = message;
+  }
+
+  public void run() {
+    try {
+      String verb = message_.getVerb();
+      IVerbHandler verbHandler = MessagingService.getMessagingInstance()
+          .getVerbHandler(verb);
+      if (verbHandler != null) {
+        verbHandler.doVerb(message_);
+      }
+    } catch (Throwable th) {
+      logger_.warn(LogUtil.throwableToString(th));
     }
-    
-    public void run()
-    { 
-        try
-        {            
-            String verb = message_.getVerb();                               
-            IVerbHandler verbHandler = MessagingService.getMessagingInstance().getVerbHandler(verb);           
-            if ( verbHandler != null )
-            {
-                verbHandler.doVerb(message_);        
-            }
-        }
-        catch (Throwable th)
-        {
-            logger_.warn( LogUtil.throwableToString(th) );
-        }
-    }
+  }
 }

@@ -21,48 +21,50 @@ package com.facebook.infrastructure.test;
 import com.facebook.infrastructure.config.DatabaseDescriptor;
 import com.facebook.infrastructure.db.Table;
 
-public class testMultipleKeys
-{
-	static int NUM_KEYS = 8;
+public class testMultipleKeys {
+  static int NUM_KEYS = 8;
 
-    static void testBulkInsertAndRead()
-    {
-    	testInsert.bulkInsertSimpleColumns("MailboxUserListIndexed", NUM_KEYS, 0, 16*1024);
-    	testInsert.bulkInsertSimpleColumns("MailboxUserListIndexed", NUM_KEYS, 16*1024, 32*1024);
+  static void testBulkInsertAndRead() {
+    testInsert.bulkInsertSimpleColumns("MailboxUserListIndexed", NUM_KEYS, 0,
+        16 * 1024);
+    testInsert.bulkInsertSimpleColumns("MailboxUserListIndexed", NUM_KEYS,
+        16 * 1024, 32 * 1024);
 
-    	testInsert.bulkInsertSuperColumns("MailboxThreadList0Indexed", NUM_KEYS, 0, 10*1024, 0, 2);
-        testInsert.bulkInsertSuperColumns("MailboxThreadList0Indexed", NUM_KEYS, 10*1024, 16*1024, 0, 2);
+    testInsert.bulkInsertSuperColumns("MailboxThreadList0Indexed", NUM_KEYS, 0,
+        10 * 1024, 0, 2);
+    testInsert.bulkInsertSuperColumns("MailboxThreadList0Indexed", NUM_KEYS,
+        10 * 1024, 16 * 1024, 0, 2);
 
-        System.out.println("Reading simple column data...");
-        for(int i = 1; i <= NUM_KEYS; ++i)
-    	{
-        	testRead.readSimpleCols("MailboxUserListIndexed", "1", 32*1024);
-    	}
-
-        System.out.println("Reading supercolumn:column data...");
-        for(int i = 1; i <= NUM_KEYS; ++i)
-    	{
-    		testRead.readSuperCols("MailboxThreadList0Indexed", (""+i), 16*1024, 2);
-    	}
-
-        System.out.println("Reading entire super column data...");
-        for(int i = 1; i <= NUM_KEYS; ++i)
-    	{
-    		testRead.readEntireSuperCols("MailboxThreadList0Indexed", (""+i), 16*1024);
-    	}
+    System.out.println("Reading simple column data...");
+    for (int i = 1; i <= NUM_KEYS; ++i) {
+      testRead.readSimpleCols("MailboxUserListIndexed", "1", 32 * 1024);
     }
 
-    static void testCompactions() throws Exception
-    {
-    	testInsert.bulkInsertSuperColumns("MailboxThreadList0Indexed", NUM_KEYS, 0, 32*1024, 0, 1);
-    	testInsert.bulkInsertSuperColumns("MailboxThreadList0Indexed", NUM_KEYS, 32*1024, 64*1024, 0, 1);
-
-    	String sTableName = DatabaseDescriptor.getTables().get(0);
-    	Table.open(sTableName).forceCompaction();
-
-    	for(int i = 1; i <= NUM_KEYS; ++i)
-    	{
-    		testRead.readSuperCols("MailboxThreadList0Indexed", (""+i), 128*1024, 1);
-    	}
+    System.out.println("Reading supercolumn:column data...");
+    for (int i = 1; i <= NUM_KEYS; ++i) {
+      testRead.readSuperCols("MailboxThreadList0Indexed", ("" + i), 16 * 1024,
+          2);
     }
+
+    System.out.println("Reading entire super column data...");
+    for (int i = 1; i <= NUM_KEYS; ++i) {
+      testRead.readEntireSuperCols("MailboxThreadList0Indexed", ("" + i),
+          16 * 1024);
+    }
+  }
+
+  static void testCompactions() throws Exception {
+    testInsert.bulkInsertSuperColumns("MailboxThreadList0Indexed", NUM_KEYS, 0,
+        32 * 1024, 0, 1);
+    testInsert.bulkInsertSuperColumns("MailboxThreadList0Indexed", NUM_KEYS,
+        32 * 1024, 64 * 1024, 0, 1);
+
+    String sTableName = DatabaseDescriptor.getTables().get(0);
+    Table.open(sTableName).forceCompaction();
+
+    for (int i = 1; i <= NUM_KEYS; ++i) {
+      testRead.readSuperCols("MailboxThreadList0Indexed", ("" + i), 128 * 1024,
+          1);
+    }
+  }
 }

@@ -37,245 +37,215 @@ import com.facebook.infrastructure.service.IComponentShutdown;
 import com.facebook.infrastructure.service.StorageService;
 
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class HintedHandOffManager implements IComponentShutdown
-{
-    private static HintedHandOffManager instance_;
-    private static Lock lock_ = new ReentrantLock();
-    private static Logger logger_ = Logger.getLogger(HintedHandOffManager.class);
-    public static final String key_ = "HintedHandOffKey";
-    final static long intervalInMins_ = 20;
-    private ScheduledExecutorService executor_ = new DebuggableScheduledThreadPoolExecutor(1, new ThreadFactoryImpl("HINTED-HANDOFF-POOL"));
+public class HintedHandOffManager implements IComponentShutdown {
+  private static HintedHandOffManager instance_;
+  private static Lock lock_ = new ReentrantLock();
+  private static Logger logger_ = Logger.getLogger(HintedHandOffManager.class);
+  public static final String key_ = "HintedHandOffKey";
+  final static long intervalInMins_ = 20;
+  private ScheduledExecutorService executor_ = new DebuggableScheduledThreadPoolExecutor(
+      1, new ThreadFactoryImpl("HINTED-HANDOFF-POOL"));
 
+  public static HintedHandOffManager instance() {
+    if (instance_ == null) {
+      lock_.lock();
+      try {
+        if (instance_ == null)
+          instance_ = new HintedHandOffManager();
+      } finally {
+        lock_.unlock();
+      }
+    }
+    return instance_;
+  }
 
-    public static HintedHandOffManager instance()
-    {
-        if ( instance_ == null )
-        {
-            lock_.lock();
-            try
-            {
-                if ( instance_ == null )
-                    instance_ = new HintedHandOffManager();
-            }
-            finally
-            {
-                lock_.unlock();
-            }
-        }
-        return instance_;
+  class HintedHandOff implements Runnable {
+    private ColumnFamilyStore columnFamilyStore_ = null;
+    private EndPoint endPoint_ = null;
+
+    HintedHandOff(ColumnFamilyStore columnFamilyStore) {
+      columnFamilyStore_ = columnFamilyStore;
     }
 
-    class HintedHandOff implements Runnable
-    {
-        private ColumnFamilyStore columnFamilyStore_ = null;
-        private EndPoint endPoint_ = null;
+    HintedHandOff(EndPoint endPoint) {
+      endPoint_ = endPoint;
+    }
 
-        HintedHandOff(ColumnFamilyStore columnFamilyStore)
-        {
-        	columnFamilyStore_ = columnFamilyStore;
+    private boolean sendMessage(String endpointAddress, String key)
+        throws Exception {
+      boolean success = false; // TODO : fix the hack we need to make sure the
+                               // data is written on the other end.
+      if (FailureDetector.instance().isAlive(
+          new EndPoint(endpointAddress, DatabaseDescriptor.getControlPort()))) {
+        success = true;
+      } else {
+        return success;
+      }
+      Table table = Table.open(DatabaseDescriptor.getTables().get(0));
+      Row row = null;
+      row = table.get(key);
+      RowMutation rm = new RowMutation(DatabaseDescriptor.getTables().get(0),
+          row);
+      RowMutationMessage rmMsg = new RowMutationMessage(rm);
+      Message message = RowMutationMessage.makeRowMutationMessage(rmMsg);
+      EndPoint endPoint = new EndPoint(endpointAddress, DatabaseDescriptor
+          .getStoragePort());
+      MessagingService.getMessagingInstance().sendOneWay(message, endPoint);
+      return success;
+    }
+
+    private void deleteEndPoint(String endpointAddress, String key)
+        throws Exception {
+      RowMutation rm = new RowMutation(DatabaseDescriptor.getTables().get(0),
+          key_);
+      rm.delete(Table.hints_ + ":" + key + ":" + endpointAddress);
+      rm.apply();
+    }
+
+    private void deleteKey(String key) throws Exception {
+      RowMutation rm = new RowMutation(DatabaseDescriptor.getTables().get(0),
+          key_);
+      rm.delete(Table.hints_ + ":" + key);
+      rm.apply();
+    }
+
+    private void runHints() {
+      logger_.debug("Started  hinted handoff "
+          + columnFamilyStore_.columnFamily_);
+
+      // 1. Scan through all the keys that we need to handoff
+      // 2. For each key read the list of recepients and send
+      // 3. Delete that recepient from the key if write was successful
+      // 4. If all writes were success for a given key we can even delete the
+      // key .
+      // 5. Now force a flush
+      // 6. Do major compaction to clean up all deletes etc.
+      // 7. I guess we r done
+      Table table = Table.open(DatabaseDescriptor.getTables().get(0));
+      ColumnFamily hintedColumnFamily = null;
+      boolean success = false;
+      boolean allsuccess = true;
+      try {
+        hintedColumnFamily = table.get(key_, Table.hints_);
+        if (hintedColumnFamily == null) {
+          // Force flush now
+          columnFamilyStore_.forceFlush(false);
+          return;
         }
-        HintedHandOff(EndPoint endPoint)
-        {
-        	endPoint_ = endPoint;
-        }
-
-        private boolean sendMessage(String endpointAddress, String key) throws Exception
-        {
-        	boolean success = false; // TODO : fix the hack we need to make sure the data is written on the other end.
-        	if(FailureDetector.instance().isAlive(new EndPoint(endpointAddress, DatabaseDescriptor.getControlPort())))
-        	{
-        		success = true;
-        	}
-        	else
-        	{
-        		return success;
-        	}
-        	Table table = Table.open(DatabaseDescriptor.getTables().get(0));
-        	Row row = null;
-        	row = table.get(key);
-        	RowMutation rm = new RowMutation(DatabaseDescriptor.getTables().get(0), row);
-			RowMutationMessage rmMsg = new RowMutationMessage(rm);
-			Message message = RowMutationMessage.makeRowMutationMessage( rmMsg );
-			EndPoint endPoint = new EndPoint(endpointAddress, DatabaseDescriptor.getStoragePort());
-			MessagingService.getMessagingInstance().sendOneWay(message, endPoint);
-			return success;
-        }
-
-        private void deleteEndPoint(String endpointAddress, String key) throws Exception
-        {
-        	RowMutation rm = new RowMutation(DatabaseDescriptor.getTables().get(0), key_);
-        	rm.delete(Table.hints_ + ":" + key + ":" + endpointAddress);
-        	rm.apply();
-        }
-
-        private void deleteKey(String key) throws Exception
-        {
-        	RowMutation rm = new RowMutation(DatabaseDescriptor.getTables().get(0), key_);
-        	rm.delete(Table.hints_ + ":" + key);
-        	rm.apply();
-        }
-
-        private void runHints()
-        {
-            logger_.debug("Started  hinted handoff " + columnFamilyStore_.columnFamily_);
-
-            // 1. Scan through all the keys that we need to handoff
-            // 2. For each key read the list of recepients and send
-            // 3. Delete that recepient from the key if write was successful
-            // 4. If all writes were success for a given key we can even delete the key .
-            // 5. Now force a flush
-            // 6. Do major compaction to clean up all deletes etc.
-            // 7. I guess we r done
-            Table table =  Table.open(DatabaseDescriptor.getTables().get(0));
-            ColumnFamily hintedColumnFamily = null;
-            boolean success = false;
-            boolean allsuccess = true;
-            try
-            {
-            	hintedColumnFamily = table.get(key_, Table.hints_);
-            	if(hintedColumnFamily == null)
-            	{
-                    // Force flush now
-                    columnFamilyStore_.forceFlush(false);
-            		return;
-            	}
-            	Collection<IColumn> keys = hintedColumnFamily.getAllColumns();
-            	if(keys != null)
-            	{
-                	for(IColumn key : keys)
-                	{
-                		// Get all the endpoints for teh key
-                		Collection<IColumn> endpoints =  key.getSubColumns();
-                		allsuccess = true;
-                		if ( endpoints != null )
-                		{
-                			for(IColumn endpoint : endpoints )
-                			{
-                				success = sendMessage(endpoint.name(), key.name());
-                				if(success)
-                				{
-                					// Delete the endpoint from the list
-                					deleteEndPoint(endpoint.name(), key.name());
-                				}
-                				else
-                				{
-                					allsuccess = false;
-                				}
-                			}
-                		}
-                		if(endpoints == null || allsuccess)
-                		{
-                			// Delete the key itself.
-                			deleteKey(key.name());
-                		}
-                	}
-            	}
-                // Force flush now
-                columnFamilyStore_.forceFlush(false);
-
-                // Now do a major compaction
-                columnFamilyStore_.forceCompaction(null, null, 0, null);
+        Collection<IColumn> keys = hintedColumnFamily.getAllColumns();
+        if (keys != null) {
+          for (IColumn key : keys) {
+            // Get all the endpoints for teh key
+            Collection<IColumn> endpoints = key.getSubColumns();
+            allsuccess = true;
+            if (endpoints != null) {
+              for (IColumn endpoint : endpoints) {
+                success = sendMessage(endpoint.name(), key.name());
+                if (success) {
+                  // Delete the endpoint from the list
+                  deleteEndPoint(endpoint.name(), key.name());
+                } else {
+                  allsuccess = false;
+                }
+              }
             }
-            catch ( Exception ex)
-            {
-            	logger_.warn(ex.getMessage());
+            if (endpoints == null || allsuccess) {
+              // Delete the key itself.
+              deleteKey(key.name());
             }
-            logger_.debug("Finished hinted handoff ..."+columnFamilyStore_.columnFamily_);
+          }
         }
+        // Force flush now
+        columnFamilyStore_.forceFlush(false);
 
-        private void runDeliverHints(EndPoint to)
-        {
-            logger_.debug("Started  hinted handoff for endPoint " + endPoint_.getHost());
+        // Now do a major compaction
+        columnFamilyStore_.forceCompaction(null, null, 0, null);
+      } catch (Exception ex) {
+        logger_.warn(ex.getMessage());
+      }
+      logger_.debug("Finished hinted handoff ..."
+          + columnFamilyStore_.columnFamily_);
+    }
 
-            // 1. Scan through all the keys that we need to handoff
-            // 2. For each key read the list of recepients if teh endpoint matches send
-            // 3. Delete that recepient from the key if write was successful
+    private void runDeliverHints(EndPoint to) {
+      logger_.debug("Started  hinted handoff for endPoint "
+          + endPoint_.getHost());
 
-            Table table =  Table.open(DatabaseDescriptor.getTables().get(0));
-            ColumnFamily hintedColumnFamily = null;
-            boolean success = false;
-            try
-            {
-            	hintedColumnFamily = table.get(key_, Table.hints_);
-            	if(hintedColumnFamily == null)
-            		return;
-            	Collection<IColumn> keys = hintedColumnFamily.getAllColumns();
-            	if(keys != null)
-            	{
-                	for(IColumn key : keys)
-                	{
-                		// Get all the endpoints for teh key
-                		Collection<IColumn> endpoints =  key.getSubColumns();
-                		if ( endpoints != null )
-                		{
-                			for(IColumn endpoint : endpoints )
-                			{
-                				if(endpoint.name().equals(endPoint_.getHost()))
-                				{
-	                				success = sendMessage(endpoint.name(), key.name());
-	                				if(success)
-	                				{
-	                					// Delete the endpoint from the list
-	                					deleteEndPoint(endpoint.name(), key.name());
-	                				}
-                				}
-                			}
-                		}
-                		if(endpoints == null)
-                		{
-                			// Delete the key itself.
-                			deleteKey(key.name());
-                		}
-                	}
-            	}
+      // 1. Scan through all the keys that we need to handoff
+      // 2. For each key read the list of recepients if teh endpoint matches
+      // send
+      // 3. Delete that recepient from the key if write was successful
+
+      Table table = Table.open(DatabaseDescriptor.getTables().get(0));
+      ColumnFamily hintedColumnFamily = null;
+      boolean success = false;
+      try {
+        hintedColumnFamily = table.get(key_, Table.hints_);
+        if (hintedColumnFamily == null)
+          return;
+        Collection<IColumn> keys = hintedColumnFamily.getAllColumns();
+        if (keys != null) {
+          for (IColumn key : keys) {
+            // Get all the endpoints for teh key
+            Collection<IColumn> endpoints = key.getSubColumns();
+            if (endpoints != null) {
+              for (IColumn endpoint : endpoints) {
+                if (endpoint.name().equals(endPoint_.getHost())) {
+                  success = sendMessage(endpoint.name(), key.name());
+                  if (success) {
+                    // Delete the endpoint from the list
+                    deleteEndPoint(endpoint.name(), key.name());
+                  }
+                }
+              }
             }
-            catch ( Exception ex)
-            {
-            	logger_.warn(ex.getMessage());
+            if (endpoints == null) {
+              // Delete the key itself.
+              deleteKey(key.name());
             }
-            logger_.debug("Finished hinted handoff for endpoint ..." + endPoint_.getHost());
+          }
         }
-
-        public void run()
-        {
-        	if(endPoint_ == null)
-        	{
-        		runHints();
-        	}
-        	else
-        	{
-        		runDeliverHints(endPoint_);
-        	}
-
-        }
+      } catch (Exception ex) {
+        logger_.warn(ex.getMessage());
+      }
+      logger_.debug("Finished hinted handoff for endpoint ..."
+          + endPoint_.getHost());
     }
 
-    public HintedHandOffManager()
-    {
-    	StorageService.instance().registerComponentForShutdown(this);
-    }
+    public void run() {
+      if (endPoint_ == null) {
+        runHints();
+      } else {
+        runDeliverHints(endPoint_);
+      }
 
-    public void submit(ColumnFamilyStore columnFamilyStore)
-    {
-    	executor_.scheduleWithFixedDelay(new HintedHandOff(columnFamilyStore), HintedHandOffManager.intervalInMins_,
-    			HintedHandOffManager.intervalInMins_, TimeUnit.MINUTES);
     }
+  }
 
-    /*
-     * This method is used to deliver hints to a particular endpoint.
-     * When we learn that some endpoint is back up we deliver the data
-     * to him via an event driven mechanism.
-    */
-    public void deliverHints(EndPoint to)
-    {
-    	executor_.submit(new HintedHandOff(to));
-    }
+  public HintedHandOffManager() {
+    StorageService.instance().registerComponentForShutdown(this);
+  }
 
-    public void shutdown()
-    {
-    	executor_.shutdownNow();
-    }
+  public void submit(ColumnFamilyStore columnFamilyStore) {
+    executor_.scheduleWithFixedDelay(new HintedHandOff(columnFamilyStore),
+        HintedHandOffManager.intervalInMins_,
+        HintedHandOffManager.intervalInMins_, TimeUnit.MINUTES);
+  }
+
+  /*
+   * This method is used to deliver hints to a particular endpoint. When we
+   * learn that some endpoint is back up we deliver the data to him via an event
+   * driven mechanism.
+   */
+  public void deliverHints(EndPoint to) {
+    executor_.submit(new HintedHandOff(to));
+  }
+
+  public void shutdown() {
+    executor_.shutdownNow();
+  }
 }

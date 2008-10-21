@@ -22,7 +22,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SerializerAttribute
-{
-    SerializerType value();
+public @interface SerializerAttribute {
+  SerializerType value();
 }

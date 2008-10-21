@@ -18,8 +18,6 @@
 
 package com.facebook.infrastructure.db;
 
-
-public interface MemtableMBean
-{
-    public int getMemtableThreshold();
+public interface MemtableMBean {
+  public int getMemtableThreshold();
 }

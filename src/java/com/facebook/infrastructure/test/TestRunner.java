@@ -23,29 +23,29 @@ import com.facebook.infrastructure.net.Message;
 import com.facebook.infrastructure.net.MessagingService;
 import com.facebook.infrastructure.utils.LogUtil;
 
-public class TestRunner
-{
-    private static EndPoint to_ = new EndPoint("tdsearch001.sf2p.facebook.com", 7000);
-    
-    public static void main(String[] args) throws Throwable
-    {
-        LogUtil.init();
-        MessagingService.getMessagingInstance().registerVerbHandlers("TEST", new TestVerbHandler());
-        MessagingService.getMessagingInstance().listen(to_, false);
-    }
+public class TestRunner {
+  private static EndPoint to_ = new EndPoint("tdsearch001.sf2p.facebook.com",
+      7000);
+
+  public static void main(String[] args) throws Throwable {
+    LogUtil.init();
+    MessagingService.getMessagingInstance().registerVerbHandlers("TEST",
+        new TestVerbHandler());
+    MessagingService.getMessagingInstance().listen(to_, false);
+  }
 }
 
-class TestVerbHandler implements IVerbHandler
-{
-    private static EndPoint to_ = new EndPoint("tdsearch001.sf2p.facebook.com", 7000);
-    
-    public void doVerb(Message message)
-    {
-        Object[] body = message.getMessageBody();
-        byte[] bytes = (byte[])body[0];
-        System.out.println( new String(bytes) );
-        
-        Message response = message.getReply(to_, body);
-        MessagingService.getMessagingInstance().sendOneWay(response, message.getFrom());
-    }
+class TestVerbHandler implements IVerbHandler {
+  private static EndPoint to_ = new EndPoint("tdsearch001.sf2p.facebook.com",
+      7000);
+
+  public void doVerb(Message message) {
+    Object[] body = message.getMessageBody();
+    byte[] bytes = (byte[]) body[0];
+    System.out.println(new String(bytes));
+
+    Message response = message.getReply(to_, body);
+    MessagingService.getMessagingInstance().sendOneWay(response,
+        message.getFrom());
+  }
 }

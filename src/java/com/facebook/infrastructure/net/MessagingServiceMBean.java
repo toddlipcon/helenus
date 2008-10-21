@@ -19,11 +19,12 @@
 package com.facebook.infrastructure.net;
 
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public interface MessagingServiceMBean
-{   
-    public long getMessagingSerializerTaskCount();
-    public long getMessagingReceiverTaskCount();
+public interface MessagingServiceMBean {
+  public long getMessagingSerializerTaskCount();
+
+  public long getMessagingReceiverTaskCount();
 }

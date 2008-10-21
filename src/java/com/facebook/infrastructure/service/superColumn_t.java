@@ -22,6 +22,7 @@ public class superColumn_t implements TBase, java.io.Serializable {
   public List<column_t> columns;
 
   public final Isset __isset = new Isset();
+
   public static final class Isset implements java.io.Serializable {
     public boolean name = false;
     public boolean columns = false;
@@ -30,10 +31,7 @@ public class superColumn_t implements TBase, java.io.Serializable {
   public superColumn_t() {
   }
 
-  public superColumn_t(
-    String name,
-    List<column_t> columns)
-  {
+  public superColumn_t(String name, List<column_t> columns) {
     this();
     this.name = name;
     this.__isset.name = true;
@@ -45,7 +43,7 @@ public class superColumn_t implements TBase, java.io.Serializable {
     if (that == null)
       return false;
     if (that instanceof superColumn_t)
-      return this.equals((superColumn_t)that);
+      return this.equals((superColumn_t) that);
     return false;
   }
 
@@ -81,44 +79,41 @@ public class superColumn_t implements TBase, java.io.Serializable {
   public void read(TProtocol iprot) throws TException {
     TField field;
     iprot.readStructBegin();
-    while (true)
-    {
+    while (true) {
       field = iprot.readFieldBegin();
-      if (field.type == TType.STOP) { 
+      if (field.type == TType.STOP) {
         break;
       }
-      switch (field.id)
-      {
-        case 1:
-          if (field.type == TType.STRING) {
-            this.name = iprot.readString();
-            this.__isset.name = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        case 2:
-          if (field.type == TType.LIST) {
-            {
-              TList _list9 = iprot.readListBegin();
-              this.columns = new ArrayList<column_t>(_list9.size);
-              for (int _i10 = 0; _i10 < _list9.size; ++_i10)
-              {
-                column_t _elem11 = new column_t();
-                _elem11 = new column_t();
-                _elem11.read(iprot);
-                this.columns.add(_elem11);
-              }
-              iprot.readListEnd();
-            }
-            this.__isset.columns = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        default:
+      switch (field.id) {
+      case 1:
+        if (field.type == TType.STRING) {
+          this.name = iprot.readString();
+          this.__isset.name = true;
+        } else {
           TProtocolUtil.skip(iprot, field.type);
-          break;
+        }
+        break;
+      case 2:
+        if (field.type == TType.LIST) {
+          {
+            TList _list9 = iprot.readListBegin();
+            this.columns = new ArrayList<column_t>(_list9.size);
+            for (int _i10 = 0; _i10 < _list9.size; ++_i10) {
+              column_t _elem11 = new column_t();
+              _elem11 = new column_t();
+              _elem11.read(iprot);
+              this.columns.add(_elem11);
+            }
+            iprot.readListEnd();
+          }
+          this.__isset.columns = true;
+        } else {
+          TProtocolUtil.skip(iprot, field.type);
+        }
+        break;
+      default:
+        TProtocolUtil.skip(iprot, field.type);
+        break;
       }
       iprot.readFieldEnd();
     }
@@ -144,7 +139,7 @@ public class superColumn_t implements TBase, java.io.Serializable {
       oprot.writeFieldBegin(field);
       {
         oprot.writeListBegin(new TList(TType.STRUCT, this.columns.size()));
-        for (column_t _iter12 : this.columns)        {
+        for (column_t _iter12 : this.columns) {
           _iter12.write(oprot);
         }
         oprot.writeListEnd();
@@ -166,4 +161,3 @@ public class superColumn_t implements TBase, java.io.Serializable {
   }
 
 }
-

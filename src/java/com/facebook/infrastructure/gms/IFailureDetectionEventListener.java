@@ -21,24 +21,28 @@ package com.facebook.infrastructure.gms;
 import com.facebook.infrastructure.net.EndPoint;
 
 /**
- * Implemented by the Gossiper to either convict/suspect an endpoint
- * based on the PHI calculated by the Failure Detector on the inter-arrival
- * times of the heart beats.
- *  
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Implemented by the Gossiper to either convict/suspect an endpoint based on
+ * the PHI calculated by the Failure Detector on the inter-arrival times of the
+ * heart beats.
+ * 
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public interface IFailureDetectionEventListener
-{  
-    /**
-     * Convict the specified endpoint.
-     * @param ep endpoint to be convicted
-     */
-    public void convict(EndPoint ep);
-    
-    /**
-     * Suspect the specified endpoint.
-     * @param ep endpoint to be suspected.
-     */
-    public void suspect(EndPoint ep);    
+public interface IFailureDetectionEventListener {
+  /**
+   * Convict the specified endpoint.
+   * 
+   * @param ep
+   *          endpoint to be convicted
+   */
+  public void convict(EndPoint ep);
+
+  /**
+   * Suspect the specified endpoint.
+   * 
+   * @param ep
+   *          endpoint to be suspected.
+   */
+  public void suspect(EndPoint ep);
 }

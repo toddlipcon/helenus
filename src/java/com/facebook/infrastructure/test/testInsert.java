@@ -24,93 +24,75 @@ import com.facebook.infrastructure.config.DatabaseDescriptor;
 import com.facebook.infrastructure.db.RowMutation;
 import com.facebook.infrastructure.db.Table;
 
-public class testInsert
-{
-    static void insert(String sKey, String sColumnFamily, String sColumn,
-            String sDataToInsert)
-    {
-        // get the table name
-        String sTableName = DatabaseDescriptor.getTables().get(0);
+public class testInsert {
+  static void insert(String sKey, String sColumnFamily, String sColumn,
+      String sDataToInsert) {
+    // get the table name
+    String sTableName = DatabaseDescriptor.getTables().get(0);
 
-        try
-        {
-            // do the insert first
-            RowMutation rm = new RowMutation(sTableName, sKey);
-            rm.add(sColumnFamily + ":" + sColumn, sDataToInsert.getBytes(), 0);
-            rm.apply();
-            System.out.println("Finished apply ...");
+    try {
+      // do the insert first
+      RowMutation rm = new RowMutation(sTableName, sKey);
+      rm.add(sColumnFamily + ":" + sColumn, sDataToInsert.getBytes(), 0);
+      rm.apply();
+      System.out.println("Finished apply ...");
 
-        }
-        catch (Exception e)
-        {
-            // write failed - return the reason
-            e.printStackTrace();
-        }
+    } catch (Exception e) {
+      // write failed - return the reason
+      e.printStackTrace();
     }
+  }
 
-    static void bulkInsertSuperColumns(String columnFamily, int numKeys,
-            int startCols, int endCol, int startSubCol, int endSubCol)
-    {
-        try
-        {
-            Random random = new Random();
-            byte[] bytes = new byte[1];
+  static void bulkInsertSuperColumns(String columnFamily, int numKeys,
+      int startCols, int endCol, int startSubCol, int endSubCol) {
+    try {
+      Random random = new Random();
+      byte[] bytes = new byte[1];
 
-            // insert data for the super columns
-            for (int i = 1; i < numKeys + 1; ++i)
-            {
-                String key = new Integer(i).toString();
-                RowMutation rm = new RowMutation("Mailbox", key);
-                for (int j = startCols; j < endCol; ++j)
-                {
-                    for (int k = startSubCol; k < endSubCol; ++k)
-                    {
-                        random.nextBytes(bytes);
-                        rm.add(columnFamily + ":" + "SuperColumn-" + j + ":"
-                                + "Column-" + k, bytes, k);
-                    }
-                }
-                rm.apply();
-            }
-
-            System.out.println("Write done ...");
-            Table table = Table.open("Mailbox");
-            table.flush(false);
+      // insert data for the super columns
+      for (int i = 1; i < numKeys + 1; ++i) {
+        String key = new Integer(i).toString();
+        RowMutation rm = new RowMutation("Mailbox", key);
+        for (int j = startCols; j < endCol; ++j) {
+          for (int k = startSubCol; k < endSubCol; ++k) {
+            random.nextBytes(bytes);
+            rm.add(columnFamily + ":" + "SuperColumn-" + j + ":" + "Column-"
+                + k, bytes, k);
+          }
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        rm.apply();
+      }
+
+      System.out.println("Write done ...");
+      Table table = Table.open("Mailbox");
+      table.flush(false);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+  }
 
-    static void bulkInsertSimpleColumns(String columnFamily, int numKeys,
-            int startCol, int endCol)
-    {
-        try
-        {
-            Random random = new Random();
-            byte[] bytes = new byte[24];
+  static void bulkInsertSimpleColumns(String columnFamily, int numKeys,
+      int startCol, int endCol) {
+    try {
+      Random random = new Random();
+      byte[] bytes = new byte[24];
 
-            // first insert data for simple columns
-            for (int i = 1; i < numKeys + 1; ++i)
-            {
-                String key = new Integer(i).toString();
-                RowMutation rm = new RowMutation("Mailbox", key);
-                for (int j = startCol; j < endCol; ++j)
-                {
-                    random.nextBytes(bytes);
-                    rm.add(columnFamily + ":" + "Column-" + j, bytes, j);
-                }
-                rm.apply();
-            }
-
-            System.out.println("Write done ...");
-            Table table = Table.open("Mailbox");
-            table.flush(false);
+      // first insert data for simple columns
+      for (int i = 1; i < numKeys + 1; ++i) {
+        String key = new Integer(i).toString();
+        RowMutation rm = new RowMutation("Mailbox", key);
+        for (int j = startCol; j < endCol; ++j) {
+          random.nextBytes(bytes);
+          rm.add(columnFamily + ":" + "Column-" + j, bytes, j);
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        rm.apply();
+      }
+
+      System.out.println("Write done ...");
+      Table table = Table.open("Mailbox");
+      table.flush(false);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+  }
 }

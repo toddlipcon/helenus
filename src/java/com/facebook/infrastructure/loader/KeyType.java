@@ -5,7 +5,6 @@
 // Generated on: 2007.10.19 at 01:36:41 PM PDT 
 //
 
-
 package com.facebook.infrastructure.loader;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,113 +12,102 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for KeyType complex type.
+ * <p>
+ * Java class for KeyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
- * &lt;complexType name="KeyType">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="OptimizeIt" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="Combiner" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="Fields" type="{}FieldCollection"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name=&quot;KeyType&quot;&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base=&quot;{http://www.w3.org/2001/XMLSchema}anyType&quot;&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name=&quot;OptimizeIt&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}boolean&quot;/&gt;
+ *         &lt;element name=&quot;Combiner&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot;/&gt;
+ *         &lt;element name=&quot;Fields&quot; type=&quot;{}FieldCollection&quot;/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "KeyType", propOrder = {
-    "optimizeIt",
-    "combiner",
-    "fields"
-})
+@XmlType(name = "KeyType", propOrder = { "optimizeIt", "combiner", "fields" })
 public class KeyType {
 
-    @XmlElement(name = "OptimizeIt", required = true, type = Boolean.class, nillable = true)
-    protected Boolean optimizeIt;
-    @XmlElement(name = "Combiner", required = true)
-    protected String combiner;
-    @XmlElement(name = "Fields", required = true)
-    protected FieldCollection fields;
+  @XmlElement(name = "OptimizeIt", required = true, type = Boolean.class, nillable = true)
+  protected Boolean optimizeIt;
+  @XmlElement(name = "Combiner", required = true)
+  protected String combiner;
+  @XmlElement(name = "Fields", required = true)
+  protected FieldCollection fields;
 
-    /**
-     * Gets the value of the optimizeIt property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isOptimizeIt() {
-        return optimizeIt;
-    }
+  /**
+   * Gets the value of the optimizeIt property.
+   * 
+   * @return possible object is {@link Boolean }
+   * 
+   */
+  public Boolean isOptimizeIt() {
+    return optimizeIt;
+  }
 
-    /**
-     * Sets the value of the optimizeIt property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setOptimizeIt(Boolean value) {
-        this.optimizeIt = value;
-    }
+  /**
+   * Sets the value of the optimizeIt property.
+   * 
+   * @param value
+   *          allowed object is {@link Boolean }
+   * 
+   */
+  public void setOptimizeIt(Boolean value) {
+    this.optimizeIt = value;
+  }
 
-    /**
-     * Gets the value of the combiner property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCombiner() {
-        return combiner;
-    }
+  /**
+   * Gets the value of the combiner property.
+   * 
+   * @return possible object is {@link String }
+   * 
+   */
+  public String getCombiner() {
+    return combiner;
+  }
 
-    /**
-     * Sets the value of the combiner property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCombiner(String value) {
-        this.combiner = value;
-    }
+  /**
+   * Sets the value of the combiner property.
+   * 
+   * @param value
+   *          allowed object is {@link String }
+   * 
+   */
+  public void setCombiner(String value) {
+    this.combiner = value;
+  }
 
-    /**
-     * Gets the value of the fields property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FieldCollection }
-     *     
-     */
-    public FieldCollection getFields() {
-        return fields;
-    }
+  /**
+   * Gets the value of the fields property.
+   * 
+   * @return possible object is {@link FieldCollection }
+   * 
+   */
+  public FieldCollection getFields() {
+    return fields;
+  }
 
-    /**
-     * Sets the value of the fields property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FieldCollection }
-     *     
-     */
-    public void setFields(FieldCollection value) {
-        this.fields = value;
-    }
+  /**
+   * Sets the value of the fields property.
+   * 
+   * @param value
+   *          allowed object is {@link FieldCollection }
+   * 
+   */
+  public void setFields(FieldCollection value) {
+    this.fields = value;
+  }
 
 }

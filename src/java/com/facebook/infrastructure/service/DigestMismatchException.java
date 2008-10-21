@@ -17,14 +17,14 @@
  */
 
 package com.facebook.infrastructure.service;
+
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class DigestMismatchException extends Exception
-{
-	public DigestMismatchException(String message)
-	{
-		super(message);
-	}
+public class DigestMismatchException extends Exception {
+  public DigestMismatchException(String message) {
+    super(message);
+  }
 }

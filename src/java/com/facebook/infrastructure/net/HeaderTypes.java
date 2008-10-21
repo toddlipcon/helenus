@@ -17,12 +17,13 @@
  */
 
 package com.facebook.infrastructure.net;
+
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class HeaderTypes 
-{
-    public final static String TASK_PROFILE_CHAIN = "TASK_PROFILE_CHAIN";
-    public static String TASK_ID = "TASK_ID";
+public class HeaderTypes {
+  public final static String TASK_PROFILE_CHAIN = "TASK_PROFILE_CHAIN";
+  public static String TASK_ID = "TASK_ID";
 }

@@ -18,7 +18,6 @@
 
 package com.facebook.infrastructure.gms;
 
-public interface FailureDetectorMBean
-{
-    public void dumpInterArrivalTimes();
+public interface FailureDetectorMBean {
+  public void dumpInterArrivalTimes();
 }

@@ -27,196 +27,165 @@ import java.util.List;
 import java.util.Map;
 
 import com.facebook.infrastructure.io.ICompactSerializer;
+
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class Message implements java.io.Serializable
-{    
-    static final long serialVersionUID = 6329198792470413221L;
-    private static ICompactSerializer<Message> serializer_;
-    
-    static
-    {
-        serializer_ = new MessageSerializer();        
-    }
-    
-    public static ICompactSerializer<Message> serializer()
-    {
-        return serializer_;
-    }
-    
-    Header header_;
-    private Object[] body_ = new Object[0];
-    
-    /* Ctor for JAXB. DO NOT DELETE */
-    private Message()
-    {
-    }
+public class Message implements java.io.Serializable {
+  static final long serialVersionUID = 6329198792470413221L;
+  private static ICompactSerializer<Message> serializer_;
 
-    protected Message(String id, EndPoint from, String messageType, String verb, Object[] body)
-    {
-        header_ = new Header(id, from, messageType, verb);
-        body_ = body;
-    }
-    
-    protected Message(Header header, Object[] body)
-    {
-        header_ = header;
-        body_ = body;
-    }
+  static {
+    serializer_ = new MessageSerializer();
+  }
 
-    public Message(EndPoint from, String messageType, String verb, Object[] body)
-    {
-        header_ = new Header(from, messageType, verb);
-        body_ = body;
-    }    
-    
-    public byte[] getHeader(Object key)
-    {
-        return header_.getDetail(key);
-    }
-    
-    public void removeHeader(Object key)
-    {
-        header_.removeDetail(key);
-    }
-    
-    public void setMessageType(String type)
-    {
-        header_.setMessageType(type);
-    }
+  public static ICompactSerializer<Message> serializer() {
+    return serializer_;
+  }
 
-    public void setMessageVerb(String verb)
-    {
-        header_.setMessageVerb(verb);
-    }
+  Header header_;
+  private Object[] body_ = new Object[0];
 
-    public void addHeader(String key, byte[] value)
-    {
-        header_.addDetail(key, value);
-    }
-    
-    public Map<String, byte[]> getHeaders()
-    {
-        return header_.getDetails();
-    }
+  /* Ctor for JAXB. DO NOT DELETE */
+  private Message() {
+  }
 
-    public Object[] getMessageBody()
-    {
-        return body_;
-    }
-    
-    public void setMessageBody(Object[] body)
-    {
-        body_ = body;
-    }
+  protected Message(String id, EndPoint from, String messageType, String verb,
+      Object[] body) {
+    header_ = new Header(id, from, messageType, verb);
+    body_ = body;
+  }
 
-    public EndPoint getFrom()
-    {
-        return header_.getFrom();
-    }
+  protected Message(Header header, Object[] body) {
+    header_ = header;
+    body_ = body;
+  }
 
-    public String getMessageType()
-    {
-        return header_.getMessageType();
-    }
+  public Message(EndPoint from, String messageType, String verb, Object[] body) {
+    header_ = new Header(from, messageType, verb);
+    body_ = body;
+  }
 
-    public String getVerb()
-    {
-        return header_.getVerb();
-    }
+  public byte[] getHeader(Object key) {
+    return header_.getDetail(key);
+  }
 
-    public String getMessageId()
-    {
-        return header_.getMessageId();
-    }
-    
-    public Class[] getTypes()
-    {
-        List<Class> types = new ArrayList<Class>();
-        
-        for ( int i = 0; i < body_.length; ++i )
-        {
-            if ( body_[i].getClass().isArray() )
-            {
-                int size = Array.getLength(body_[i]);
-                if ( size > 0 )
-                {
-                    types.add( Array.get( body_[i], 0).getClass() );
-                }
-            }
-            else
-            {
-                types.add(body_[i].getClass());
-            }
+  public void removeHeader(Object key) {
+    header_.removeDetail(key);
+  }
+
+  public void setMessageType(String type) {
+    header_.setMessageType(type);
+  }
+
+  public void setMessageVerb(String verb) {
+    header_.setMessageVerb(verb);
+  }
+
+  public void addHeader(String key, byte[] value) {
+    header_.addDetail(key, value);
+  }
+
+  public Map<String, byte[]> getHeaders() {
+    return header_.getDetails();
+  }
+
+  public Object[] getMessageBody() {
+    return body_;
+  }
+
+  public void setMessageBody(Object[] body) {
+    body_ = body;
+  }
+
+  public EndPoint getFrom() {
+    return header_.getFrom();
+  }
+
+  public String getMessageType() {
+    return header_.getMessageType();
+  }
+
+  public String getVerb() {
+    return header_.getVerb();
+  }
+
+  public String getMessageId() {
+    return header_.getMessageId();
+  }
+
+  public Class[] getTypes() {
+    List<Class> types = new ArrayList<Class>();
+
+    for (int i = 0; i < body_.length; ++i) {
+      if (body_[i].getClass().isArray()) {
+        int size = Array.getLength(body_[i]);
+        if (size > 0) {
+          types.add(Array.get(body_[i], 0).getClass());
         }
-        
-        return types.toArray( new Class[0] );
-    }    
-
-    void setMessageId(String id)
-    {
-        header_.setMessageId(id);
-    }    
-
-    public Message getReply(EndPoint from, Object[] args)
-    {        
-        Message response = new Message(getMessageId(),
-                                       from,
-                                       MessagingService.responseStage_,
-                                       MessagingService.responseVerbHandler_,
-                                       args);
-        return response;
+      } else {
+        types.add(body_[i].getClass());
+      }
     }
-    
-    public String toString()
-    {
-        StringBuffer sbuf = new StringBuffer("");
-        String separator = System.getProperty("line.separator");
-        sbuf.append("ID:" + getMessageId());
-        sbuf.append(separator);
-        sbuf.append("FROM:" + getFrom());
-        sbuf.append(separator);
-        sbuf.append("TYPE:" + getMessageType());
-        sbuf.append(separator);
-        sbuf.append("VERB:" + getVerb());
-        sbuf.append(separator);
-        sbuf.append("BODY TYPE:" + getBodyTypes());        
-        sbuf.append(separator);
-        return sbuf.toString();
+
+    return types.toArray(new Class[0]);
+  }
+
+  void setMessageId(String id) {
+    header_.setMessageId(id);
+  }
+
+  public Message getReply(EndPoint from, Object[] args) {
+    Message response = new Message(getMessageId(), from,
+        MessagingService.responseStage_, MessagingService.responseVerbHandler_,
+        args);
+    return response;
+  }
+
+  public String toString() {
+    StringBuffer sbuf = new StringBuffer("");
+    String separator = System.getProperty("line.separator");
+    sbuf.append("ID:" + getMessageId());
+    sbuf.append(separator);
+    sbuf.append("FROM:" + getFrom());
+    sbuf.append(separator);
+    sbuf.append("TYPE:" + getMessageType());
+    sbuf.append(separator);
+    sbuf.append("VERB:" + getVerb());
+    sbuf.append(separator);
+    sbuf.append("BODY TYPE:" + getBodyTypes());
+    sbuf.append(separator);
+    return sbuf.toString();
+  }
+
+  private String getBodyTypes() {
+    StringBuffer sbuf = new StringBuffer("");
+    Class[] types = getTypes();
+    for (int i = 0; i < types.length; ++i) {
+      sbuf.append(types[i].getName());
+      sbuf.append(" ");
     }
-    
-    private String getBodyTypes()
-    {
-        StringBuffer sbuf = new StringBuffer("");
-        Class[] types = getTypes();
-        for ( int i = 0; i < types.length; ++i )
-        {
-            sbuf.append(types[i].getName());
-            sbuf.append(" ");         
-        }
-        return sbuf.toString();
-    }    
+    return sbuf.toString();
+  }
 }
 
-class MessageSerializer implements ICompactSerializer<Message>
-{
-    public void serialize(Message t, DataOutputStream dos) throws IOException
-    {
-        Header.serializer().serialize( t.header_, dos);
-        byte[] bytes = (byte[])t.getMessageBody()[0];
-        dos.writeInt(bytes.length);
-        dos.write(bytes);
-    }
+class MessageSerializer implements ICompactSerializer<Message> {
+  public void serialize(Message t, DataOutputStream dos) throws IOException {
+    Header.serializer().serialize(t.header_, dos);
+    byte[] bytes = (byte[]) t.getMessageBody()[0];
+    dos.writeInt(bytes.length);
+    dos.write(bytes);
+  }
 
-    public Message deserialize(DataInputStream dis) throws IOException
-    {
-        Header header = Header.serializer().deserialize(dis);
-        int size = dis.readInt();
-        byte[] bytes = new byte[size];
-        dis.readFully(bytes);
-        // return new Message(header.getMessageId(), header.getFrom(), header.getMessageType(), header.getVerb(), new Object[]{bytes});
-        return new Message(header, new Object[]{bytes});
-    }
+  public Message deserialize(DataInputStream dis) throws IOException {
+    Header header = Header.serializer().deserialize(dis);
+    int size = dis.readInt();
+    byte[] bytes = new byte[size];
+    dis.readFully(bytes);
+    // return new Message(header.getMessageId(), header.getFrom(),
+    // header.getMessageType(), header.getVerb(), new Object[]{bytes});
+    return new Message(header, new Object[] { bytes });
+  }
 }

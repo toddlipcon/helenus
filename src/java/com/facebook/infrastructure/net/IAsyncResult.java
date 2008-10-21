@@ -22,12 +22,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public interface IAsyncResult
-{
-    public Object[] get();
-    public boolean isDone();
-    public Object[] get(long timeout, TimeUnit tu) throws TimeoutException; 
+public interface IAsyncResult {
+  public Object[] get();
+
+  public boolean isDone();
+
+  public Object[] get(long timeout, TimeUnit tu) throws TimeoutException;
 }

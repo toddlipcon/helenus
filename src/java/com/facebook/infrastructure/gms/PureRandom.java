@@ -22,63 +22,53 @@ import java.util.Random;
 
 import com.facebook.infrastructure.utils.BitSet;
 
-
 /**
- * Implementation of a PureRandomNumber generator. Use this class cautiously. Not
- * for general purpose use. Currently this is used by the Gossiper to choose a random
- * endpoint to Gossip to.
- *
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Implementation of a PureRandomNumber generator. Use this class cautiously.
+ * Not for general purpose use. Currently this is used by the Gossiper to choose
+ * a random endpoint to Gossip to.
+ * 
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-class PureRandom extends Random
-{
-    private BitSet bs_ = new BitSet();
-    private int lastUb_;
+class PureRandom extends Random {
+  private BitSet bs_ = new BitSet();
+  private int lastUb_;
 
-    PureRandom()
-    {
-        super();
+  PureRandom() {
+    super();
+  }
+
+  public int nextInt(int ub) {
+    if (ub <= 0)
+      throw new IllegalArgumentException("ub must be positive");
+
+    if (lastUb_ != ub) {
+      bs_.clear();
+      lastUb_ = ub;
+    } else if (bs_.cardinality() == ub) {
+      bs_.clear();
     }
 
-    public int nextInt(int ub)
-    {
-    	if (ub <= 0)
-    		throw new IllegalArgumentException("ub must be positive");
-
-        if ( lastUb_ !=  ub )
-        {
-            bs_.clear();
-            lastUb_ = ub;
-        }
-        else if(bs_.cardinality() == ub)
-        {
-        	bs_.clear();
-        }
-
-        int value = super.nextInt(ub);
-        while ( bs_.get(value) )
-        {
-            value = super.nextInt(ub);
-        }
-        bs_.set(value);
-        return value;
+    int value = super.nextInt(ub);
+    while (bs_.get(value)) {
+      value = super.nextInt(ub);
     }
+    bs_.set(value);
+    return value;
+  }
 
-    public static void main(String[] args) throws Throwable
-    {
-    	Random pr = new PureRandom();
-        int ubs[] = new int[] { 2, 3, 1, 10, 5, 0};
+  public static void main(String[] args) throws Throwable {
+    Random pr = new PureRandom();
+    int ubs[] = new int[] { 2, 3, 1, 10, 5, 0 };
 
-        for (int ub : ubs)
-        {
-            System.out.println("UB: " + String.valueOf(ub));
-            for (int j = 0; j < 10; j++)
-            {
-                int junk = pr.nextInt(ub);
-                // Do something with junk so JVM doesn't optimize away
-                System.out.println(junk);
-            }
-        }
+    for (int ub : ubs) {
+      System.out.println("UB: " + String.valueOf(ub));
+      for (int j = 0; j < 10; j++) {
+        int junk = pr.nextInt(ub);
+        // Do something with junk so JVM doesn't optimize away
+        System.out.println(junk);
+      }
     }
+  }
 }

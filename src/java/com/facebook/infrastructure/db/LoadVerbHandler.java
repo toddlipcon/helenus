@@ -28,41 +28,36 @@ import com.facebook.infrastructure.service.StorageService;
 import com.facebook.infrastructure.utils.LogUtil;
 
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class LoadVerbHandler implements IVerbHandler
-{
-    private static Logger logger_ = Logger.getLogger(LoadVerbHandler.class);    
-    
-    public void doVerb(Message message)
-    { 
-        try
-        {
-	        Object[] body = message.getMessageBody();
-	        RowMutationMessage rmMsg = (RowMutationMessage)body[0];
-	        RowMutation rm = rmMsg.getRowMutation();
-	
-			EndPoint[] endpoints = StorageService.instance().getNStorageEndPoint(rm.key());
-	
-			Message messageInternal = new Message(StorageService.getLocalStorageEndPoint(), 
-	                StorageService.mutationStage_,
-					StorageService.mutationVerbHandler_, 
-	                new Object[]{ rmMsg }
-	        );
-            
-            StringBuilder sb = new StringBuilder();
-			for(EndPoint endPoint : endpoints)
-			{                
-                sb.append(endPoint);
-				MessagingService.getMessagingInstance().sendOneWay(messageInternal, endPoint);
-			}
-            logger_.debug("Sent data to " + sb.toString());            
-        }        
-        catch ( Exception e )
-        {
-            logger_.debug(LogUtil.throwableToString(e));            
-        }        
+public class LoadVerbHandler implements IVerbHandler {
+  private static Logger logger_ = Logger.getLogger(LoadVerbHandler.class);
+
+  public void doVerb(Message message) {
+    try {
+      Object[] body = message.getMessageBody();
+      RowMutationMessage rmMsg = (RowMutationMessage) body[0];
+      RowMutation rm = rmMsg.getRowMutation();
+
+      EndPoint[] endpoints = StorageService.instance().getNStorageEndPoint(
+          rm.key());
+
+      Message messageInternal = new Message(StorageService
+          .getLocalStorageEndPoint(), StorageService.mutationStage_,
+          StorageService.mutationVerbHandler_, new Object[] { rmMsg });
+
+      StringBuilder sb = new StringBuilder();
+      for (EndPoint endPoint : endpoints) {
+        sb.append(endPoint);
+        MessagingService.getMessagingInstance().sendOneWay(messageInternal,
+            endPoint);
+      }
+      logger_.debug("Sent data to " + sb.toString());
+    } catch (Exception e) {
+      logger_.debug(LogUtil.throwableToString(e));
     }
+  }
 
 }

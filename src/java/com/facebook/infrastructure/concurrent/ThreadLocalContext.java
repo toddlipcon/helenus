@@ -19,24 +19,22 @@
 package com.facebook.infrastructure.concurrent;
 
 /**
- * Use this implementation over Java's ThreadLocal or InheritableThreadLocal when 
- * you need to add multiple key/value pairs into ThreadLocalContext for a given thread.
+ * Use this implementation over Java's ThreadLocal or InheritableThreadLocal
+ * when you need to add multiple key/value pairs into ThreadLocalContext for a
+ * given thread.
  * 
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
+public class ThreadLocalContext {
+  private static InheritableThreadLocal<Context> tls_ = new InheritableThreadLocal<Context>();
 
-public class ThreadLocalContext
-{
-    private static InheritableThreadLocal<Context> tls_ = new InheritableThreadLocal<Context>();
+  public static void put(Context value) {
+    tls_.set(value);
+  }
 
-    public static void put(Context value)
-    {
-        tls_.set(value);
-    }
-
-    public static Context get()
-    {
-        return tls_.get();
-    }
+  public static Context get() {
+    return tls_.get();
+  }
 }

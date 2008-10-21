@@ -28,105 +28,90 @@ import java.util.TreeSet;
 import com.facebook.infrastructure.db.ColumnComparatorFactory.ComparatorType;
 
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-class EfficientBidiMap implements Serializable
-{
-    private Map<String, IColumn> map_ = new HashMap<String, IColumn>();
-    private SortedSet<IColumn> sortedSet_;
-    private Comparator<IColumn> columnComparator_;
+class EfficientBidiMap implements Serializable {
+  private Map<String, IColumn> map_ = new HashMap<String, IColumn>();
+  private SortedSet<IColumn> sortedSet_;
+  private Comparator<IColumn> columnComparator_;
 
-    EfficientBidiMap()
-    {
-    	this(ColumnComparatorFactory.getComparator(ComparatorType.TIMESTAMP));
-    }
+  EfficientBidiMap() {
+    this(ColumnComparatorFactory.getComparator(ComparatorType.TIMESTAMP));
+  }
 
-    EfficientBidiMap(Comparator<IColumn> columnComparator)
-    {
-    	columnComparator_ = columnComparator;
-    	sortedSet_ = new TreeSet<IColumn>(columnComparator);
-    }
+  EfficientBidiMap(Comparator<IColumn> columnComparator) {
+    columnComparator_ = columnComparator;
+    sortedSet_ = new TreeSet<IColumn>(columnComparator);
+  }
 
-    EfficientBidiMap(Map<String, IColumn> map, SortedSet<IColumn> set, Comparator<IColumn> comparator)
-    {
-    	map_ = map;
-    	sortedSet_ = set;
-    	columnComparator_ = comparator;
-    }
+  EfficientBidiMap(Map<String, IColumn> map, SortedSet<IColumn> set,
+      Comparator<IColumn> comparator) {
+    map_ = map;
+    sortedSet_ = set;
+    columnComparator_ = comparator;
+  }
 
-    EfficientBidiMap(Object[] objects, Comparator<IColumn> columnComparator)
-    {
-    	columnComparator_ = columnComparator;
-    	sortedSet_ = new TreeSet<IColumn>(columnComparator);
-        for ( Object object : objects )
-        {
-            IColumn column = (IColumn)object;
-            sortedSet_.add(column);
-            map_.put(column.name(), column);
-        }
+  EfficientBidiMap(Object[] objects, Comparator<IColumn> columnComparator) {
+    columnComparator_ = columnComparator;
+    sortedSet_ = new TreeSet<IColumn>(columnComparator);
+    for (Object object : objects) {
+      IColumn column = (IColumn) object;
+      sortedSet_.add(column);
+      map_.put(column.name(), column);
     }
+  }
 
-    public Comparator<IColumn> getComparator()
-    {
-    	return columnComparator_;
-    }
+  public Comparator<IColumn> getComparator() {
+    return columnComparator_;
+  }
 
-    public void put(String key, IColumn column)
-    {
-        map_.put(key, column);
-        sortedSet_.add(column);
-    }
+  public void put(String key, IColumn column) {
+    map_.put(key, column);
+    sortedSet_.add(column);
+  }
 
-    public IColumn get(String key)
-    {
-        return map_.get(key);
-    }
+  public IColumn get(String key) {
+    return map_.get(key);
+  }
 
-    public SortedSet<IColumn> getSortedColumns()
-    {
-//    	SortedSet<IColumn> columns =  new TreeSet<IColumn>(columnComparator_);
-//        Set<String> keySet = map_.keySet();
-//        for(String key: keySet)
-//        {
-//        	columns.add(map_.get(key));
-//        }
-//    	return columns;
-    	return sortedSet_;
-    }
+  public SortedSet<IColumn> getSortedColumns() {
+    // SortedSet<IColumn> columns = new TreeSet<IColumn>(columnComparator_);
+    // Set<String> keySet = map_.keySet();
+    // for(String key: keySet)
+    // {
+    // columns.add(map_.get(key));
+    // }
+    // return columns;
+    return sortedSet_;
+  }
 
-    public Map<String, IColumn> getColumns()
-    {
-        return map_;
-    }
+  public Map<String, IColumn> getColumns() {
+    return map_;
+  }
 
-    public int size()
-    {
-    	return map_.size();
-    }
+  public int size() {
+    return map_.size();
+  }
 
-    public void remove (String columnName)
-    {
-    	sortedSet_.remove(map_.get(columnName));
-    	map_.remove(columnName);
-    }
-    void clear()
-    {
-    	map_.clear();
-    	sortedSet_.clear();
-    }
+  public void remove(String columnName) {
+    sortedSet_.remove(map_.get(columnName));
+    map_.remove(columnName);
+  }
 
-    ColumnComparatorFactory.ComparatorType getComparatorType()
-	{
-		return ((AbstractColumnComparator)columnComparator_).getComparatorType();
-	}
+  void clear() {
+    map_.clear();
+    sortedSet_.clear();
+  }
 
-    EfficientBidiMap cloneMe()
-    {
-    	Map<String, IColumn> map = new HashMap<String, IColumn>(map_);
-    	SortedSet<IColumn> set = new TreeSet<IColumn>(sortedSet_);
-    	return new EfficientBidiMap(map, set, columnComparator_);
-    }
+  ColumnComparatorFactory.ComparatorType getComparatorType() {
+    return ((AbstractColumnComparator) columnComparator_).getComparatorType();
+  }
+
+  EfficientBidiMap cloneMe() {
+    Map<String, IColumn> map = new HashMap<String, IColumn>(map_);
+    SortedSet<IColumn> set = new TreeSet<IColumn>(sortedSet_);
+    return new EfficientBidiMap(map, set, columnComparator_);
+  }
 }
-
-

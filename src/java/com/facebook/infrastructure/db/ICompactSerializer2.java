@@ -24,41 +24,45 @@ import java.io.IOException;
 import com.facebook.infrastructure.io.ICompactSerializer;
 
 /**
- * This interface is an extension of the ICompactSerializer which allows for partial deserialization
- * of a type.
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * This interface is an extension of the ICompactSerializer which allows for
+ * partial deserialization of a type. Author : Avinash Lakshman (
+ * alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
  */
 
-public interface ICompactSerializer2<T> extends ICompactSerializer<T>
-{   
-	/**
-     * Returns an instance of an IColumn which contains only the 
-     * columns that are required. This is specified in the <i>columnNames</i>
-     * argument.
-     * 
-     * @param dis DataInputStream from which we need to deserialize.
-     * @param columnNames list of items that are required.
-     * @throws IOException
-     * @return type which contains the specified items.
-	*/
-	public T deserialize(DataInputStream dis, IFilter filter) throws IOException;
-    
-    /**
-     * This method is used to deserialize just the specified field from 
-     * the serialized stream.
-     * 
-     * @param dis DataInputStream from which we need to deserialize.
-     * @param name name of the desired field.
-     * @param count count of the number of fields required.
-     * @throws IOException
-     * @return the deserialized type.
-    */
-	public T deserialize(DataInputStream dis, String name, IFilter filter) throws IOException;
-    
-    /**
-     * 
-     * @param dis
-     * @throws IOException
-     */
-    public void skip(DataInputStream dis) throws IOException;
+public interface ICompactSerializer2<T> extends ICompactSerializer<T> {
+  /**
+   * Returns an instance of an IColumn which contains only the columns that are
+   * required. This is specified in the <i>columnNames</i> argument.
+   * 
+   * @param dis
+   *          DataInputStream from which we need to deserialize.
+   * @param columnNames
+   *          list of items that are required.
+   * @throws IOException
+   * @return type which contains the specified items.
+   */
+  public T deserialize(DataInputStream dis, IFilter filter) throws IOException;
+
+  /**
+   * This method is used to deserialize just the specified field from the
+   * serialized stream.
+   * 
+   * @param dis
+   *          DataInputStream from which we need to deserialize.
+   * @param name
+   *          name of the desired field.
+   * @param count
+   *          count of the number of fields required.
+   * @throws IOException
+   * @return the deserialized type.
+   */
+  public T deserialize(DataInputStream dis, String name, IFilter filter)
+      throws IOException;
+
+  /**
+   * 
+   * @param dis
+   * @throws IOException
+   */
+  public void skip(DataInputStream dis) throws IOException;
 }

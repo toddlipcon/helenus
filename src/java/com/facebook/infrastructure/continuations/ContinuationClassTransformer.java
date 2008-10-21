@@ -30,45 +30,43 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
 
-
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-class ContinuationClassTransformer implements ClassFileTransformer
-{
-    private static final String targetAnnotation_ = "Suspendable";
-    private ResourceTransformer transformer_;
-    private Set<String> classes_ = new HashSet<String>();
-    
-    public ContinuationClassTransformer(String agentArguments, ResourceTransformer transformer)
-    {
-        super();
-        transformer_ = transformer;        
+class ContinuationClassTransformer implements ClassFileTransformer {
+  private static final String targetAnnotation_ = "Suspendable";
+  private ResourceTransformer transformer_;
+  private Set<String> classes_ = new HashSet<String>();
+
+  public ContinuationClassTransformer(String agentArguments,
+      ResourceTransformer transformer) {
+    super();
+    transformer_ = transformer;
+  }
+
+  public byte[] transform(ClassLoader classLoader, String className,
+      Class redefiningClass, ProtectionDomain domain, byte[] bytes)
+      throws IllegalClassFormatException {
+    /*
+     * Use the ASM class reader to see which classes support the Suspendable
+     * annotation. If they do then those classes need to have their bytecodes
+     * transformed for Continuation support.
+     */
+    ClassReader classReader = new ClassReader(bytes);
+    ClassNode classNode = new ClassNode();
+    classReader.accept(classNode, true);
+    List<AnnotationNode> annotationNodes = classNode.visibleAnnotations;
+
+    for (AnnotationNode annotationNode : annotationNodes) {
+      if (annotationNode.desc
+          .indexOf(ContinuationClassTransformer.targetAnnotation_) != -1) {
+        System.out.println("Transforming class " + className);
+        bytes = transformer_.transform(bytes);
+      }
     }
-    
-    public byte[] transform(ClassLoader classLoader, String className, Class redefiningClass, ProtectionDomain domain, byte[] bytes) throws IllegalClassFormatException
-    {                       
-        /*
-         * Use the ASM class reader to see which classes support
-         * the Suspendable annotation. If they do then those 
-         * classes need to have their bytecodes transformed for
-         * Continuation support. 
-        */
-        ClassReader classReader = new ClassReader(bytes);
-        ClassNode classNode = new ClassNode();
-        classReader.accept(classNode, true);       
-        List<AnnotationNode> annotationNodes = classNode.visibleAnnotations;
-        
-        for( AnnotationNode annotationNode : annotationNodes )
-        {            
-            if ( annotationNode.desc.indexOf(ContinuationClassTransformer.targetAnnotation_) != -1 )
-            {
-                System.out.println("Transforming class " + className);
-                bytes = transformer_.transform(bytes);
-            }
-        }
-                
-        return bytes;
-    }
+
+    return bytes;
+  }
 }

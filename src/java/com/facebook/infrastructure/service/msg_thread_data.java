@@ -24,6 +24,7 @@ public class msg_thread_data implements TBase, java.io.Serializable {
   public String participants_ids;
 
   public final Isset __isset = new Isset();
+
   public static final class Isset {
     public boolean threadId = false;
     public boolean synopsis = false;
@@ -35,13 +36,8 @@ public class msg_thread_data implements TBase, java.io.Serializable {
   public msg_thread_data() {
   }
 
-  public msg_thread_data(
-    String threadId,
-    String synopsis,
-    String subject,
-    ArrayList<String> author_list,
-    String participants_ids)
-  {
+  public msg_thread_data(String threadId, String synopsis, String subject,
+      ArrayList<String> author_list, String participants_ids) {
     this();
     this.threadId = threadId;
     this.__isset.threadId = true;
@@ -58,67 +54,64 @@ public class msg_thread_data implements TBase, java.io.Serializable {
   public void read(TProtocol iprot) throws TException {
     TField field;
     iprot.readStructBegin();
-    while (true)
-    {
+    while (true) {
       field = iprot.readFieldBegin();
-      if (field.type == TType.STOP) { 
+      if (field.type == TType.STOP) {
         break;
       }
-      switch (field.id)
-      {
-        case 1:
-          if (field.type == TType.STRING) {
-            this.threadId = iprot.readString();
-            this.__isset.threadId = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        case 2:
-          if (field.type == TType.STRING) {
-            this.synopsis = iprot.readString();
-            this.__isset.synopsis = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        case 3:
-          if (field.type == TType.STRING) {
-            this.subject = iprot.readString();
-            this.__isset.subject = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        case 4:
-          if (field.type == TType.LIST) {
-            {
-              TList _list22 = iprot.readListBegin();
-              this.author_list = new ArrayList<String>(_list22.size);
-              for (int _i23 = 0; _i23 < _list22.size; ++_i23)
-              {
-                String _elem24 = null;
-                _elem24 = iprot.readString();
-                this.author_list.add(_elem24);
-              }
-              iprot.readListEnd();
-            }
-            this.__isset.author_list = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        case 5:
-          if (field.type == TType.STRING) {
-            this.participants_ids = iprot.readString();
-            this.__isset.participants_ids = true;
-          } else { 
-            TProtocolUtil.skip(iprot, field.type);
-          }
-          break;
-        default:
+      switch (field.id) {
+      case 1:
+        if (field.type == TType.STRING) {
+          this.threadId = iprot.readString();
+          this.__isset.threadId = true;
+        } else {
           TProtocolUtil.skip(iprot, field.type);
-          break;
+        }
+        break;
+      case 2:
+        if (field.type == TType.STRING) {
+          this.synopsis = iprot.readString();
+          this.__isset.synopsis = true;
+        } else {
+          TProtocolUtil.skip(iprot, field.type);
+        }
+        break;
+      case 3:
+        if (field.type == TType.STRING) {
+          this.subject = iprot.readString();
+          this.__isset.subject = true;
+        } else {
+          TProtocolUtil.skip(iprot, field.type);
+        }
+        break;
+      case 4:
+        if (field.type == TType.LIST) {
+          {
+            TList _list22 = iprot.readListBegin();
+            this.author_list = new ArrayList<String>(_list22.size);
+            for (int _i23 = 0; _i23 < _list22.size; ++_i23) {
+              String _elem24 = null;
+              _elem24 = iprot.readString();
+              this.author_list.add(_elem24);
+            }
+            iprot.readListEnd();
+          }
+          this.__isset.author_list = true;
+        } else {
+          TProtocolUtil.skip(iprot, field.type);
+        }
+        break;
+      case 5:
+        if (field.type == TType.STRING) {
+          this.participants_ids = iprot.readString();
+          this.__isset.participants_ids = true;
+        } else {
+          TProtocolUtil.skip(iprot, field.type);
+        }
+        break;
+      default:
+        TProtocolUtil.skip(iprot, field.type);
+        break;
       }
       iprot.readFieldEnd();
     }
@@ -160,7 +153,7 @@ public class msg_thread_data implements TBase, java.io.Serializable {
       oprot.writeFieldBegin(field);
       {
         oprot.writeListBegin(new TList(TType.STRING, this.author_list.size()));
-        for (String _iter25 : this.author_list)        {
+        for (String _iter25 : this.author_list) {
           oprot.writeString(_iter25);
         }
         oprot.writeListEnd();
@@ -196,4 +189,3 @@ public class msg_thread_data implements TBase, java.io.Serializable {
   }
 
 }
-

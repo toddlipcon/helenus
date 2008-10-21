@@ -19,15 +19,18 @@
 package com.facebook.infrastructure.net.io;
 
 import java.io.IOException;
+
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public interface IStreamComplete
-{
-    /*
-     * This callback if registered with the StreamContextManager is 
-     * called when the stream from a host is completely handled. 
-    */
-    public void onStreamCompletion(String from, StreamContextManager.StreamContext streamContext, StreamContextManager.StreamStatus streamStatus) throws IOException;
+public interface IStreamComplete {
+  /*
+   * This callback if registered with the StreamContextManager is called when
+   * the stream from a host is completely handled.
+   */
+  public void onStreamCompletion(String from,
+      StreamContextManager.StreamContext streamContext,
+      StreamContextManager.StreamStatus streamStatus) throws IOException;
 }

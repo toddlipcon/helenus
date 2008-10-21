@@ -21,27 +21,44 @@ package com.facebook.infrastructure.db;
 import java.util.Collection;
 
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public interface IColumn
-{
-    public static short UtfPrefix_ = 2;
-    public boolean isMarkedForDelete();
-    public String name();
-    public String name(String key);
-    public int size();
-    public int serializedSize();
-    public long timestamp();
-    public long timestamp(String key);
-    public byte[] value();
-    public byte[] value(String key);
-    public Collection<IColumn> getSubColumns();
-    public void addColumn(String name, IColumn column);
-    public void delete();
-    public void repair(IColumn column);
-    public IColumn diff(IColumn column);
-    public boolean putColumn(IColumn column);
-    public int getObjectCount();
-    public byte[] digest();    
+public interface IColumn {
+  public static short UtfPrefix_ = 2;
+
+  public boolean isMarkedForDelete();
+
+  public String name();
+
+  public String name(String key);
+
+  public int size();
+
+  public int serializedSize();
+
+  public long timestamp();
+
+  public long timestamp(String key);
+
+  public byte[] value();
+
+  public byte[] value(String key);
+
+  public Collection<IColumn> getSubColumns();
+
+  public void addColumn(String name, IColumn column);
+
+  public void delete();
+
+  public void repair(IColumn column);
+
+  public IColumn diff(IColumn column);
+
+  public boolean putColumn(IColumn column);
+
+  public int getObjectCount();
+
+  public byte[] digest();
 }

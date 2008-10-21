@@ -19,16 +19,11 @@
 package com.facebook.infrastructure.net.io;
 
 /**
- * Created by IntelliJ IDEA.
- * User: lakshman
- * Date: Aug 22, 2005
- * Time: 11:37:31 AM
+ * Created by IntelliJ IDEA. User: lakshman Date: Aug 22, 2005 Time: 11:37:31 AM
  * To change this template use File | Settings | File Templates.
  */
-public class ReadNotCompleteException extends Exception
-{
-    ReadNotCompleteException(String message)
-    {
-        super(message);
-    }
+public class ReadNotCompleteException extends Exception {
+  ReadNotCompleteException(String message) {
+    super(message);
+  }
 }

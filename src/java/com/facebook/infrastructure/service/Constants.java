@@ -5,7 +5,6 @@
  */
 package com.facebook.infrastructure.service;
 
-
 public class Constants {
 
 }

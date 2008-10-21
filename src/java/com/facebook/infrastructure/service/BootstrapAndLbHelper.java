@@ -1,4 +1,4 @@
- /**
+/**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -26,40 +26,38 @@ import org.apache.log4j.Logger;
 
 import com.facebook.infrastructure.io.SSTable;
 
-public final class BootstrapAndLbHelper
-{
-    private static final Logger logger_ = Logger.getLogger(BootstrapAndLbHelper.class);
-    private static List<String> getIndexedPrimaryKeys()
-    {
-        List<String> indexedPrimaryKeys = SSTable.getIndexedKeys();
-        Iterator<String> it = indexedPrimaryKeys.iterator();
-        
-        while ( it.hasNext() )
-        {
-            String key = it.next();
-            if ( !StorageService.instance().isPrimary(key) )
-            {
-                it.remove();
-            }
-        }
-        return indexedPrimaryKeys;
+public final class BootstrapAndLbHelper {
+  private static final Logger logger_ = Logger
+      .getLogger(BootstrapAndLbHelper.class);
+
+  private static List<String> getIndexedPrimaryKeys() {
+    List<String> indexedPrimaryKeys = SSTable.getIndexedKeys();
+    Iterator<String> it = indexedPrimaryKeys.iterator();
+
+    while (it.hasNext()) {
+      String key = it.next();
+      if (!StorageService.instance().isPrimary(key)) {
+        it.remove();
+      }
     }
-    
-    /**
-     * Given the number of keys that need to be transferred say, 1000
-     * and given the smallest key stored we need the hash of the 1000th
-     * key greater than the smallest key in the sorted order in the primary
-     * range.
-     * 
-     * @param keyCount number of keys after which token is required.
-     * @return token.
-    */
-    public static BigInteger getTokenBasedOnPrimaryCount(int keyCount)
-    {
-        List<String> indexedPrimaryKeys = getIndexedPrimaryKeys();
-        int index = keyCount / SSTable.indexInterval();
-        String key = (index >= indexedPrimaryKeys.size()) ? indexedPrimaryKeys.get( indexedPrimaryKeys.size() - 1 ) : indexedPrimaryKeys.get(index);
-        logger_.debug("Hashing key " + key + " ...");
-        return StorageService.instance().hash(key);
-    }
+    return indexedPrimaryKeys;
+  }
+
+  /**
+   * Given the number of keys that need to be transferred say, 1000 and given
+   * the smallest key stored we need the hash of the 1000th key greater than the
+   * smallest key in the sorted order in the primary range.
+   * 
+   * @param keyCount
+   *          number of keys after which token is required.
+   * @return token.
+   */
+  public static BigInteger getTokenBasedOnPrimaryCount(int keyCount) {
+    List<String> indexedPrimaryKeys = getIndexedPrimaryKeys();
+    int index = keyCount / SSTable.indexInterval();
+    String key = (index >= indexedPrimaryKeys.size()) ? indexedPrimaryKeys
+        .get(indexedPrimaryKeys.size() - 1) : indexedPrimaryKeys.get(index);
+    logger_.debug("Hashing key " + key + " ...");
+    return StorageService.instance().hash(key);
+  }
 }

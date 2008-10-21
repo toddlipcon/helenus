@@ -29,9 +29,11 @@ import com.facebook.infrastructure.net.EndPoint;
  * the other which does.
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
  */
-public interface IReplicaPlacementStrategy
-{
-	public EndPoint[] getStorageEndPoints(BigInteger token);
-    public EndPoint[] getStorageEndPoints(BigInteger token, Map<BigInteger, EndPoint> tokenToEndPointMap);
-    public Map<EndPoint, EndPoint> getHintedStorageEndPoints(BigInteger token);
+public interface IReplicaPlacementStrategy {
+  public EndPoint[] getStorageEndPoints(BigInteger token);
+
+  public EndPoint[] getStorageEndPoints(BigInteger token,
+      Map<BigInteger, EndPoint> tokenToEndPointMap);
+
+  public Map<EndPoint, EndPoint> getHintedStorageEndPoints(BigInteger token);
 }

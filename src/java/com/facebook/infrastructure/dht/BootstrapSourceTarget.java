@@ -1,4 +1,4 @@
- /**
+/**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -21,29 +21,26 @@ package com.facebook.infrastructure.dht;
 import com.facebook.infrastructure.net.EndPoint;
 
 /**
- * This class encapsulates who is the source and the
- * target of a bootstrap for a particular range.
+ * This class encapsulates who is the source and the target of a bootstrap for a
+ * particular range.
  */
-class BootstrapSourceTarget
-{
-    protected EndPoint source_;
-    protected EndPoint target_;
-    
-    BootstrapSourceTarget(EndPoint source, EndPoint target)
-    {
-        source_ = source;
-        target_ = target;
-    }
-    
-    public String toString()
-    {
-        StringBuilder sb = new StringBuilder("");
-        sb.append("SOURCE: ");
-        sb.append(source_);
-        sb.append(" ----> ");
-        sb.append("TARGET: ");
-        sb.append(target_);
-        sb.append(" ");
-        return sb.toString();
-    }
+class BootstrapSourceTarget {
+  protected EndPoint source_;
+  protected EndPoint target_;
+
+  BootstrapSourceTarget(EndPoint source, EndPoint target) {
+    source_ = source;
+    target_ = target;
+  }
+
+  public String toString() {
+    StringBuilder sb = new StringBuilder("");
+    sb.append("SOURCE: ");
+    sb.append(source_);
+    sb.append(" ----> ");
+    sb.append("TARGET: ");
+    sb.append(target_);
+    sb.append(" ");
+    return sb.toString();
+  }
 }

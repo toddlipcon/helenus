@@ -28,61 +28,56 @@ import org.apache.log4j.Logger;
 import com.facebook.infrastructure.utils.LogUtil;
 
 /**
- * This is a wrapper class for the <i>ScheduledThreadPoolExecutor</i>. It provides an implementation
- * for the <i>afterExecute()</i> found in the <i>ThreadPoolExecutor</i> class to log any unexpected 
- * Runtime Exceptions.
+ * This is a wrapper class for the <i>ScheduledThreadPoolExecutor</i>. It
+ * provides an implementation for the <i>afterExecute()</i> found in the
+ * <i>ThreadPoolExecutor</i> class to log any unexpected Runtime Exceptions.
  * 
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public final class DebuggableThreadPoolExecutor extends ThreadPoolExecutor
-{
-    private static Logger logger_ = Logger.getLogger(DebuggableThreadPoolExecutor.class);
-    
-    public DebuggableThreadPoolExecutor(int corePoolSize,
-            int maximumPoolSize,
-            long keepAliveTime,
-            TimeUnit unit,
-            BlockingQueue<Runnable> workQueue,
-            ThreadFactory threadFactory)
-    {
-        super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory);
-        super.prestartAllCoreThreads();
-    }
-    
-    /*
-     * 
-     *  (non-Javadoc)
-     * @see java.util.concurrent.ThreadPoolExecutor#afterExecute(java.lang.Runnable, java.lang.Throwable)
-     * Helps us in figuring out why sometimes the threads are getting 
-     * killed and replaced by new ones.
-     */
-    public void afterExecute(Runnable r, Throwable t)
-    {
-        super.afterExecute(r,t);
-        if ( t != null )
-        {  
-            Context ctx = ThreadLocalContext.get();
-            if ( ctx != null )
-            {
-                Object object = ctx.get(r.getClass().getName());
-                
-                if ( object != null )
-                {
-                    logger_.info("**** In afterExecute() " + t.getClass().getName() + " occured while working with " + object + " ****");
-                }
-                else
-                {
-                    logger_.info("**** In afterExecute() " + t.getClass().getName() + " occured ****");
-                }
-            }
-            
-            Throwable cause = t.getCause();
-            if ( cause != null )
-            {
-                logger_.info( LogUtil.throwableToString(cause) );
-            }
-            logger_.info( LogUtil.throwableToString(t) );
+public final class DebuggableThreadPoolExecutor extends ThreadPoolExecutor {
+  private static Logger logger_ = Logger
+      .getLogger(DebuggableThreadPoolExecutor.class);
+
+  public DebuggableThreadPoolExecutor(int corePoolSize, int maximumPoolSize,
+      long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue,
+      ThreadFactory threadFactory) {
+    super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
+        threadFactory);
+    super.prestartAllCoreThreads();
+  }
+
+  /*
+   * 
+   * (non-Javadoc)
+   * 
+   * @see
+   * java.util.concurrent.ThreadPoolExecutor#afterExecute(java.lang.Runnable,
+   * java.lang.Throwable) Helps us in figuring out why sometimes the threads are
+   * getting killed and replaced by new ones.
+   */
+  public void afterExecute(Runnable r, Throwable t) {
+    super.afterExecute(r, t);
+    if (t != null) {
+      Context ctx = ThreadLocalContext.get();
+      if (ctx != null) {
+        Object object = ctx.get(r.getClass().getName());
+
+        if (object != null) {
+          logger_.info("**** In afterExecute() " + t.getClass().getName()
+              + " occured while working with " + object + " ****");
+        } else {
+          logger_.info("**** In afterExecute() " + t.getClass().getName()
+              + " occured ****");
         }
+      }
+
+      Throwable cause = t.getCause();
+      if (cause != null) {
+        logger_.info(LogUtil.throwableToString(cause));
+      }
+      logger_.info(LogUtil.throwableToString(t));
     }
+  }
 }

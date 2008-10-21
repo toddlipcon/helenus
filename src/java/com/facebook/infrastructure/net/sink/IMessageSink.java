@@ -19,11 +19,12 @@
 package com.facebook.infrastructure.net.sink;
 
 import com.facebook.infrastructure.net.Message;
+
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public interface IMessageSink
-{
-    public Message handleMessage(Message message);    
+public interface IMessageSink {
+  public Message handleMessage(Message message);
 }

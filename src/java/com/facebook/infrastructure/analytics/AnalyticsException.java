@@ -20,28 +20,28 @@ package com.facebook.infrastructure.analytics;
 
 /**
  * General-purpose, unchecked metrics exception.
- *
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com ) & Karthik Ranganathan ( kranganathan@facebook.com )
+ * 
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com ) & Karthik Ranganathan ( kranganathan@facebook.com )
  */
-public class AnalyticsException extends RuntimeException
-{
+public class AnalyticsException extends RuntimeException {
 
-	  private static final long serialVersionUID = -1643257498540498497L;
+  private static final long serialVersionUID = -1643257498540498497L;
 
-	  /**
-	   * Creates a new instance of MetricsException
-	   */
-	  public AnalyticsException()
-	  {
-	  }
+  /**
+   * Creates a new instance of MetricsException
+   */
+  public AnalyticsException() {
+  }
 
-	  /** Creates a new instance of MetricsException
-	   *
-	   * @param message an error message
-	   */
-	  public AnalyticsException(String message)
-	  {
-	    super(message);
-	  }
+  /**
+   * Creates a new instance of MetricsException
+   * 
+   * @param message
+   *          an error message
+   */
+  public AnalyticsException(String message) {
+    super(message);
+  }
 
-	}
+}

@@ -31,92 +31,92 @@ import com.facebook.infrastructure.service.StorageService;
 import com.facebook.infrastructure.utils.LogUtil;
 
 /**
- * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
+ * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik (
+ * pmalik@facebook.com )
  */
 
-public class ReadVerbHandler implements IVerbHandler
-{
-    private static class ReadContext
-    {
-        protected DataInputBuffer bufIn_ = new DataInputBuffer();
-        protected DataOutputBuffer bufOut_ = new DataOutputBuffer();
+public class ReadVerbHandler implements IVerbHandler {
+  private static class ReadContext {
+    protected DataInputBuffer bufIn_ = new DataInputBuffer();
+    protected DataOutputBuffer bufOut_ = new DataOutputBuffer();
+  }
+
+  private static Logger logger_ = Logger.getLogger(ReadVerbHandler.class);
+  /*
+   * We use this so that we can reuse the same row mutation context for the
+   * mutation.
+   */
+  private static ThreadLocal<ReadContext> tls_ = new InheritableThreadLocal<ReadContext>();
+
+  public void doVerb(Message message) {
+    byte[] body = (byte[]) message.getMessageBody()[0];
+    /* Obtain a Read Context from TLS */
+    ReadContext readCtx = tls_.get();
+    if (readCtx == null) {
+      readCtx = new ReadContext();
+      tls_.set(readCtx);
     }
+    readCtx.bufIn_.reset(body, body.length);
 
-    private static Logger logger_ = Logger.getLogger( ReadVerbHandler.class );
-    /* We use this so that we can reuse the same row mutation context for the mutation. */
-    private static ThreadLocal<ReadContext> tls_ = new InheritableThreadLocal<ReadContext>();
-
-    public void doVerb(Message message)
-    {
-        byte[] body = (byte[])message.getMessageBody()[0];
-        /* Obtain a Read Context from TLS */
-        ReadContext readCtx = tls_.get();
-        if ( readCtx == null )
-        {
-            readCtx = new ReadContext();
-            tls_.set(readCtx);
+    try {
+      ReadMessage readMessage = ReadMessage.serializer().deserialize(
+          readCtx.bufIn_);
+      Table table = Table.open(readMessage.table());
+      Row row = null;
+      long start = System.currentTimeMillis();
+      if (readMessage.columnFamily_column() == null)
+        row = table.get(readMessage.key());
+      else {
+        if (readMessage.getColumnNames().size() == 0) {
+          if (readMessage.count() > 0 && readMessage.start() >= 0)
+            row = table.getRow(readMessage.key(), readMessage
+                .columnFamily_column(), readMessage.start(), readMessage
+                .count());
+          else
+            row = table.getRow(readMessage.key(), readMessage
+                .columnFamily_column());
+        } else {
+          row = table.getRow(readMessage.key(), readMessage
+              .columnFamily_column(), readMessage.getColumnNames());
         }
-        readCtx.bufIn_.reset(body, body.length);
+      }
+      logger_.info("getRow()  TIME: " + (System.currentTimeMillis() - start)
+          + " ms.");
+      start = System.currentTimeMillis();
+      ReadResponseMessage readResponseMessage = null;
+      if (readMessage.isDigestQuery()) {
+        readResponseMessage = new ReadResponseMessage(table.getTableName(), row
+            .digest());
 
-        try
-        {
-            ReadMessage readMessage = ReadMessage.serializer().deserialize(readCtx.bufIn_);
-            Table table = Table.open(readMessage.table());
-            Row row = null;
-            long start = System.currentTimeMillis();
-            if( readMessage.columnFamily_column() == null )
-            	row = table.get(readMessage.key());
-            else
-            {
-            	if(readMessage.getColumnNames().size() == 0)
-            	{
-	            	if(readMessage.count() > 0 && readMessage.start() >= 0)
-	            		row = table.getRow(readMessage.key(), readMessage.columnFamily_column(), readMessage.start(), readMessage.count());
-	            	else
-	            		row = table.getRow(readMessage.key(), readMessage.columnFamily_column());
-            	}
-            	else
-            	{
-            		row = table.getRow(readMessage.key(), readMessage.columnFamily_column(), readMessage.getColumnNames());
-            	}
-            }
-            logger_.info("getRow()  TIME: " + (System.currentTimeMillis() - start) + " ms.");
-            start = System.currentTimeMillis();
-            ReadResponseMessage readResponseMessage = null;
-            if(readMessage.isDigestQuery())
-            {
-                readResponseMessage = new ReadResponseMessage(table.getTableName(), row.digest());
+      } else {
+        readResponseMessage = new ReadResponseMessage(table.getTableName(), row);
+      }
+      readResponseMessage.setIsDigestQuery(readMessage.isDigestQuery());
+      /* serialize the ReadResponseMessage. */
+      readCtx.bufOut_.reset();
 
-            }
-            else
-            {
-                readResponseMessage = new ReadResponseMessage(table.getTableName(), row);
-            }
-            readResponseMessage.setIsDigestQuery(readMessage.isDigestQuery());
-            /* serialize the ReadResponseMessage. */
-            readCtx.bufOut_.reset();
+      start = System.currentTimeMillis();
+      ReadResponseMessage.serializer().serialize(readResponseMessage,
+          readCtx.bufOut_);
+      logger_.info("serialize  TIME: " + (System.currentTimeMillis() - start)
+          + " ms.");
 
-            start = System.currentTimeMillis();
-            ReadResponseMessage.serializer().serialize(readResponseMessage, readCtx.bufOut_);
-            logger_.info("serialize  TIME: " + (System.currentTimeMillis() - start) + " ms.");
+      byte[] bytes = new byte[readCtx.bufOut_.getLength()];
+      start = System.currentTimeMillis();
+      System.arraycopy(readCtx.bufOut_.getData(), 0, bytes, 0, bytes.length);
+      logger_.info("copy  TIME: " + (System.currentTimeMillis() - start)
+          + " ms.");
 
-            byte[] bytes = new byte[readCtx.bufOut_.getLength()];
-            start = System.currentTimeMillis();
-            System.arraycopy(readCtx.bufOut_.getData(), 0, bytes, 0, bytes.length);
-            logger_.info("copy  TIME: " + (System.currentTimeMillis() - start) + " ms.");
-
-            Message response = message.getReply( StorageService.getLocalStorageEndPoint(), new Object[]{bytes} );
-            MessagingService.getMessagingInstance().sendOneWay(response, message.getFrom());
-            logger_.info("ReadVerbHandler  TIME 2: " + (System.currentTimeMillis() - start)
-                    + " ms.");
-        }
-        catch ( IOException ex)
-        {
-            logger_.info( LogUtil.throwableToString(ex) );
-        }
-        catch ( ColumnFamilyNotDefinedException ex)
-        {
-            logger_.info( LogUtil.throwableToString(ex) );
-        }
+      Message response = message.getReply(StorageService
+          .getLocalStorageEndPoint(), new Object[] { bytes });
+      MessagingService.getMessagingInstance().sendOneWay(response,
+          message.getFrom());
+      logger_.info("ReadVerbHandler  TIME 2: "
+          + (System.currentTimeMillis() - start) + " ms.");
+    } catch (IOException ex) {
+      logger_.info(LogUtil.throwableToString(ex));
+    } catch (ColumnFamilyNotDefinedException ex) {
+      logger_.info(LogUtil.throwableToString(ex));
     }
+  }
 }

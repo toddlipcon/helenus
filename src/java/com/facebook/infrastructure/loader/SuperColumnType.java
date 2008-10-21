@@ -5,7 +5,6 @@
 // Generated on: 2007.10.19 at 01:36:41 PM PDT 
 //
 
-
 package com.facebook.infrastructure.loader;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,84 +13,78 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for SuperColumnType complex type.
+ * <p>
+ * Java class for SuperColumnType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
- * &lt;complexType name="SuperColumnType">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="Fields" type="{}FieldCollection"/>
- *       &lt;/sequence>
- *       &lt;attribute name="Tokenize" type="{http://www.w3.org/2001/XMLSchema}boolean" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name=&quot;SuperColumnType&quot;&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base=&quot;{http://www.w3.org/2001/XMLSchema}anyType&quot;&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name=&quot;Fields&quot; type=&quot;{}FieldCollection&quot;/&gt;
+ *       &lt;/sequence&gt;
+ *       &lt;attribute name=&quot;Tokenize&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}boolean&quot; /&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SuperColumnType", propOrder = {
-    "fields"
-})
+@XmlType(name = "SuperColumnType", propOrder = { "fields" })
 public class SuperColumnType {
 
-    @XmlElement(name = "Fields", required = true)
-    protected FieldCollection fields;
-    @XmlAttribute(name = "Tokenize")
-    protected Boolean tokenize;
+  @XmlElement(name = "Fields", required = true)
+  protected FieldCollection fields;
+  @XmlAttribute(name = "Tokenize")
+  protected Boolean tokenize;
 
-    /**
-     * Gets the value of the fields property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FieldCollection }
-     *     
-     */
-    public FieldCollection getFields() {
-        return fields;
-    }
+  /**
+   * Gets the value of the fields property.
+   * 
+   * @return possible object is {@link FieldCollection }
+   * 
+   */
+  public FieldCollection getFields() {
+    return fields;
+  }
 
-    /**
-     * Sets the value of the fields property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FieldCollection }
-     *     
-     */
-    public void setFields(FieldCollection value) {
-        this.fields = value;
-    }
+  /**
+   * Sets the value of the fields property.
+   * 
+   * @param value
+   *          allowed object is {@link FieldCollection }
+   * 
+   */
+  public void setFields(FieldCollection value) {
+    this.fields = value;
+  }
 
-    /**
-     * Gets the value of the tokenize property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isTokenize() {
-        return tokenize;
-    }
+  /**
+   * Gets the value of the tokenize property.
+   * 
+   * @return possible object is {@link Boolean }
+   * 
+   */
+  public Boolean isTokenize() {
+    return tokenize;
+  }
 
-    /**
-     * Sets the value of the tokenize property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setTokenize(Boolean value) {
-        this.tokenize = value;
-    }
+  /**
+   * Sets the value of the tokenize property.
+   * 
+   * @param value
+   *          allowed object is {@link Boolean }
+   * 
+   */
+  public void setTokenize(Boolean value) {
+    this.tokenize = value;
+  }
 
 }

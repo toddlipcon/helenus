@@ -1,4 +1,4 @@
- /**
+/**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -22,63 +22,55 @@ import java.util.Comparator;
 
 import com.facebook.infrastructure.db.FileUtils;
 
-class LoadInfo
-{
-    protected static class PrimaryCountComparator implements Comparator<LoadInfo>
-    {
-        public int compare(LoadInfo li, LoadInfo li2)
-        {
-            if ( li == null || li2 == null )
-                throw new IllegalArgumentException("Cannot pass in values that are NULL.");
-            return (li.count_ - li2.count_);
-        }
+class LoadInfo {
+  protected static class PrimaryCountComparator implements Comparator<LoadInfo> {
+    public int compare(LoadInfo li, LoadInfo li2) {
+      if (li == null || li2 == null)
+        throw new IllegalArgumentException(
+            "Cannot pass in values that are NULL.");
+      return (li.count_ - li2.count_);
     }
-    
-    protected static class DiskSpaceComparator implements Comparator<LoadInfo>
-    {
-        public int compare(LoadInfo li, LoadInfo li2)
-        {
-            if ( li == null || li2 == null )
-                throw new IllegalArgumentException("Cannot pass in values that are NULL.");
-            
-            double space = FileUtils.stringToFileSize(li.diskSpace_);
-            double space2 = FileUtils.stringToFileSize(li2.diskSpace_);
-            return (int)(space - space2);
-        }
+  }
+
+  protected static class DiskSpaceComparator implements Comparator<LoadInfo> {
+    public int compare(LoadInfo li, LoadInfo li2) {
+      if (li == null || li2 == null)
+        throw new IllegalArgumentException(
+            "Cannot pass in values that are NULL.");
+
+      double space = FileUtils.stringToFileSize(li.diskSpace_);
+      double space2 = FileUtils.stringToFileSize(li2.diskSpace_);
+      return (int) (space - space2);
     }
-    
-    private int count_;
-    private String diskSpace_;
-    
-    LoadInfo(int count, long diskSpace)
-    {
-        count_ = count;
-        diskSpace_ = FileUtils.stringifyFileSize(diskSpace);
-    }
-    
-    LoadInfo(String loadInfo)
-    {
-        String[] peices = loadInfo.split(":");
-        count_ = Integer.parseInt(peices[0]);
-        diskSpace_ = peices[1];
-    }
-    
-    int count()
-    {
-        return count_;
-    }
-    
-    String diskSpace()
-    {
-        return diskSpace_;
-    }
-    
-    public String toString()
-    {
-        StringBuilder sb = new StringBuilder("");
-        sb.append(count_);
-        sb.append(":");
-        sb.append(diskSpace_);
-        return sb.toString();
-    }
+  }
+
+  private int count_;
+  private String diskSpace_;
+
+  LoadInfo(int count, long diskSpace) {
+    count_ = count;
+    diskSpace_ = FileUtils.stringifyFileSize(diskSpace);
+  }
+
+  LoadInfo(String loadInfo) {
+    String[] peices = loadInfo.split(":");
+    count_ = Integer.parseInt(peices[0]);
+    diskSpace_ = peices[1];
+  }
+
+  int count() {
+    return count_;
+  }
+
+  String diskSpace() {
+    return diskSpace_;
+  }
+
+  public String toString() {
+    StringBuilder sb = new StringBuilder("");
+    sb.append(count_);
+    sb.append(":");
+    sb.append(diskSpace_);
+    return sb.toString();
+  }
 }
