@@ -34,7 +34,8 @@
   <property name="final.name" value="${name}-${version}"/>
   <property name="year" value="2008"/>
 
-  <property name="src.dir" value="${basedir}/src/java"/>
+  <property name="src.dir.java" value="${basedir}/src/java"/>
+  <property name="src.dir.genjava" value="${basedir}/src/gen-java"/>
   <property name="lib.dir" value="${basedir}/lib"/>
   <property name="src.dir.test" value="${basedir}/test/java"/>
   <property name="conf.dir" value="${basedir}/conf"/>
@@ -109,7 +110,8 @@
      windowtitle="${Name} ${version} API"
      doctitle="${Name} ${version} API"
     >
-      <packageset dir="${src.dir}"/>
+      <packageset dir="${src.dir.java}"/>
+      <packageset dir="${src.dir.genjava}"/>
       <link href="${javadoc.link.java}"/>
 
       <classpath >
@@ -124,8 +126,18 @@
      debug="${javac.debug}"
      debuglevel="${javac.debuglevel}"
      destdir="${build.classes}"
-     srcdir="${src.dir}"
+     srcdir="${src.dir.genjava}"
     >
+
+      <classpath refid="classpath"/>
+    </javac>
+    <javac
+     debug="${javac.debug}"
+     debuglevel="${javac.debuglevel}"
+     destdir="${build.classes}"
+     srcdir="${src.dir.java}"
+    >
+
       <classpath refid="classpath"/>
     </javac>
   </target>
