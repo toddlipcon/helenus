@@ -2,4 +2,4 @@ build
 .checkstyle
 .classpath
 .project
-.settings/
+.settings
