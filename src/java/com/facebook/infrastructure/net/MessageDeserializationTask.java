@@ -19,13 +19,13 @@
 package com.facebook.infrastructure.net;
 
 import java.io.IOException;
+
 import org.apache.log4j.Logger;
+
 import com.facebook.infrastructure.concurrent.DebuggableThreadPoolExecutor;
-import com.facebook.infrastructure.concurrent.StageManager;
 import com.facebook.infrastructure.net.io.FastSerializer;
 import com.facebook.infrastructure.net.io.ISerializer;
 import com.facebook.infrastructure.net.sink.SinkManager;
-import com.facebook.infrastructure.service.StorageService;
 import com.facebook.infrastructure.utils.LogUtil;
 
 /**

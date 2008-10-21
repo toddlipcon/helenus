@@ -18,9 +18,10 @@
 
 package com.facebook.infrastructure.net;
 
-import java.nio.channels.*;
 import java.io.IOException;
-import java.net.*;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 
 import org.apache.log4j.Logger;
 

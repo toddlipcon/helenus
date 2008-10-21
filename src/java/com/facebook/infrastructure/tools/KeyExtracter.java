@@ -18,21 +18,14 @@
 
 package com.facebook.infrastructure.tools;
 
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 import com.facebook.infrastructure.io.DataInputBuffer;
 import com.facebook.infrastructure.io.DataOutputBuffer;
 import com.facebook.infrastructure.io.IFileReader;
 import com.facebook.infrastructure.io.SSTable;
 import com.facebook.infrastructure.io.SequenceFile;
-import com.facebook.infrastructure.io.SSTable.KeyPositionInfo;
-import com.facebook.infrastructure.utils.BasicUtilities;
 
 public class KeyExtracter
 {

@@ -21,9 +21,7 @@ package com.facebook.infrastructure.db;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -31,8 +29,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.log4j.Logger;
 
-import com.facebook.infrastructure.concurrent.*;
-import com.facebook.infrastructure.db.HintedHandOffManager.HintedHandOff;
+import com.facebook.infrastructure.concurrent.DebuggableScheduledThreadPoolExecutor;
+import com.facebook.infrastructure.concurrent.ThreadFactoryImpl;
 import com.facebook.infrastructure.dht.Range;
 import com.facebook.infrastructure.net.EndPoint;
 import com.facebook.infrastructure.service.IComponentShutdown;

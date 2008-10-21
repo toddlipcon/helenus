@@ -18,18 +18,15 @@
 
 package com.facebook.infrastructure.net;
 
-import java.lang.reflect.Array;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.*;
-import org.apache.log4j.Logger;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import com.facebook.infrastructure.io.ICompactSerializer;
-import com.facebook.infrastructure.utils.*;
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
  */

@@ -23,15 +23,12 @@ import java.nio.channels.SelectableChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 
-import com.facebook.infrastructure.utils.*;
+import com.facebook.infrastructure.utils.LogUtil;
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
  */

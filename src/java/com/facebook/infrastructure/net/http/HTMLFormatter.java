@@ -25,7 +25,6 @@ package com.facebook.infrastructure.net.http;
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
  */
 
-import java.util.List;
 import java.util.Set;
 
 /**

@@ -18,8 +18,13 @@
 
 package com.facebook.infrastructure.utils;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.apache.log4j.Logger;
 /**

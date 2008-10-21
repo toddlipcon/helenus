@@ -22,30 +22,25 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+
 import org.apache.log4j.Logger;
+
 import com.facebook.infrastructure.concurrent.DebuggableThreadPoolExecutor;
 import com.facebook.infrastructure.concurrent.ThreadFactoryImpl;
 import com.facebook.infrastructure.config.DatabaseDescriptor;
 import com.facebook.infrastructure.db.FileUtils;
-import com.facebook.infrastructure.db.SystemTable;
-import com.facebook.infrastructure.db.Table;
-import com.facebook.infrastructure.gms.*;
+import com.facebook.infrastructure.gms.ApplicationState;
+import com.facebook.infrastructure.gms.Gossiper;
 import com.facebook.infrastructure.io.DataInputBuffer;
 import com.facebook.infrastructure.io.DataOutputBuffer;
 import com.facebook.infrastructure.io.ICompactSerializer;
 import com.facebook.infrastructure.io.IFileReader;
 import com.facebook.infrastructure.io.IFileWriter;
 import com.facebook.infrastructure.io.SequenceFile;
-import com.facebook.infrastructure.utils.BitSet;
 import com.facebook.infrastructure.utils.BloomFilter;
-import com.facebook.infrastructure.utils.FBUtilities;
 import com.facebook.infrastructure.utils.LogUtil;
 
 /*

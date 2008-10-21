@@ -18,9 +18,9 @@
 
 package com.facebook.infrastructure.net.io;
 
-import java.nio.channels.SocketChannel;
-import java.nio.ByteBuffer;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
  */

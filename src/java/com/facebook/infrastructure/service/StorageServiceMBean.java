@@ -19,9 +19,6 @@
 package com.facebook.infrastructure.service;
 
 import java.io.IOException;
-import java.math.BigInteger;
-
-import com.facebook.infrastructure.net.EndPoint;
 
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

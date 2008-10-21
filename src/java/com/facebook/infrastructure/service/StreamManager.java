@@ -20,9 +20,13 @@ package com.facebook.infrastructure.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
-import com.facebook.infrastructure.config.DatabaseDescriptor;
+
 import com.facebook.infrastructure.db.FileUtils;
 import com.facebook.infrastructure.io.DataInputBuffer;
 import com.facebook.infrastructure.net.EndPoint;

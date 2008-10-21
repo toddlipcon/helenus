@@ -18,7 +18,6 @@
 
 package com.facebook.infrastructure.io;
 
-import java.io.File;
 import java.io.IOException;
 
 /**

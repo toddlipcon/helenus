@@ -1,7 +1,6 @@
 package com.facebook.infrastructure.net.http;
 
 import java.util.Collection;
-import java.util.List;
 
 import com.facebook.infrastructure.config.DatabaseDescriptor;
 import com.facebook.infrastructure.db.ColumnFamily;

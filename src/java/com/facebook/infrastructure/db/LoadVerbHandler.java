@@ -19,6 +19,7 @@
 package com.facebook.infrastructure.db;
 
 import org.apache.log4j.Logger;
+
 import com.facebook.infrastructure.net.EndPoint;
 import com.facebook.infrastructure.net.IVerbHandler;
 import com.facebook.infrastructure.net.Message;

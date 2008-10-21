@@ -23,17 +23,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.apache.log4j.Logger;
-import com.facebook.infrastructure.io.DataInputBuffer;
-import com.facebook.infrastructure.io.IFileReader;
-import com.facebook.infrastructure.io.IFileWriter;
+
 import com.facebook.infrastructure.utils.FBUtilities;
-import com.facebook.infrastructure.utils.HashingSchemes;
-import com.facebook.infrastructure.utils.LogUtil;
 
 
 /**

@@ -18,7 +18,7 @@
 
 package com.facebook.infrastructure.net;
 
-import java.nio.channels.*;
+import java.nio.channels.SelectionKey;
 
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

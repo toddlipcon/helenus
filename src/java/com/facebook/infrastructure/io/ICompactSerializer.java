@@ -18,9 +18,9 @@
 
 package com.facebook.infrastructure.io;
 
-import java.io.IOException;
-import java.io.DataOutputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 /**
  * Allows for the controlled serialization/deserialization of a given type.

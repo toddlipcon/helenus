@@ -18,10 +18,13 @@
 
 package com.facebook.infrastructure.db;
 
-import java.io.*;
-import java.nio.ByteBuffer;
-import java.util.*;
-import com.facebook.infrastructure.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
+import com.facebook.infrastructure.io.DataInputBuffer;
+import com.facebook.infrastructure.io.ICompactSerializer;
 
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

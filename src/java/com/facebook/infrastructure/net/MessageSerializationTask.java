@@ -23,11 +23,11 @@ import java.net.SocketException;
 
 import org.apache.log4j.Logger;
 
-import com.facebook.infrastructure.utils.LogUtil;
 import com.facebook.infrastructure.concurrent.Context;
 import com.facebook.infrastructure.concurrent.DebuggableThreadPoolExecutor;
 import com.facebook.infrastructure.concurrent.ThreadLocalContext;
 import com.facebook.infrastructure.net.sink.SinkManager;
+import com.facebook.infrastructure.utils.LogUtil;
 
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

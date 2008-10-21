@@ -18,8 +18,12 @@
 
 package com.facebook.infrastructure.db;
 
-import java.util.*;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Set;
 
 import com.facebook.infrastructure.config.DatabaseDescriptor;
 

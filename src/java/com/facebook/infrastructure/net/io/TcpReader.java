@@ -20,7 +20,8 @@ package com.facebook.infrastructure.net.io;
 
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.facebook.infrastructure.net.ProtocolHeader;
 import com.facebook.infrastructure.net.TcpConnection;

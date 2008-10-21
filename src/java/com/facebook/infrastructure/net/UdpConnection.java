@@ -18,21 +18,20 @@
 
 package com.facebook.infrastructure.net;
 
-import java.net.SocketAddress;
-import java.nio.*;
-import java.nio.channels.*;
-import java.util.*;
-import java.util.concurrent.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.SocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.DatagramChannel;
+import java.nio.channels.SelectionKey;
+
 import org.apache.log4j.Logger;
-import com.facebook.infrastructure.concurrent.*;
-import com.facebook.infrastructure.net.io.ProtocolState;
-import com.facebook.infrastructure.net.sink.SinkManager;
-import com.facebook.infrastructure.utils.*;
+
+import com.facebook.infrastructure.utils.BasicUtilities;
+import com.facebook.infrastructure.utils.LogUtil;
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
  */

@@ -18,19 +18,14 @@
 
 package com.facebook.infrastructure.service;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.concurrent.locks.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.log4j.Logger;
 
-import com.facebook.infrastructure.db.Column;
-import com.facebook.infrastructure.db.ColumnFamily;
-import com.facebook.infrastructure.db.RowMutation;
 import com.facebook.infrastructure.db.RowMutationMessage;
-import com.facebook.infrastructure.db.SuperColumn;
 import com.facebook.infrastructure.net.EndPoint;
-import com.facebook.infrastructure.net.Header;
 import com.facebook.infrastructure.net.Message;
 import com.facebook.infrastructure.net.MessagingService;
 import com.facebook.infrastructure.utils.Cachetable;

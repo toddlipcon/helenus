@@ -18,20 +18,17 @@
 
 package com.facebook.infrastructure.continuations;
 
-import java.lang.annotation.Annotation;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.HashSet;
-import java.util.StringTokenizer;
+
+import org.apache.commons.javaflow.bytecode.transformation.ResourceTransformer;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.MethodNode;
-import org.apache.commons.javaflow.bytecode.transformation.ResourceTransformer;
-import org.apache.commons.javaflow.bytecode.transformation.bcel.BcelClassTransformer;
 
 
 /**

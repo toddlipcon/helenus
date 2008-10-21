@@ -6,13 +6,15 @@
 package com.facebook.infrastructure.service;
 
 import java.util.ArrayList;
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.HashSet;
-import com.facebook.thrift.*;
 
-import com.facebook.thrift.protocol.*;
-import com.facebook.thrift.transport.*;
+import com.facebook.thrift.TBase;
+import com.facebook.thrift.TException;
+import com.facebook.thrift.protocol.TField;
+import com.facebook.thrift.protocol.TList;
+import com.facebook.thrift.protocol.TProtocol;
+import com.facebook.thrift.protocol.TProtocolUtil;
+import com.facebook.thrift.protocol.TStruct;
+import com.facebook.thrift.protocol.TType;
 
 public class msg_thread_data implements TBase, java.io.Serializable {
   public String threadId;

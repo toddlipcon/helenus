@@ -7,11 +7,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
+
 import com.facebook.infrastructure.config.DatabaseDescriptor;
 import com.facebook.infrastructure.gms.FailureDetector;
 import com.facebook.infrastructure.net.EndPoint;
-import com.facebook.infrastructure.service.StorageService;
 
 /**
  * This class contains a helper method that will be used by

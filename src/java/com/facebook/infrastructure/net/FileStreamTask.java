@@ -18,12 +18,12 @@
 
 package com.facebook.infrastructure.net;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.SocketException;
 
 import org.apache.log4j.Logger;
 
-import com.facebook.infrastructure.net.sink.SinkManager;
 import com.facebook.infrastructure.utils.LogUtil;
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

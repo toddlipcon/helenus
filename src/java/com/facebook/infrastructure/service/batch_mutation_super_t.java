@@ -5,16 +5,20 @@
  */
 package com.facebook.infrastructure.service;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
-import java.util.Set;
-import java.util.HashSet;
-import com.facebook.thrift.*;
+import java.util.List;
+import java.util.Map;
 
-import com.facebook.thrift.protocol.*;
-import com.facebook.thrift.transport.*;
+import com.facebook.thrift.TBase;
+import com.facebook.thrift.TException;
+import com.facebook.thrift.protocol.TField;
+import com.facebook.thrift.protocol.TList;
+import com.facebook.thrift.protocol.TMap;
+import com.facebook.thrift.protocol.TProtocol;
+import com.facebook.thrift.protocol.TProtocolUtil;
+import com.facebook.thrift.protocol.TStruct;
+import com.facebook.thrift.protocol.TType;
 
 public class batch_mutation_super_t implements TBase, java.io.Serializable {
   public String table;

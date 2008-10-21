@@ -18,9 +18,8 @@
 
 package com.facebook.infrastructure.concurrent;
 
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.*;
-import com.facebook.infrastructure.utils.*;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This class is an implementation of the <i>ThreadFactory</i> interface. This 

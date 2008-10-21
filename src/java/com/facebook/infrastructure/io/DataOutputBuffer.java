@@ -18,10 +18,12 @@
 
 package com.facebook.infrastructure.io;
 
-import java.io.*;
+import java.io.DataInput;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.Arrays;
 
 /**

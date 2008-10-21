@@ -21,14 +21,13 @@ package com.facebook.infrastructure.gms;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import com.facebook.infrastructure.utils.*;
 import com.facebook.infrastructure.io.ICompactSerializer;
-import com.facebook.infrastructure.io.IFileReader;
-import com.facebook.infrastructure.io.IFileWriter;
 
 /**
  * This abstraction represents both the HeartBeatState and the ApplicationState in an EndPointState

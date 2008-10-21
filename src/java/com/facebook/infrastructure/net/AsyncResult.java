@@ -18,8 +18,6 @@
 
 package com.facebook.infrastructure.net;
 
-import java.util.List;
-import java.util.Hashtable;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -29,8 +27,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.log4j.Logger;
 
-import com.facebook.infrastructure.config.DatabaseDescriptor;
-import com.facebook.infrastructure.service.QuorumResponseHandler;
 import com.facebook.infrastructure.utils.LogUtil;
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

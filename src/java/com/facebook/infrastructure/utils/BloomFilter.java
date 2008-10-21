@@ -18,20 +18,16 @@
 
 package com.facebook.infrastructure.utils;
 
-import java.math.*;
-import java.nio.ByteBuffer;
-import java.nio.LongBuffer;
-import java.io.*;
-import java.security.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.zip.*;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import com.facebook.infrastructure.io.DataInputBuffer;
-import com.facebook.infrastructure.io.DataOutputBuffer;
 import com.facebook.infrastructure.io.ICompactSerializer;
 
 /**

@@ -22,10 +22,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import com.facebook.infrastructure.dht.Range;
 import com.facebook.infrastructure.io.ICompactSerializer;
-import com.facebook.infrastructure.io.IFileReader;
-import com.facebook.infrastructure.io.IFileWriter;
 
 /**
  * This abstraction represents the state associated with a particular node which an

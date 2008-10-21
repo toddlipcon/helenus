@@ -5,13 +5,6 @@
  */
 package com.facebook.infrastructure.service;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.HashSet;
-import com.facebook.thrift.*;
 
 public class Constants {
 

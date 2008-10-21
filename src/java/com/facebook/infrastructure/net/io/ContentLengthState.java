@@ -18,11 +18,10 @@
 
 package com.facebook.infrastructure.net.io;
 
-import com.facebook.infrastructure.utils.FBUtilities;
-
-import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+
+import com.facebook.infrastructure.utils.FBUtilities;
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
  */

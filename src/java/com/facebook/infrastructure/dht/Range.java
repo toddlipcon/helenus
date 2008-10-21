@@ -22,16 +22,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import com.facebook.infrastructure.gms.GossipDigest;
 import com.facebook.infrastructure.io.ICompactSerializer;
-import com.facebook.infrastructure.io.IFileReader;
-import com.facebook.infrastructure.io.IFileWriter;
-import com.facebook.infrastructure.net.CompactEndPointSerializationHelper;
-import com.facebook.infrastructure.net.EndPoint;
 import com.facebook.infrastructure.service.StorageService;
 
 /**

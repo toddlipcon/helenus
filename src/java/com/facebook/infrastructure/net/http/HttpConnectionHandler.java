@@ -18,15 +18,15 @@
 
 package com.facebook.infrastructure.net.http;
 
-import com.facebook.infrastructure.db.Table;
-import com.facebook.infrastructure.net.SelectionKeyHandler;
-import com.facebook.infrastructure.net.SelectorManager;
 import java.io.IOException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
 import org.apache.log4j.Logger;
+
+import com.facebook.infrastructure.net.SelectionKeyHandler;
+import com.facebook.infrastructure.net.SelectorManager;
 
 public class HttpConnectionHandler extends SelectionKeyHandler
 {

@@ -23,14 +23,12 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.*;
 
 import javax.xml.bind.annotation.XmlElement;
 
 import com.facebook.infrastructure.io.ICompactSerializer;
 import com.facebook.infrastructure.net.EndPoint;
 import com.facebook.infrastructure.net.Message;
-import com.facebook.infrastructure.net.MessagingService;
 import com.facebook.infrastructure.service.StorageService;
 import com.facebook.infrastructure.utils.FBUtilities;
 

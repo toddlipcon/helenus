@@ -18,16 +18,35 @@
 
 package com.facebook.infrastructure.gms;
 
-import java.io.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.apache.log4j.Logger;
+
 import com.facebook.infrastructure.concurrent.SingleThreadedStage;
 import com.facebook.infrastructure.concurrent.StageManager;
 import com.facebook.infrastructure.config.DatabaseDescriptor;
+import com.facebook.infrastructure.net.EndPoint;
+import com.facebook.infrastructure.net.IVerbHandler;
+import com.facebook.infrastructure.net.Message;
+import com.facebook.infrastructure.net.MessagingService;
 import com.facebook.infrastructure.service.IComponentShutdown;
 import com.facebook.infrastructure.service.StorageService;
-import com.facebook.infrastructure.utils.*;
-import com.facebook.infrastructure.net.*;
+import com.facebook.infrastructure.utils.LogUtil;
 
 /**
  * This module is responsible for Gossiping information for the local endpoint. This abstraction

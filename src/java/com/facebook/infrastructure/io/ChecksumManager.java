@@ -17,10 +17,7 @@
  */
 package com.facebook.infrastructure.io;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Method;
@@ -29,19 +26,21 @@ import java.nio.channels.FileChannel;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.zip.Adler32;
+
 import org.apache.log4j.Logger;
+
+import bak.pcj.map.AbstractLongKeyLongMap;
+import bak.pcj.map.LongKeyLongChainedHashMap;
+
 import com.facebook.infrastructure.config.DatabaseDescriptor;
 import com.facebook.infrastructure.db.FileUtils;
 import com.facebook.infrastructure.utils.LogUtil;
-import bak.pcj.map.AbstractLongKeyLongMap;
-import bak.pcj.map.LongKeyLongChainedHashMap;
 
 /**
  * This class manages the persistence of checksums and keeps

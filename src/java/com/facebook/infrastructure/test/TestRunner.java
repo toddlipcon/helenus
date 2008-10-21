@@ -17,10 +17,6 @@
  */
 package com.facebook.infrastructure.test;
 
-import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
-
-import com.facebook.infrastructure.io.SequenceFile;
 import com.facebook.infrastructure.net.EndPoint;
 import com.facebook.infrastructure.net.IVerbHandler;
 import com.facebook.infrastructure.net.Message;

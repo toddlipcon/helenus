@@ -23,12 +23,12 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 
+import com.facebook.infrastructure.db.Row;
 import com.facebook.infrastructure.db.Table;
 import com.facebook.infrastructure.net.EndPoint;
 import com.facebook.infrastructure.service.StorageService;
 import com.facebook.infrastructure.utils.FBUtilities;
 import com.facebook.infrastructure.utils.LogUtil;
-import com.facebook.infrastructure.db.Row;
 
 public class KeyChecker
 {

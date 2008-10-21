@@ -21,8 +21,6 @@ package com.facebook.infrastructure.test;
 import java.util.Random;
 
 import com.facebook.infrastructure.config.DatabaseDescriptor;
-import com.facebook.infrastructure.db.ColumnFamily;
-import com.facebook.infrastructure.db.IColumn;
 import com.facebook.infrastructure.db.RowMutation;
 import com.facebook.infrastructure.db.Table;
 

@@ -18,7 +18,6 @@
 
 package com.facebook.infrastructure.net;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 

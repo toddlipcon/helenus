@@ -23,10 +23,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import com.facebook.infrastructure.db.ColumnFamily;
+
 import com.facebook.infrastructure.io.ICompactSerializer;
 import com.facebook.infrastructure.net.Message;
-import com.facebook.infrastructure.net.io.*;
+import com.facebook.infrastructure.net.io.StreamContextManager;
 import com.facebook.infrastructure.service.StorageService;
 
 /**

@@ -19,7 +19,6 @@
 package com.facebook.infrastructure.db;
 
 import java.util.Collection;
-import java.util.Map;
 
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

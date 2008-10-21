@@ -26,7 +26,6 @@ import java.util.List;
 
 import com.facebook.infrastructure.config.DatabaseDescriptor;
 import com.facebook.infrastructure.io.IndexHelper;
-import com.facebook.infrastructure.io.SSTable.KeyPositionInfo;
 import com.facebook.infrastructure.utils.FBUtilities;
 
 /**

@@ -19,11 +19,11 @@
 package com.facebook.infrastructure.net;
 
 import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.concurrent.locks.*;
-
-import org.apache.log4j.Logger;
+import java.util.Collections;
+import java.util.List;
+import java.util.Vector;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
  */

@@ -18,7 +18,6 @@
 
 package com.facebook.infrastructure.utils;
 
-import java.util.Enumeration;
 import java.util.Set;
 
 public interface ICachetable<K,V>

@@ -19,8 +19,6 @@
 package com.facebook.infrastructure.net.io;
 
 import java.io.IOException;
-
-import com.facebook.infrastructure.net.EndPoint;
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
  */

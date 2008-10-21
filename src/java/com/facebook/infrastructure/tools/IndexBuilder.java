@@ -19,8 +19,15 @@
 package com.facebook.infrastructure.tools;
 
 import java.io.IOException;
-import com.facebook.infrastructure.io.*;
-import com.facebook.infrastructure.utils.*;
+
+import com.facebook.infrastructure.io.DataInputBuffer;
+import com.facebook.infrastructure.io.DataOutputBuffer;
+import com.facebook.infrastructure.io.IFileReader;
+import com.facebook.infrastructure.io.IFileWriter;
+import com.facebook.infrastructure.io.SSTable;
+import com.facebook.infrastructure.io.SequenceFile;
+import com.facebook.infrastructure.utils.BasicUtilities;
+import com.facebook.infrastructure.utils.BloomFilter;
 
 public class IndexBuilder
 {

@@ -18,7 +18,10 @@
 
 package com.facebook.infrastructure.concurrent;
 
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * An abstraction for stages as described in the SEDA paper by Matt Welsh. 

@@ -27,11 +27,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
 import org.apache.log4j.Logger;
+import org.cliffc.high_scale_lib.NonBlockingHashMap;
+
 import com.facebook.infrastructure.config.DatabaseDescriptor;
 import com.facebook.infrastructure.io.SSTable;
 import com.facebook.infrastructure.utils.BloomFilter;
-import org.cliffc.high_scale_lib.NonBlockingHashMap;
 
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

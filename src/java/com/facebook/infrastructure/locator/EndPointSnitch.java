@@ -18,7 +18,9 @@
 
 package com.facebook.infrastructure.locator;
 
-import java.net.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import com.facebook.infrastructure.net.EndPoint;
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

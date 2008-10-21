@@ -18,12 +18,16 @@
 
 package com.facebook.infrastructure.utils;
 
-import java.io.*;
-import java.text.*;
-import java.util.*;
-import org.apache.log4j.*;
-import org.apache.log4j.spi.LoggerFactory;
-import org.apache.log4j.xml.DOMConfigurator;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 public class LogUtil
 {

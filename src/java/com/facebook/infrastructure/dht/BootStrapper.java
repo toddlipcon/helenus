@@ -18,22 +18,19 @@
 
 package com.facebook.infrastructure.dht;
 
-import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.apache.log4j.Logger;
 
 import com.facebook.infrastructure.locator.TokenMetadata;
 import com.facebook.infrastructure.net.EndPoint;
-import com.facebook.infrastructure.net.Message;
-import com.facebook.infrastructure.net.MessagingService;
 import com.facebook.infrastructure.service.StorageService;
 import com.facebook.infrastructure.utils.LogUtil;
 

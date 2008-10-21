@@ -18,21 +18,22 @@
 
 package com.facebook.infrastructure.service;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.*;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.log4j.Logger;
 
 import com.facebook.infrastructure.config.DatabaseDescriptor;
-import com.facebook.infrastructure.db.WriteResponseMessage;
 import com.facebook.infrastructure.net.IAsyncCallback;
 import com.facebook.infrastructure.net.Message;
 import com.facebook.infrastructure.net.MessagingService;
-import com.facebook.infrastructure.utils.*;
+import com.facebook.infrastructure.utils.LogUtil;
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
  */

@@ -20,27 +20,34 @@ package com.facebook.infrastructure.service;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.apache.log4j.Logger;
+
 import com.facebook.infrastructure.concurrent.DebuggableScheduledThreadPoolExecutor;
 import com.facebook.infrastructure.concurrent.DebuggableThreadPoolExecutor;
 import com.facebook.infrastructure.concurrent.SingleThreadedStage;
 import com.facebook.infrastructure.concurrent.StageManager;
 import com.facebook.infrastructure.concurrent.ThreadFactoryImpl;
-import com.facebook.infrastructure.dht.LeaveJoinProtocolImpl;
-import com.facebook.infrastructure.dht.Range;
 import com.facebook.infrastructure.gms.ApplicationState;
 import com.facebook.infrastructure.gms.EndPointState;
 import com.facebook.infrastructure.gms.Gossiper;
 import com.facebook.infrastructure.gms.IEndPointStateChangeSubscriber;
-import com.facebook.infrastructure.io.SSTable;
-import com.facebook.infrastructure.net.*;
-import com.facebook.infrastructure.utils.*;
+import com.facebook.infrastructure.net.EndPoint;
+import com.facebook.infrastructure.net.IAsyncResult;
+import com.facebook.infrastructure.net.IVerbHandler;
+import com.facebook.infrastructure.net.Message;
+import com.facebook.infrastructure.net.MessagingService;
 
 /*
  * The load balancing algorithm here is an implementation of

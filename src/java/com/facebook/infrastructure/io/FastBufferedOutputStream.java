@@ -18,7 +18,9 @@
 
 package com.facebook.infrastructure.io;
 
-import java.io.*;
+import java.io.FilterOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * The class implements a buffered output stream. By setting up such an output

@@ -23,7 +23,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import com.facebook.infrastructure.io.ICompactSerializer;
-import com.facebook.infrastructure.net.*;
+import com.facebook.infrastructure.net.CompactEndPointSerializationHelper;
+import com.facebook.infrastructure.net.EndPoint;
 
 /**
  * Contains information about a specified list of EndPoints and the largest version 

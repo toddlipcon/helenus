@@ -22,11 +22,16 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import org.apache.log4j.Logger;
+
+import com.facebook.infrastructure.io.ICompactSerializer;
 import com.facebook.infrastructure.utils.FBUtilities;
-import com.facebook.infrastructure.io.*;
 
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

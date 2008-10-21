@@ -21,10 +21,11 @@ package com.facebook.infrastructure.gms;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.facebook.infrastructure.io.ICompactSerializer;
-import com.facebook.infrastructure.net.*;
+import com.facebook.infrastructure.net.EndPoint;
 
 
 /**

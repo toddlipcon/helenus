@@ -18,10 +18,10 @@
 
 package com.facebook.infrastructure.net.sink;
 
-import com.facebook.infrastructure.net.EndPoint;
+import java.util.LinkedList;
+import java.util.ListIterator;
+
 import com.facebook.infrastructure.net.Message;
-import java.util.*;
-import java.io.IOException;
 
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

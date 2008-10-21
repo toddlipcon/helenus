@@ -23,14 +23,19 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Proxy;
-import java.util.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import org.apache.log4j.Logger;
+
 import com.facebook.infrastructure.config.DatabaseDescriptor;
-import com.facebook.infrastructure.io.*;
 import com.facebook.infrastructure.utils.FBUtilities;
-import com.facebook.infrastructure.utils.HashingSchemes;
 
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

@@ -20,10 +20,6 @@ package com.facebook.infrastructure.net;
 
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
-
-import com.facebook.infrastructure.concurrent.IStage;
-
 /**
  * An IMessagingService provides the methods for sending messages to remote
  * endpoints. IMessagingService enables the sending of request-response style

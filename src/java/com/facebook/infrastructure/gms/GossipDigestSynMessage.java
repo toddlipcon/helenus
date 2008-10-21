@@ -21,14 +21,18 @@ package com.facebook.infrastructure.gms;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import com.facebook.infrastructure.io.ICompactSerializer;
 import com.facebook.infrastructure.net.CompactEndPointSerializationHelper;
 import com.facebook.infrastructure.net.EndPoint;
-import com.facebook.infrastructure.utils.*;
+import com.facebook.infrastructure.utils.Log4jLogger;
 
 
 /**

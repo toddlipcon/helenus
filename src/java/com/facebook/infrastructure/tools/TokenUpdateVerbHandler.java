@@ -18,13 +18,17 @@
 
 package com.facebook.infrastructure.tools;
 
-import java.util.*;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.log4j.Logger;
-import com.facebook.infrastructure.io.*;
+
+import com.facebook.infrastructure.config.DatabaseDescriptor;
+import com.facebook.infrastructure.io.DataInputBuffer;
 import com.facebook.infrastructure.net.EndPoint;
 import com.facebook.infrastructure.net.IVerbHandler;
 import com.facebook.infrastructure.net.Message;
@@ -32,7 +36,6 @@ import com.facebook.infrastructure.net.MessagingService;
 import com.facebook.infrastructure.service.StorageService;
 import com.facebook.infrastructure.tools.TokenUpdater.TokenInfoMessage;
 import com.facebook.infrastructure.utils.LogUtil;
-import com.facebook.infrastructure.config.*;
 
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

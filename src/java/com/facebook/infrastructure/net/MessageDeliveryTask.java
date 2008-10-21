@@ -19,6 +19,7 @@
 package com.facebook.infrastructure.net;
 
 import org.apache.log4j.Logger;
+
 import com.facebook.infrastructure.utils.LogUtil;
 
 /**

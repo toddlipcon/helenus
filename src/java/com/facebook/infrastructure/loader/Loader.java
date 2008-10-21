@@ -14,8 +14,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
+
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Token;
@@ -23,14 +25,12 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 
 import com.facebook.infrastructure.config.DatabaseDescriptor;
-import com.facebook.infrastructure.db.FileUtils;
 import com.facebook.infrastructure.db.RowMutation;
 import com.facebook.infrastructure.db.Table;
 import com.facebook.infrastructure.io.SSTable;
-import com.facebook.infrastructure.locator.EndPointSnitch;
 import com.facebook.infrastructure.net.EndPoint;
 import com.facebook.infrastructure.service.StorageService;
-import com.facebook.infrastructure.utils.*;
+import com.facebook.infrastructure.utils.LogUtil;
 
 
 /**

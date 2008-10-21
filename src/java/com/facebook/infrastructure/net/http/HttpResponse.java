@@ -23,9 +23,12 @@
 
 package com.facebook.infrastructure.net.http;
 
-import java.util.*;
-import java.io.*;
-import java.nio.*;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  *

@@ -18,7 +18,6 @@
 
 package com.facebook.infrastructure.net.io;
 
-import java.nio.channels.SocketChannel;
 import java.io.IOException;
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

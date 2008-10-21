@@ -18,15 +18,14 @@
 
 package com.facebook.infrastructure.net.io;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.SocketChannel;
-import java.io.*;
 
 import org.apache.log4j.Logger;
-
-import com.facebook.infrastructure.db.Table;
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )
  */

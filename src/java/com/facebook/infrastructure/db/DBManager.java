@@ -18,10 +18,8 @@
 
 package com.facebook.infrastructure.db;
 
-import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.net.InetAddress;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -30,12 +28,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.facebook.infrastructure.config.DatabaseDescriptor;
-import com.facebook.infrastructure.io.DataOutputBuffer;
-import com.facebook.infrastructure.io.IFileWriter;
-import com.facebook.infrastructure.io.SequenceFile;
 import com.facebook.infrastructure.utils.BasicUtilities;
 import com.facebook.infrastructure.utils.FBUtilities;
-import com.facebook.infrastructure.utils.HashingSchemes;
 
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

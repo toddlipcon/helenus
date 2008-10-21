@@ -18,9 +18,7 @@
 
 package com.facebook.infrastructure.io;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.security.MessageDigest;
 import java.util.List;
 
 /**

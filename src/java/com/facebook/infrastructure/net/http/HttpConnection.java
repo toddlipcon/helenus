@@ -24,25 +24,21 @@
 
 package com.facebook.infrastructure.net.http;
 
-import java.util.*;
-import java.net.*;
-import java.io.*;
-import java.nio.*;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
+import java.util.LinkedList;
+import java.util.List;
 
-import com.facebook.infrastructure.concurrent.SingleThreadedStage;
-import com.facebook.infrastructure.concurrent.StageManager;
-import com.facebook.infrastructure.db.Table;
-import com.facebook.infrastructure.net.IVerbHandler;
+import org.apache.log4j.Logger;
+
 import com.facebook.infrastructure.net.Message;
 import com.facebook.infrastructure.net.MessagingService;
 import com.facebook.infrastructure.net.SelectionKeyHandler;
 import com.facebook.infrastructure.net.SelectorManager;
-import com.facebook.infrastructure.service.*;
+import com.facebook.infrastructure.service.StorageService;
 import com.facebook.infrastructure.utils.LogUtil;
-
-import org.apache.log4j.Logger;
 
 /**
  *

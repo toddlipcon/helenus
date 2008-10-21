@@ -19,9 +19,13 @@
 package com.facebook.infrastructure.db;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import com.facebook.infrastructure.db.ColumnComparatorFactory.ComparatorType;
-import com.facebook.infrastructure.service.StorageService;
 
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

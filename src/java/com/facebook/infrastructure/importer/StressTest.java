@@ -19,32 +19,27 @@
 package com.facebook.infrastructure.importer;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+
 import org.apache.log4j.Logger;
-import com.facebook.infrastructure.analytics.AnalyticsContext;
+
 import com.facebook.infrastructure.concurrent.DebuggableThreadPoolExecutor;
 import com.facebook.infrastructure.concurrent.ThreadFactoryImpl;
-import com.facebook.infrastructure.config.DatabaseDescriptor;
-import com.facebook.infrastructure.db.Memtable;
 import com.facebook.infrastructure.db.ReadMessage;
 import com.facebook.infrastructure.db.Row;
 import com.facebook.infrastructure.db.RowMutation;
 import com.facebook.infrastructure.db.RowMutationMessage;
 import com.facebook.infrastructure.net.EndPoint;
-import com.facebook.infrastructure.net.IAsyncResult;
 import com.facebook.infrastructure.net.Message;
 import com.facebook.infrastructure.net.MessagingService;
-import com.facebook.infrastructure.service.IResponseResolver;
 import com.facebook.infrastructure.service.Cassandra;
+import com.facebook.infrastructure.service.IResponseResolver;
 import com.facebook.infrastructure.service.QuorumResponseHandler;
 import com.facebook.infrastructure.service.ReadResponseResolver;
 import com.facebook.infrastructure.service.StorageService;
@@ -57,7 +52,13 @@ import com.facebook.infrastructure.utils.LogUtil;
 import com.facebook.thrift.protocol.TBinaryProtocol;
 import com.facebook.thrift.transport.TSocket;
 import com.facebook.thrift.transport.TTransport;
-import com.martiansoftware.jsap.*;
+import com.martiansoftware.jsap.FlaggedOption;
+import com.martiansoftware.jsap.JSAP;
+import com.martiansoftware.jsap.JSAPResult;
+import com.martiansoftware.jsap.Parameter;
+import com.martiansoftware.jsap.QualifiedSwitch;
+import com.martiansoftware.jsap.SimpleJSAP;
+import com.martiansoftware.jsap.UnflaggedOption;
 
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

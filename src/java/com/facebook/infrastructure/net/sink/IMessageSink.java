@@ -18,7 +18,6 @@
 
 package com.facebook.infrastructure.net.sink;
 
-import com.facebook.infrastructure.net.EndPoint;
 import com.facebook.infrastructure.net.Message;
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

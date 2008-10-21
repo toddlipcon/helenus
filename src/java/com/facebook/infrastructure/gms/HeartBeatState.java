@@ -18,10 +18,10 @@
 
 package com.facebook.infrastructure.gms;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.facebook.infrastructure.io.ICompactSerializer;
 

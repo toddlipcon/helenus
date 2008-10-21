@@ -21,15 +21,23 @@ package com.facebook.infrastructure.gms;
 import java.io.FileOutputStream;
 import java.lang.management.ManagementFactory;
 import java.net.UnknownHostException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
+
 import org.apache.log4j.Logger;
+
 import com.facebook.infrastructure.config.DatabaseDescriptor;
 import com.facebook.infrastructure.net.EndPoint;
-import com.facebook.infrastructure.utils.*;
+import com.facebook.infrastructure.utils.FBUtilities;
+import com.facebook.infrastructure.utils.LogUtil;
 
 /**
  * This FailureDetector is an implementation of the paper titled

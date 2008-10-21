@@ -18,16 +18,19 @@
 
 package com.facebook.infrastructure.config;
 
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.io.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import com.facebook.infrastructure.db.ColumnFamily;
 import com.facebook.infrastructure.db.FileUtils;
-import com.facebook.infrastructure.db.Table;
-import com.facebook.infrastructure.db.Table.TableMetadata;
-import com.facebook.infrastructure.io.*;
 import com.facebook.infrastructure.utils.XMLUtils;
 
 

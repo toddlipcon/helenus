@@ -19,12 +19,9 @@
 package com.facebook.infrastructure.db;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.List;
 
 import com.facebook.infrastructure.io.ICompactSerializer;
-import com.facebook.infrastructure.utils.BloomFilter;
 
 /**
  * This interface is an extension of the ICompactSerializer which allows for partial deserialization

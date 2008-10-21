@@ -24,8 +24,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import com.facebook.infrastructure.net.*;
-
 /**
  * This class is an implementation of the <i>IStage</i> interface. In particular
  * it is for a stage that has a thread pool with a single thread. For details 

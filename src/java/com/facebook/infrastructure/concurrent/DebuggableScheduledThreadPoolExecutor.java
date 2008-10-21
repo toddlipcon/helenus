@@ -18,9 +18,12 @@
 
 package com.facebook.infrastructure.concurrent;
 
-import java.util.concurrent.*;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadFactory;
+
 import org.apache.log4j.Logger;
-import com.facebook.infrastructure.utils.*;
+
+import com.facebook.infrastructure.utils.LogUtil;
 
 /**
  * This is a wrapper class for the <i>ScheduledThreadPoolExecutor</i>. It provides an implementation

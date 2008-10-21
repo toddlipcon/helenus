@@ -21,14 +21,6 @@ package com.facebook.infrastructure.analytics;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.log4j.Logger;
-
-import com.facebook.infrastructure.config.DatabaseDescriptor;
-import com.facebook.infrastructure.service.StorageService;
-import com.facebook.infrastructure.utils.LogUtil;
 
 /**
  * This class sets up the analytics package to report metrics into

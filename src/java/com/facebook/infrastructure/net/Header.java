@@ -21,10 +21,12 @@ package com.facebook.infrastructure.net;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import com.facebook.infrastructure.io.ICompactSerializer;
-import com.facebook.infrastructure.utils.GuidGenerator;
 
 
 /**

@@ -18,7 +18,6 @@
 
 package com.facebook.infrastructure.tools;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -29,12 +28,13 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.concurrent.atomic.AtomicInteger;
-import com.facebook.infrastructure.io.*;
+
+import com.facebook.infrastructure.io.ICompactSerializer;
 import com.facebook.infrastructure.net.EndPoint;
 import com.facebook.infrastructure.net.Message;
 import com.facebook.infrastructure.net.MessagingService;
 import com.facebook.infrastructure.service.StorageService;
-import com.facebook.infrastructure.utils.*;
+import com.facebook.infrastructure.utils.FBUtilities;
 
 public class TokenUpdater
 {

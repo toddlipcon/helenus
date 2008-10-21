@@ -34,10 +34,7 @@ import com.facebook.infrastructure.net.EndPoint;
 import com.facebook.infrastructure.net.Message;
 import com.facebook.infrastructure.net.MessagingService;
 import com.facebook.infrastructure.service.IComponentShutdown;
-import com.facebook.infrastructure.service.IResponseResolver;
-import com.facebook.infrastructure.service.QuorumResponseHandler;
 import com.facebook.infrastructure.service.StorageService;
-import com.facebook.infrastructure.service.WriteResponseResolver;
 
 /**
  * Author : Avinash Lakshman ( alakshman@facebook.com) & Prashant Malik ( pmalik@facebook.com )

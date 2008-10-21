@@ -18,8 +18,9 @@
 
 package com.facebook.infrastructure.io;
 
-import java.io.*;
-import java.nio.ByteBuffer;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 
 /**

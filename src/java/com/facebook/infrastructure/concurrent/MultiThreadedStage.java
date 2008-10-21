@@ -19,12 +19,11 @@
 
 package com.facebook.infrastructure.concurrent;
 
-import java.util.concurrent.*;
-import javax.naming.OperationNotSupportedException;
-import org.apache.log4j.Logger;
-import com.facebook.infrastructure.net.EndPoint;
-import com.facebook.infrastructure.net.MessagingService;
-import com.facebook.infrastructure.utils.LogUtil;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class is an implementation of the <i>IStage</i> interface. In particular
