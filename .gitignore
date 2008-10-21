@@ -1,0 +1,5 @@
+build
+.checkstyle
+.classpath
+.project
+.settings/
