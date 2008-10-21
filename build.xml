@@ -17,7 +17,7 @@
    limitations under the License.
 -->
 
-<project name="Cassandra" default="compile">
+<project name="Cassandra" default="jar">
 
   <!-- =========================================== -->
   <!--                   PROPERTIES                -->
@@ -34,8 +34,9 @@
   <property name="final.name" value="${name}-${version}"/>
   <property name="year" value="2008"/>
 
-  <property name="src.dir" value="${basedir}/src"/>
+  <property name="src.dir" value="${basedir}/src/java"/>
   <property name="lib.dir" value="${basedir}/lib"/>
+  <property name="src.dir.test" value="${basedir}/test/java"/>
   <property name="conf.dir" value="${basedir}/conf"/>
   <property name="docs.dir" value="${basedir}/docs"/>
   <property name="interface.dir" value="${basedir}/interface"/>
@@ -44,6 +45,9 @@
   <property name="build.classes" value="${build.dir}/classes"/>
   <property name="build.docs" value="${build.dir}/docs"/>
   <property name="build.javadoc" value="${build.docs}/api"/>
+  <property name="build.dir.test" value="${build.dir}/test"/>
+  <property name="build.classes.test" value="${build.dir.test}/classes"/>
+  <property name="build.junit.report" location="${build.dir}/junit"/>
 
   <property name="dist.dir" value="${build.dir}/${final.name}"/>
 
@@ -91,8 +95,7 @@
   </target>
 
   <target name="clean" description="Delete the build files and their directories">
-    <delete file="${build.dir}/${final.name}.jar"/>
-    <delete dir="${build.classes}"/>
+    <delete dir="${build.dir}"/>
   </target>
 
   <target name="javadoc" description="Generate javadoc">
@@ -116,7 +119,7 @@
     </javadoc>
   </target>	
 
-  <target name="compile" depends="init" description="Build the Cassandra classes">
+  <target name="compile-source" depends="init" description="Build the Cassandra classes">
     <javac
      debug="${javac.debug}"
      debuglevel="${javac.debuglevel}"
@@ -127,7 +130,50 @@
     </javac>
   </target>
 
-  <target name="jar" depends="compile" description="Make the Cassandra jarfile">
+  <target name="compile-test" depends="compile-source" description="Compile the Java test source code">
+    <mkdir dir="${build.classes.test}"/>
+    <javac srcdir="${src.dir.test}" destdir="${build.classes.test}" debug="${javac.debug}">
+      <classpath>
+      	<path refid="classpath"/>
+      </classpath>
+    </javac>
+  </target>
+	
+  <target name="compile" depends="compile-source, compile-test"/>
+	
+  <target name="test" depends="compile" description="Run the unit tests">
+    <delete dir="${build.junit.report}"/>
+    <mkdir dir="${build.junit.report}"/>
+    
+    <property name="junit.includes" value="**/*Test.java"/>
+    <property name="junit.excludes" value="nothing.by.default"/>
+    
+    <junit printsummary="yes" failureproperty="testfailed" showoutput="true" fork="true">
+    	<classpath refid="classpath"/>
+    	<classpath location="${build.classes.test}"/>
+    	
+      <formatter type="xml" usefile="true"/>
+      
+      <batchtest todir="${build.junit.report}">
+        <fileset dir="${src.dir.test}">
+          <include name="${junit.includes}"/>
+          <exclude name="${junit.excludes}"/>
+        </fileset>
+      </batchtest>
+      
+    </junit>
+    
+    <junitreport todir="${build.junit.report}">
+      <fileset dir="${build.junit.report}">
+        <include name="TEST-*.xml"/>
+      </fileset>
+      <report format="noframes" todir="${build.junit.report}"/>
+    </junitreport>
+    
+    <fail if="testfailed" message="Some test(s) failed. See '${build.junit.report}' for details."/>
+  </target>
+	
+  <target name="jar" depends="compile-source" description="Make the Cassandra jarfile">
     <jar jarfile="${build.dir}/${final.name}.jar"
          basedir="${build.classes}">
       <manifest>
@@ -141,7 +187,7 @@
     </jar>
   </target>
 
-  <target name="package" depends="compile, jar, javadoc"
+  <target name="package" depends="compile-source, jar, javadoc"
 	  description="Build distribution">
     <mkdir dir="${dist.dir}"/>
     <mkdir dir="${dist.dir}/lib"/>
