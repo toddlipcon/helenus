@@ -4,7 +4,7 @@
 # Interface definition for peer storage
 # 
 
-include "/home/pmalik/code/fbcode/fb303/if/fb303.thrift"
+include "fb303.thrift"
 
 namespace java  com.facebook.infrastructure.service
 

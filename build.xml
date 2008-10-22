@@ -34,6 +34,7 @@
   <property name="final.name" value="${name}-${version}"/>
   <property name="year" value="2008"/>
 
+  <property name="thrift.dir" value="/usr/local/bin"/>
   <property name="src.dir.java" value="${basedir}/src/java"/>
   <property name="src.dir.genjava" value="${basedir}/src/gen-java"/>
   <property name="lib.dir" value="${basedir}/lib"/>
@@ -128,7 +129,6 @@
      destdir="${build.classes}"
      srcdir="${src.dir.genjava}"
     >
-
       <classpath refid="classpath"/>
     </javac>
     <javac
@@ -141,6 +141,20 @@
       <classpath refid="classpath"/>
     </javac>
   </target>
+  <target name='interface' depends="compile" description='Generate thrift stub files for various languages' >
+      <exec executable="thrift" failonerror="true" dir="${thrift.dir}">
+          <arg line="-gen py --gen java -gen cocoa -gen perl -gen rb -gen st -gen cpp -php -o ${build.dir} ${interface.dir}/cassandra.thrift " />
+      </exec>
+      <exec executable="thrift" failonerror="true" dir="${thrift.dir}">
+          <arg line="-gen py --gen java -gen cocoa -gen perl -gen rb -gen st -gen cpp -php -o ${build.dir} ${interface.dir}/fb303.thrift " />
+      </exec>
+      <javac srcdir="${build.dir}/gen-java">
+          <classpath refid="classpath" />
+      </javac>
+      <jar destfile="${build.dir}/cassandrathriftapi.jar" basedir="${build.dir}/gen-java" includes="**/*.class" />
+  </target>
+
+
 
   <target name="compile-test" depends="compile-source" description="Compile the Java test source code">
     <mkdir dir="${build.classes.test}"/>
