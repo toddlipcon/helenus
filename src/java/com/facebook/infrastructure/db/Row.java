@@ -87,6 +87,10 @@ public class Row implements Serializable {
     size_.addAndGet(delta);
   }
 
+  public ColumnFamily getColumnFamily(String cf) {
+    return columnFamilies_.get(cf);
+  }
+
   int size() {
     return size_.get();
   }
