@@ -472,7 +472,7 @@ public class ColumnFamilyStore {
            * can return wrong results we need to take care of that later.
            */
           /* suppress columns marked for delete */
-          Map<String, IColumn> columns = columnFamily.getColumns();
+          Map<String, IColumn> columns = columnFamily.getColumnMap();
           Set<String> cNames = columns.keySet();
 
           for (String cName : cNames) {

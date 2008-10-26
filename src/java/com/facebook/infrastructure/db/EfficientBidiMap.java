@@ -19,6 +19,7 @@
 package com.facebook.infrastructure.db;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,8 +88,12 @@ class EfficientBidiMap implements Serializable {
     return sortedSet_;
   }
 
-  public Map<String, IColumn> getColumns() {
+  public Map<String, IColumn> getColumnMap() {
     return map_;
+  }
+
+  public Collection<IColumn> getColumns() {
+    return map_.values();
   }
 
   public int size() {

@@ -176,11 +176,10 @@ public final class ColumnFamily implements Serializable {
    * before adding
    */
   void addColumns(ColumnFamily cf) {
-    Map<String, IColumn> columns = cf.getColumns();
-    Set<String> cNames = columns.keySet();
+    Map<String, IColumn> columns = cf.getColumnMap();
 
-    for (String cName : cNames) {
-      addColumn(cName, columns.get(cName));
+    for (Map.Entry<String, IColumn> entry : columns.entrySet()) {
+      addColumn(entry.getKey(), entry.getValue());
     }
   }
 
@@ -210,13 +209,12 @@ public final class ColumnFamily implements Serializable {
 
   int getColumnCount() {
     int count = 0;
-    Map<String, IColumn> columns = columns_.getColumns();
+    Collection<IColumn> columns = columns_.getColumns();
     if (columns != null) {
       if (!DatabaseDescriptor.getColumnType(name_).equals("Super")) {
         count = columns.size();
       } else {
-        Collection<IColumn> values = columns.values();
-        for (IColumn column : values) {
+        for (IColumn column : columns) {
           count += column.getObjectCount();
         }
       }
@@ -269,8 +267,8 @@ public final class ColumnFamily implements Serializable {
     return columns_.getSortedColumns();
   }
 
-  Map<String, IColumn> getColumns() {
-    return columns_.getColumns();
+  Map<String, IColumn> getColumnMap() {
+    return columns_.getColumnMap();
   }
 
   public void remove(String columnName) {
@@ -293,11 +291,10 @@ public final class ColumnFamily implements Serializable {
    * it into the oldCf.
    */
   void merge(ColumnFamily columnFamily) {
-    Map<String, IColumn> columns = columnFamily.getColumns();
-    Set<String> cNames = columns.keySet();
+    Map<String, IColumn> columns = columnFamily.getColumnMap();
 
-    for (String cName : cNames) {
-      columns_.put(cName, columns.get(cName));
+    for (Map.Entry<String, IColumn> entry : columns.entrySet()) {
+        columns_.put(entry.getKey(), entry.getValue());
     }
   }
 
@@ -309,12 +306,12 @@ public final class ColumnFamily implements Serializable {
    * intact. Else the one with the greatest timestamp is considered latest.
    */
   void repair(ColumnFamily columnFamily) {
-    Map<String, IColumn> columns = columnFamily.getColumns();
-    Set<String> cNames = columns.keySet();
+    Map<String, IColumn> columns = columnFamily.getColumnMap();
 
-    for (String cName : cNames) {
+    for (Map.Entry<String, IColumn> entry : columns.entrySet()) {
+      String cName = entry.getKey();
       IColumn columnInternal = columns_.get(cName);
-      IColumn columnExternal = columns.get(cName);
+      IColumn columnExternal = entry.getValue();
 
       if (columnInternal == null) {
         if (DatabaseDescriptor.getColumnFamilyType(name_).equals(
@@ -339,7 +336,7 @@ public final class ColumnFamily implements Serializable {
    */
   ColumnFamily diff(ColumnFamily columnFamily) {
     ColumnFamily cfDiff = new ColumnFamily(columnFamily.name());
-    Map<String, IColumn> columns = columnFamily.getColumns();
+    Map<String, IColumn> columns = columnFamily.getColumnMap();
     Set<String> cNames = columns.keySet();
 
     for (String cName : cNames) {
@@ -354,7 +351,7 @@ public final class ColumnFamily implements Serializable {
         }
       }
     }
-    if (cfDiff.getColumns().size() != 0)
+    if (!cfDiff.getColumnMap().isEmpty())
       return cfDiff;
     else
       return null;
@@ -362,7 +359,7 @@ public final class ColumnFamily implements Serializable {
 
   int size() {
     if (size_.get() == 0) {
-      Set<String> cNames = columns_.getColumns().keySet();
+      Set<String> cNames = columns_.getColumnMap().keySet();
       for (String cName : cNames) {
         size_.addAndGet(columns_.get(cName).size());
       }
